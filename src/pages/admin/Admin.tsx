@@ -1,11 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
+import UsersTable from "../../components/admin/UsersTable";
+import { AdminContext, AdminContextProvider } from "../../context/AdminContext";
+
+import { FortbankUser } from "../../Interfaces/interfaces";
+import "../../styles/admin/admin.css";
 
 const Admin = () => {
-  let { name }: any = useContext(AuthContext);
+  let { user, authTokens }: any = useContext(AuthContext);
+  let [fortbankUsers, setFortbankUsers] = useState<FortbankUser[]>([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    let response = await fetch("/api/users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    });
+    let data = await response.json();
+    setFortbankUsers(data);
+  };
+
   return (
     <>
-      <h1>You are Logged in {name}!</h1>
+      <AdminContextProvider>
+        <UsersTable fortbankUsers={fortbankUsers} />
+      </AdminContextProvider>
     </>
   );
 };

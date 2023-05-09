@@ -6,7 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 
 import Admin from "./pages/admin/Admin";
 import AdminLogin from "./pages/admin/AdminLogin";
-import Header from "./components/Header";
+import Header from "./components/admin/AdminHeader";
 
 function App() {
   return (
