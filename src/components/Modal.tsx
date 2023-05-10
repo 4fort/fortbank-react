@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { TbX } from "react-icons/tb";
 import {
   FortbankUser,
@@ -13,6 +13,9 @@ import {
   cardPinValidator,
   balanceValidator,
 } from "../utils/FormValidator";
+import { User } from "../Models/UserModel";
+import AuthContext from "../context/AuthContext";
+import AdminContext from "../context/AdminContext";
 
 interface PropsStruct {
   dialogRef: any;
@@ -23,21 +26,23 @@ interface PropsStruct {
   selectedUser: FortbankUser;
 }
 
-const Modal = (props: PropsStruct) => {
-  const {
-    dialogRef,
-    modalMethod,
-    modalMethods,
-    handleCloseModal,
-    selectedUserValues,
+const Modal = (props: any) => {
+  let {
     setOwnerName,
     setEmail,
     setCardNum,
     setCardPin,
     setBalance,
-  } = props;
+    dialogRef,
 
-  console.log(selectedUserValues);
+    selectedUserValues,
+
+    addUser,
+  }: any = useContext(AdminContext);
+
+  const modalMethods = ["Add User", "Update User"];
+
+  const { modalMethod, handleCloseModal } = props;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,6 +81,18 @@ const Modal = (props: PropsStruct) => {
     const data = new FormData(e.currentTarget);
     const payload = Object.fromEntries(data);
     console.log(payload);
+
+    let user = new User(
+      payload.owner_name,
+      payload.email,
+      parseInt(payload.card_num.replace(/-/g, "")),
+      parseInt(payload.card_pin),
+      parseFloat(payload.balance)
+    );
+
+    addUser(user);
+
+    console.log(user);
 
     handleCloseModal();
   };

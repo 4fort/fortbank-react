@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-const Header = () => {
+const AdminHeader = () => {
   let { user, logoutAdmin }: any = useContext(AuthContext);
   return (
     <header>
@@ -27,4 +27,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default AdminHeader;

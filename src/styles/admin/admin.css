@@ -108,34 +108,25 @@ header div.actions .logout {
   cursor: pointer;
 }
 
-table {
-  border-collapse: collapse;
-  background: var(--darkmode-primary-color);
+.adminActions {
   width: 90%;
-  border-radius: 5px;
-}
-table caption,
-table th,
-table td {
   padding: 1rem;
-}
-table caption {
   font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
 }
-table caption div {
+.adminActions div {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-table caption div span * {
+.adminActions div span * {
   margin-right: 1rem;
 }
-table caption div span svg {
+.adminActions div span svg {
   opacity: var(--icon-opacity);
 }
-table caption div span input {
+.adminActions div span input {
   height: 1.1875rem;
   background: var(--darkmode-primary-color);
   padding: 2px 5px;
@@ -148,10 +139,10 @@ table caption div span input {
   transition: all 0.1s;
   outline: solid 0px var(--secondary-color);
 }
-table caption div span input:focus {
+.adminActions div span input:focus {
   outline: solid 3px var(--secondary-color);
 }
-table caption div button {
+.adminActions div button {
   font-weight: 600;
   border: none;
   border-radius: 5px;
@@ -166,27 +157,44 @@ table caption div button {
   cursor: pointer;
   border-radius: 25px;
 }
-table caption div button:hover {
+.adminActions div button:hover {
   background: var(--secondary-color);
 }
-table caption div button svg {
+.adminActions div button svg {
   font-size: 0.8rem;
   padding-left: 0.3rem;
 }
-table th {
+
+div.tableWrapper {
+  width: 90%;
+  height: 80vh;
+  border-radius: 5px;
+  overflow-y: scroll;
+}
+div.tableWrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--darkmode-primary-color);
+}
+div.tableWrapper table caption,
+div.tableWrapper table th,
+div.tableWrapper table td {
+  padding: 1rem;
+}
+div.tableWrapper table th {
   background: var(--darkmode-quarternary-color);
   text-align: start;
 }
-table tr:nth-of-type(2n) {
+div.tableWrapper table tr:nth-of-type(2n) {
   background: var(--darkmode-secondary-color);
 }
-table td[data-cell=actions] {
+div.tableWrapper table td[data-cell=actions] {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   opacity: var(--icon-opacity);
 }
-table td[data-cell=actions] span {
+div.tableWrapper table td[data-cell=actions] span {
   font-size: 1.1rem;
   cursor: pointer;
 }
@@ -266,4 +274,9 @@ dialog form button {
 }
 dialog form button:hover {
   background: var(--secondary-color);
+}
+dialog form button:disabled,
+dialog form button [disabled] {
+  background: var(--primary-color) !important;
+  cursor: default;
 }/*# sourceMappingURL=admin.css.map */
