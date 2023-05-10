@@ -1,10 +1,5 @@
 import { useState, useContext } from "react";
 import { TbX } from "react-icons/tb";
-import {
-  FortbankUser,
-  FormInputInterface,
-  FormValuesInterface,
-} from "../Interfaces/interfaces";
 import FormInput from "./FormInput";
 import {
   ownerNameValidator,
@@ -14,19 +9,9 @@ import {
   balanceValidator,
 } from "../utils/FormValidator";
 import { User } from "../Models/UserModel";
-import AuthContext from "../context/AuthContext";
 import AdminContext from "../context/AdminContext";
 
-interface PropsStruct {
-  dialogRef: any;
-  modalMethods: Array<string>;
-  modalMethod: number;
-  handleCloseModal: void;
-  selectedUserValues: FortbankUser;
-  selectedUser: FortbankUser;
-}
-
-const Modal = (props: any) => {
+const Modal = () => {
   let {
     setOwnerName,
     setEmail,
@@ -34,24 +19,34 @@ const Modal = (props: any) => {
     setCardPin,
     setBalance,
     dialogRef,
+    modalMethod,
+
+    handleCloseModal,
 
     selectedUserValues,
 
     addUser,
+    updateUser,
+
+    setIsValidated,
   }: any = useContext(AdminContext);
 
   const modalMethods = ["Add User", "Update User"];
 
-  const { modalMethod, handleCloseModal } = props;
+  let ownerNameError: string | undefined;
+  let emailError: string | undefined;
+  let cardNumError: string | undefined;
+  let cardPinError: string | undefined;
+  let balanceError: string | undefined;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const ownerNameError = ownerNameValidator(selectedUserValues.owner_name);
-    const emailError = emailValidator(selectedUserValues.email);
-    const cardNumError = cardNumValidator(String(selectedUserValues.card_num));
-    const cardPinError = cardPinValidator(String(selectedUserValues.card_pin));
-    const balanceError = balanceValidator(String(selectedUserValues.balance));
+    ownerNameError = ownerNameValidator(selectedUserValues.owner_name);
+    emailError = emailValidator(selectedUserValues.email);
+    cardNumError = cardNumValidator(String(selectedUserValues.card_num));
+    cardPinError = cardPinValidator(String(selectedUserValues.card_pin));
+    balanceError = balanceValidator(String(selectedUserValues.balance));
 
     if (
       ownerNameError ||
@@ -61,26 +56,26 @@ const Modal = (props: any) => {
       balanceError
     ) {
       if (ownerNameError) {
-        console.log("Error in Name");
+        console.log(ownerNameError);
       }
       if (emailError) {
-        console.log("Error in Email");
+        console.log(emailError);
       }
       if (cardNumError) {
-        console.log("Error in Card Num");
+        console.log(cardNumError);
       }
       if (cardPinError) {
-        console.log("Error in Card Pin");
+        console.log(cardPinError);
       }
       if (balanceError) {
-        console.log("Error in Balance");
+        console.log(balanceError);
       }
+      setIsValidated(false);
       return;
     }
 
     const data = new FormData(e.currentTarget);
     const payload = Object.fromEntries(data);
-    console.log(payload);
 
     let user = new User(
       payload.owner_name,
@@ -90,11 +85,11 @@ const Modal = (props: any) => {
       parseFloat(payload.balance)
     );
 
-    addUser(user);
-
-    console.log(user);
-
-    handleCloseModal();
+    if (modalMethod === 0) {
+      addUser(user);
+    } else if (modalMethod === 1) {
+      updateUser(selectedUserValues.id, user);
+    }
   };
 
   return (

@@ -2,7 +2,7 @@ export const ownerNameValidator = (e: string) => {
   if (!e.trim()) {
     return "Full name is required";
   }
-  if (!/^[a-zA-Z ]+$/.test(e)) {
+  if (!/^[a-zA-Z .]+$/.test(e)) {
     return "Full name should only contain letters and spaces";
   }
   return undefined;

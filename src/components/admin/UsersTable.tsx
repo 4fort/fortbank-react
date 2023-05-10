@@ -4,14 +4,13 @@ import Modal from "../Modal.tsx";
 import { FortbankUser } from "../../Interfaces/interfaces.tsx";
 import AdminContext from "../../context/AdminContext.tsx";
 
-const UsersTable = ({ fortbankUsers }: any) => {
+const UsersTable = () => {
   let {
     setSelectedUser,
-    modalMethod,
     setModalMethod,
-
-    handleCloseModal,
     handleShowModal,
+    deleteUser,
+    filteredUsers,
   }: any = useContext(AdminContext);
 
   return (
@@ -29,32 +28,37 @@ const UsersTable = ({ fortbankUsers }: any) => {
           </tr>
         </thead>
         <tbody>
-          {fortbankUsers.length > 0 ? (
-            fortbankUsers.map((user: any) => (
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user: FortbankUser) => (
               <tr key={user.id}>
                 <td data-cell='id'>{user.id}</td>
                 <td data-cell='name'>{user.owner_name}</td>
                 <td data-cell='email'>{user.email}</td>
-                <td data-cell='card number'>{user.card_num}</td>
+                <td data-cell='card number'>
+                  {String(user.card_num)
+                    .match(/.{1,3}/g)
+                    .join("-")}
+                </td>
                 <td data-cell='card pin'>{user.card_pin}</td>
-                <td data-cell='balance'>₱{user.balance}</td>
+                <td data-cell='balance'>
+                  ₱{parseFloat(user.balance).toLocaleString("en-US")}
+                </td>
                 <td data-cell='actions'>
                   <span>
                     <TbEdit
                       onClick={() => {
                         setModalMethod(1);
                         handleShowModal();
-                        setSelectedUser(
-                          fortbankUsers.find((currentuser: any) => {
-                            if (user.id === currentuser.id) return currentuser;
-                            return null;
-                          })
-                        );
+                        setSelectedUser(user);
                       }}
                     />
                   </span>
                   <span>
-                    <TbTrash />
+                    <TbTrash
+                      onClick={() => {
+                        deleteUser(user.id);
+                      }}
+                    />
                   </span>
                 </td>
               </tr>
@@ -66,7 +70,7 @@ const UsersTable = ({ fortbankUsers }: any) => {
           )}
         </tbody>
       </table>
-      <Modal modalMethod={modalMethod} handleCloseModal={handleCloseModal} />
+      <Modal />
     </div>
   );
 };

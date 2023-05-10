@@ -1,6 +1,26 @@
 * {
   padding: 0;
   margin: 0;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    opacity: 0;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 
 body {
@@ -144,6 +164,47 @@ header {
   }
 }
 
+.loginWrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    padding: 1.4rem;
+    background: var(--darkmode-tertiary-color);
+    border-radius: 8px;
+
+    span {
+      font-weight: 700;
+      font-size: 1.4rem;
+      padding-bottom: 20px;
+    }
+
+    label {
+      padding-bottom: 5px;
+    }
+    input {
+      @include input-style();
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      background: var(--darkmode-primary-color);
+    }
+    button {
+      @include button-style();
+      padding: 0.8rem;
+      color: var(--white-color);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      border-radius: 25px;
+    }
+  }
+}
+
 .adminActions {
   width: 90%;
   padding: 1rem;
@@ -200,6 +261,12 @@ div.tableWrapper {
     th,
     td {
       padding: 1rem;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 11;
     }
 
     th {
