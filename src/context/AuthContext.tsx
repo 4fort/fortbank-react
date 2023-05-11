@@ -27,12 +27,14 @@ export const AuthProvider = ({ children }: Props) => {
       : null
   );
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const history = useNavigate();
 
   let loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+
     let response = await fetch("/api/token/", {
       method: "POST",
       headers: {
@@ -44,7 +46,6 @@ export const AuthProvider = ({ children }: Props) => {
       }),
     });
     let data = await response.json();
-    setLoading(true);
     if (response.status === 200) {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
@@ -58,10 +59,14 @@ export const AuthProvider = ({ children }: Props) => {
   };
 
   let logoutAdmin = () => {
+    setLoading(true);
+
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
     history("/admin");
+
+    setLoading(false);
   };
 
   let updateToken = async () => {
@@ -106,6 +111,19 @@ export const AuthProvider = ({ children }: Props) => {
   }, [authTokens, loading]);
 
   return (
-    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
+    <>
+      {loading ? (
+        <div className='loadingScreen'>
+          <div className='lds-ripple'>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      ) : (
+        <AuthContext.Provider value={contextData}>
+          {children}
+        </AuthContext.Provider>
+      )}
+    </>
   );
 };
