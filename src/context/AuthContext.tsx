@@ -1,29 +1,37 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { AuthContextType } from "../Interfaces/interfaces";
 
-const AuthContext = createContext({});
+type Props = {
+  children: React.ReactNode;
+};
+
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export default AuthContext;
 
-export const AuthProvider = ({ children }: any) => {
-  const baseUrl = "http://127.0.0.1:8000";
+export const AuthProvider = ({ children }: Props) => {
+  const baseUrl: string = "http://127.0.0.1:8000";
 
-  const [authTokens, setAuthTokens] = useState(() =>
+  const [authTokens, setAuthTokens] = useState<
+    AuthContextType["authTokens"] | null
+  >(() =>
     localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
+      ? JSON.parse(localStorage.getItem("authTokens")!)
       : null
   );
-  const [user, setUser] = useState(() =>
+  const [user, setUser] = useState<AuthContextType["user"] | null>(() =>
     localStorage.getItem("authTokens")
-      ? jwt_decode(localStorage.getItem("authTokens"))
+      ? jwt_decode(localStorage.getItem("authTokens")!)
       : null
   );
+
   const [loading, setLoading] = useState(true);
 
   const history = useNavigate();
 
-  let loginAdmin = async (e: any) => {
+  let loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let response = await fetch("/api/token/", {
       method: "POST",
@@ -31,18 +39,21 @@ export const AuthProvider = ({ children }: any) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: e.target.username.value,
-        password: e.target.password.value,
+        username: e.currentTarget.username.value,
+        password: e.currentTarget.password.value,
       }),
     });
     let data = await response.json();
+    setLoading(true);
     if (response.status === 200) {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       history("/admin-dashboard");
+      setLoading(false);
     } else {
       console.log("error");
+      setLoading(false);
     }
   };
 
@@ -60,7 +71,7 @@ export const AuthProvider = ({ children }: any) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        refresh: authTokens.refresh,
+        refresh: authTokens?.refresh,
       }),
     });
     let data = await response.json();
@@ -74,12 +85,14 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  let contextData = {
+  let contextData: AuthContextType = {
     baseUrl: baseUrl,
     user: user,
     authTokens: authTokens,
     loginAdmin: loginAdmin,
     logoutAdmin: logoutAdmin,
+    loading: loading,
+    setLoading: setLoading,
   };
 
   useEffect(() => {

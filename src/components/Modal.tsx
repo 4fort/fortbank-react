@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { TbX } from "react-icons/tb";
 import FormInput from "./FormInput";
 import {
@@ -10,6 +10,7 @@ import {
 } from "../utils/FormValidator";
 import { User } from "../Models/UserModel";
 import AdminContext from "../context/AdminContext";
+import { AdminContextType } from "../Interfaces/interfaces";
 
 const Modal = () => {
   let {
@@ -29,7 +30,35 @@ const Modal = () => {
     updateUser,
 
     setIsValidated,
-  }: any = useContext(AdminContext);
+  } = useContext<AdminContextType | null>(AdminContext) ?? {
+    setOwnerName: () => {},
+    setEmail: () => {},
+    setCardNum: () => {},
+    setCardPin: () => {},
+    setBalance: () => {},
+    dialogRef: {
+      current: null,
+      showModal: () => {},
+      close: () => {},
+    },
+    modalMethod: 0,
+
+    handleCloseModal: () => {},
+
+    selectedUserValues: {
+      id: 0,
+      owner_name: "",
+      email: "",
+      card_num: "",
+      card_pin: "",
+      balance: "",
+    },
+
+    addUser: () => {},
+    updateUser: () => {},
+
+    setIsValidated: () => {},
+  };
 
   const modalMethods = ["Add User", "Update User"];
 
@@ -77,13 +106,21 @@ const Modal = () => {
     const data = new FormData(e.currentTarget);
     const payload = Object.fromEntries(data);
 
-    let user = new User(
-      payload.owner_name,
-      payload.email,
-      parseInt(payload.card_num.replace(/-/g, "")),
-      parseInt(payload.card_pin),
-      parseFloat(payload.balance)
-    );
+    let user = new User("", "", 0, 0, 0);
+
+    let cardNum = parseInt(String(payload.card_num).replace(/-/g, ""));
+    let cardPin = parseInt(String(payload.card_pin));
+    if (isNaN(cardNum) || isNaN(cardPin)) {
+      console.log("cardNum or cardPin is not a number");
+    } else {
+      user = new User(
+        String(payload.owner_name),
+        String(payload.email),
+        cardNum,
+        cardPin,
+        parseFloat(String(payload.balance))
+      );
+    }
 
     if (modalMethod === 0) {
       addUser(user);

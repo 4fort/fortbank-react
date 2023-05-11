@@ -1,16 +1,26 @@
 import { createContext, useContext, useState, useRef, useEffect } from "react";
-import { FortbankUser } from "../Interfaces/interfaces";
-import { User } from "../Models/UserModel";
 import axios from "axios";
 import AuthContext from "./AuthContext";
+import {
+  AdminContextType,
+  AuthContextType,
+  FortbankUser,
+} from "../Interfaces/interfaces";
+import { User } from "../Models/UserModel";
 
-const AdminContext = createContext({});
+type Props = {
+  children: React.ReactNode;
+};
+
+const AdminContext = createContext<AdminContextType | null>(null);
 export default AdminContext;
 
-export const AdminProvider = ({ children }) => {
-  let { baseUrl, user, authTokens }: any = useContext(AuthContext);
+export const AdminProvider = ({ children }: Props) => {
+  let { baseUrl, user, authTokens } = useContext<AuthContextType | null>(
+    AuthContext
+  ) ?? { baseUrl: "", user: null, authTokens: null };
 
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(0);
   const [ownerName, setOwnerName] = useState("");
   const [email, setEmail] = useState("");
   const [cardNum, setCardNum] = useState("");
@@ -18,20 +28,24 @@ export const AdminProvider = ({ children }) => {
   const [balance, setBalance] = useState("");
 
   const [modalMethod, setModalMethod] = useState<number>(0);
-  const [selectedUser, setSelectedUser] = useState<FortbankUser | {}>({});
+  const [selectedUser, setSelectedUser] = useState<FortbankUser | undefined>(
+    undefined
+  );
 
   const [isValidated, setIsValidated] = useState(true);
 
-  const dialogRef = useRef(null);
-
   const [query, setQuery] = useState("");
 
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
   const handleShowModal = () => {
-    dialogRef.current.showModal();
+    if (dialogRef.current) {
+      dialogRef.current?.showModal();
+    }
   };
 
   const handleCloseModal = () => {
-    setSelectedUser({});
+    setSelectedUser(undefined);
 
     setOwnerName("");
     setEmail("");
@@ -41,14 +55,17 @@ export const AdminProvider = ({ children }) => {
 
     setIsValidated(true);
 
-    dialogRef.current.close();
+    if (dialogRef.current) {
+      dialogRef.current?.close();
+    }
   };
 
-  const [fortbankUsers, setFortbankUsers] = useState<FortbankUser | []>([]);
+  const [fortbankUsers, setFortbankUsers] = useState<FortbankUser[]>([]);
 
   useEffect(() => {
-    getUsers();
-  }, []);
+    if (user) getUsers();
+    return;
+  }, [user]);
 
   const getUsers = async () => {
     try {
@@ -69,7 +86,7 @@ export const AdminProvider = ({ children }) => {
       const response = await axios.post(`${baseUrl}/api/users/`, user, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(authTokens?.access),
         },
       });
       setFortbankUsers([...fortbankUsers, response.data]);
@@ -87,7 +104,7 @@ export const AdminProvider = ({ children }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
+            Authorization: "Bearer " + String(authTokens?.access),
           },
         }
       );
@@ -107,7 +124,7 @@ export const AdminProvider = ({ children }) => {
       await axios.delete(`${baseUrl}/api/users/${userId}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(authTokens?.access),
         },
       });
       setFortbankUsers(
@@ -118,12 +135,12 @@ export const AdminProvider = ({ children }) => {
     }
   };
 
-  const getFilteredUsers = (query: string, users: FortbankUser) => {
+  const getFilteredUsers = (query: string, users: FortbankUser[]) => {
     if (!query) {
       return users;
     }
     return users.filter(
-      (user: User) =>
+      (user: FortbankUser) =>
         user.owner_name.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase()) ||
         String(user.card_num).includes(query) ||
@@ -131,10 +148,10 @@ export const AdminProvider = ({ children }) => {
     );
   };
 
-  const filteredUsers = getFilteredUsers(query, fortbankUsers);
+  const filteredUsers: FortbankUser[] = getFilteredUsers(query, fortbankUsers);
 
   useEffect(() => {
-    setUserId(selectedUser?.id || "");
+    setUserId(selectedUser?.id || 0);
     setOwnerName(selectedUser?.owner_name || "");
     setEmail(selectedUser?.email || "");
     setCardNum(selectedUser?.card_num || "");

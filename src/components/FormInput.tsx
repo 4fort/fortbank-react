@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import { TbExclamationCircle } from "react-icons/tb";
 import AdminContext from "../context/AdminContext";
+import { AdminContextType, Validate } from "../Interfaces/interfaces";
 
-type Validate = (e: string | undefined) => string;
-type OnInputChange = (e: string) => string;
+type OnInputChange = (e: string) => void;
 
 interface Props {
   labelFor: string;
@@ -12,18 +12,19 @@ interface Props {
   value: string;
   validate: Validate;
   onInputChange: OnInputChange;
-  isValidated: boolean;
 }
 
 const FormInput = (props: Props) => {
   const { labelFor, inputType, inputLabel, value, validate, onInputChange } =
     props;
 
-  let { isValidated } = useContext(AdminContext);
+  let { isValidated } = useContext<AdminContextType | null>(AdminContext) ?? {
+    isValidated: null,
+  };
 
-  const [errorPrompt, setErrorPrompt] = useState("");
+  const [errorPrompt, setErrorPrompt] = useState<string | undefined>("");
   useEffect(() => {
-    !isValidated ? setErrorPrompt(validate("")) : setErrorPrompt("");
+    !isValidated ? setErrorPrompt(validate(String(value))) : setErrorPrompt("");
   }, [isValidated]);
 
   return (
@@ -35,7 +36,7 @@ const FormInput = (props: Props) => {
         type={inputType}
         value={value}
         onChange={(e) => {
-          setErrorPrompt(validate(e.target.value));
+          setErrorPrompt(validate(String(e.target.value)));
           onInputChange(e.target.value);
         }}
       />

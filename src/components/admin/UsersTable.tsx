@@ -1,17 +1,25 @@
-import { useEffect, useRef, useState, useContext } from "react";
+import { useContext } from "react";
 import { TbEdit, TbTrash } from "react-icons/tb";
 import Modal from "../Modal.tsx";
-import { FortbankUser } from "../../Interfaces/interfaces.tsx";
+import { FortbankUser } from "../../Interfaces/interfaces.ts";
 import AdminContext from "../../context/AdminContext.tsx";
+import { AdminContextType } from "../../Interfaces/interfaces.ts";
 
 const UsersTable = () => {
-  let {
+  const context = useContext<AdminContextType | null>(AdminContext) ?? {
+    setSelectedUser: () => {},
+    setModalMethod: () => {},
+    handleShowModal: () => {},
+    deleteUser: () => {},
+    filteredUsers: () => {},
+  };
+  const {
     setSelectedUser,
     setModalMethod,
     handleShowModal,
     deleteUser,
     filteredUsers,
-  }: any = useContext(AdminContext);
+  } = context;
 
   return (
     <div className='tableWrapper'>
@@ -28,7 +36,7 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.length > 0 ? (
+          {Array.isArray(filteredUsers) && filteredUsers.length > 0 ? (
             filteredUsers.map((user: FortbankUser) => (
               <tr key={user.id}>
                 <td data-cell='id'>{user.id}</td>
@@ -36,8 +44,8 @@ const UsersTable = () => {
                 <td data-cell='email'>{user.email}</td>
                 <td data-cell='card number'>
                   {String(user.card_num)
-                    .match(/.{1,3}/g)
-                    .join("-")}
+                    ?.match(/.{1,3}/g)
+                    ?.join("-")}
                 </td>
                 <td data-cell='card pin'>{user.card_pin}</td>
                 <td data-cell='balance'>
@@ -65,7 +73,7 @@ const UsersTable = () => {
             ))
           ) : (
             <tr>
-              <td>No Users</td>
+              <td colSpan={6}>No Users</td>
             </tr>
           )}
         </tbody>

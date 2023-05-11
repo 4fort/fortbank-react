@@ -239,8 +239,9 @@ header div.actions .logout {
 div.tableWrapper {
   width: 90%;
   height: 80vh;
-  border-radius: 5px;
-  overflow-y: scroll;
+  background: var(--darkmode-primary-color);
+  border-radius: 8px;
+  overflow-y: overlay;
 }
 div.tableWrapper table {
   width: 100%;

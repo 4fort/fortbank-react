@@ -1,4 +1,6 @@
-export const ownerNameValidator = (e: string) => {
+import { Validate } from "../Interfaces/interfaces";
+
+export const ownerNameValidator: Validate = (e: string) => {
   if (!e.trim()) {
     return "Full name is required";
   }
@@ -8,7 +10,7 @@ export const ownerNameValidator = (e: string) => {
   return undefined;
 };
 
-export const emailValidator = (e: string) => {
+export const emailValidator: Validate = (e: string) => {
   if (!e.trim()) {
     return "Email is required";
   }
@@ -18,7 +20,7 @@ export const emailValidator = (e: string) => {
   return undefined;
 };
 
-export const cardNumValidator = (e: string) => {
+export const cardNumValidator: Validate = (e: string) => {
   if (!e.trim()) {
     return "Card Num is required";
   }
@@ -32,7 +34,7 @@ export const cardNumValidator = (e: string) => {
   return undefined;
 };
 
-export const cardPinValidator = (e: string) => {
+export const cardPinValidator: Validate = (e: string) => {
   if (!e.trim()) {
     return "Card Pin is required";
   }
@@ -42,7 +44,7 @@ export const cardPinValidator = (e: string) => {
   return undefined;
 };
 
-export const balanceValidator = (e: string) => {
+export const balanceValidator: Validate = (e: string) => {
   if (!e.trim()) {
     return "Balance is required";
   }

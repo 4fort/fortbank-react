@@ -1,8 +1,13 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import { AuthContextType } from "../../Interfaces/interfaces";
+
 const AdminHeader = () => {
-  let { user, logoutAdmin }: any = useContext(AuthContext);
+  let { user, logoutAdmin } = useContext<AuthContextType | null>(
+    AuthContext
+  ) ?? { user: { username: "" } };
+
   return (
     <header>
       <div className='logo'>
