@@ -141,6 +141,7 @@ export const AdminProvider = ({ children }: Props) => {
     }
     return users.filter(
       (user: FortbankUser) =>
+        String(user.id).includes(query) ||
         user.owner_name.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase()) ||
         String(user.card_num).includes(query) ||
