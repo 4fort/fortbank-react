@@ -22,6 +22,7 @@ export interface AuthContextType {
   logoutAdmin: () => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  unauthorized: boolean;
 }
 
 export interface AdminContextType {

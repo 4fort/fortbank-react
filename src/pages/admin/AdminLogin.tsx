@@ -1,14 +1,27 @@
 import { useContext } from "react";
+import { TbExclamationCircle } from "react-icons/tb";
 import AuthContext from "../../context/AuthContext";
 import "../../styles/admin/admin.css";
+import { AuthContextType } from "../../Interfaces/interfaces";
 
 const AdminLogin = () => {
-  let { loginAdmin }: any = useContext(AuthContext);
+  const context = useContext<AuthContextType | null>(AuthContext) ?? {
+    loginAdmin: () => {},
+    unauthorized: true,
+    setUnauthorized: () => {},
+  };
+  let { loginAdmin, unauthorized } = context;
 
   return (
     <div className='loginWrapper'>
       <form onSubmit={loginAdmin} className='loginForm'>
         <span>Login Admin</span>
+        {unauthorized ? (
+          <span className='error'>
+            <TbExclamationCircle />
+            Unauthorized
+          </span>
+        ) : null}
         <label htmlFor='username'>Username</label>
         <input
           placeholder='username'

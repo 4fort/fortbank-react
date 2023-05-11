@@ -27,7 +27,8 @@ export const AuthProvider = ({ children }: Props) => {
       : null
   );
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [unauthorized, setUnauthorized] = useState<boolean>(false);
 
   const history = useNavigate();
 
@@ -51,9 +52,12 @@ export const AuthProvider = ({ children }: Props) => {
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       history("/admin-dashboard");
+      setUnauthorized(false);
+
       setLoading(false);
     } else {
-      console.log("error");
+      setUnauthorized(true);
+
       setLoading(false);
     }
   };
@@ -84,8 +88,10 @@ export const AuthProvider = ({ children }: Props) => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
+      setUnauthorized(false);
     } else {
-      console.log("error");
+      setUnauthorized(true);
+
       logoutAdmin();
     }
   };
@@ -98,6 +104,7 @@ export const AuthProvider = ({ children }: Props) => {
     logoutAdmin: logoutAdmin,
     loading: loading,
     setLoading: setLoading,
+    unauthorized: unauthorized,
   };
 
   useEffect(() => {
