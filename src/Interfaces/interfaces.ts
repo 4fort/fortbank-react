@@ -75,3 +75,9 @@ export interface DialogRefInterface extends HTMLDialogElement {
 }
 
 export type Validate = (e: string) => string | undefined;
+
+export type ChildProp = {
+  children: React.ReactNode;
+};
+
+export interface ClientContextType {}

@@ -5,17 +5,14 @@ import {
   AdminContextType,
   AuthContextType,
   FortbankUser,
+  ChildProp,
 } from "../Interfaces/interfaces";
 import { User } from "../Models/UserModel";
-
-type Props = {
-  children: React.ReactNode;
-};
 
 const AdminContext = createContext<AdminContextType | null>(null);
 export default AdminContext;
 
-export const AdminProvider = ({ children }: Props) => {
+export const AdminProvider = ({ children }: ChildProp) => {
   let { baseUrl, user, authTokens } = useContext<AuthContextType | null>(
     AuthContext
   ) ?? { baseUrl: "", user: null, authTokens: null };
