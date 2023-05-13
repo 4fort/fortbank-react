@@ -165,6 +165,9 @@ header {
   &:hover {
     background: var(--secondary-color);
   }
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .loadingScreen {
@@ -353,7 +356,14 @@ div.tableWrapper {
       opacity: var(--icon-opacity);
       span {
         font-size: 1.1rem;
+      }
+      svg {
         cursor: pointer;
+        transition: 0.1s;
+
+        &:active {
+          transform: scale(0.85);
+        }
       }
     }
   }
@@ -362,15 +372,18 @@ div.tableWrapper {
 dialog {
   margin: auto;
   padding: 1em;
-  width: 350px;
-  background: var(--darkmode-quarternary-color);
+  width: 90vw;
+  // height: 90vh;
+  overflow-y: overlay;
+  background: var(--darkmode-tertiary-color);
   color: var(--white-color);
   border: none;
   border-radius: 5px;
+  outline: none;
   &::backdrop {
     background: rgba(0, 0, 0, 0.5);
   }
-  div {
+  div.actionLabel {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -380,25 +393,95 @@ dialog {
     }
     svg {
       cursor: pointer;
+      transition: 0.1s;
+
+      &:active {
+        transform: scale(0.85);
+      }
     }
   }
   form {
-    margin-top: 30px;
+    margin-top: 50px;
+    width: 100%;
     display: flex;
     flex-direction: column;
 
+    div {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    span.fieldTitle {
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .firstSection {
+      flex-direction: row;
+      align-items: start;
+      width: 100%;
+      // height: 50%;
+      gap: 2vw;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        width: 35%;
+
+        &.nameFields {
+          flex-direction: row;
+          width: 100%;
+          height: 100%;
+          gap: 1vw;
+          & div {
+            width: 50%;
+          }
+          input {
+            padding: 0.8rem 0;
+            width: 100%;
+          }
+        }
+      }
+    }
+
     label {
       margin-bottom: 0.2rem;
+      font-size: 0.9rem;
+      opacity: var(--icon-opacity);
     }
     input {
       @include input-style();
-      padding: 0.5rem;
+      padding: 0.8rem;
       margin-bottom: 1rem;
-      background: var(--darkmode-primary-color);
+      font-family: inherit;
+      outline: solid 3px var(--darkmode-secondary-color);
+      background: var(--darkmode-quinary-color);
+      &::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+      }
+    }
+    select {
+      @include input-style();
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      outline: solid 3px var(--darkmode-secondary-color);
+      background: var(--darkmode-quinary-color);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      position: relative;
+      cursor: pointer;
+
+      &::after {
+        content: "\25BC";
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
     }
 
     button {
       @include button-style();
+      margin-top: 30px;
       padding: 0.7rem;
       color: var(--white-color);
       &:disabled,

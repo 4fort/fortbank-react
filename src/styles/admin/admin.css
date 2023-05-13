@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   padding: 0;
   margin: 0;
@@ -245,6 +246,9 @@ header div.actions .logout {
 .loginWrapper .loginForm button:hover {
   background: var(--secondary-color);
 }
+.loginWrapper .loginForm button:active {
+  transform: scale(0.95);
+}
 
 .adminActions {
   width: 90%;
@@ -298,6 +302,9 @@ header div.actions .logout {
 .adminActions div button:hover {
   background: var(--secondary-color);
 }
+.adminActions div button:active {
+  transform: scale(0.95);
+}
 .adminActions div button svg {
   font-size: 0.8rem;
   padding-left: 0.3rem;
@@ -340,40 +347,87 @@ div.tableWrapper table td[data-cell=actions] {
 }
 div.tableWrapper table td[data-cell=actions] span {
   font-size: 1.1rem;
+}
+div.tableWrapper table td[data-cell=actions] svg {
   cursor: pointer;
+  transition: 0.1s;
+}
+div.tableWrapper table td[data-cell=actions] svg:active {
+  transform: scale(0.85);
 }
 
 dialog {
   margin: auto;
   padding: 1em;
-  width: 350px;
-  background: var(--darkmode-quarternary-color);
+  width: 90vw;
+  overflow-y: overlay;
+  background: var(--darkmode-tertiary-color);
   color: var(--white-color);
   border: none;
   border-radius: 5px;
+  outline: none;
 }
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.5);
 }
-dialog div {
+dialog div.actionLabel {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.2rem;
 }
-dialog div span {
+dialog div.actionLabel span {
   font-weight: 700;
 }
-dialog div svg {
+dialog div.actionLabel svg {
   cursor: pointer;
+  transition: 0.1s;
+}
+dialog div.actionLabel svg:active {
+  transform: scale(0.85);
 }
 dialog form {
-  margin-top: 30px;
+  margin-top: 50px;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
+dialog form div {
+  display: flex;
+  justify-content: space-evenly;
+}
+dialog form span.fieldTitle {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+dialog form .firstSection {
+  flex-direction: row;
+  align-items: start;
+  width: 100%;
+  gap: 2vw;
+}
+dialog form .firstSection div {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+dialog form .firstSection div.nameFields {
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 1vw;
+}
+dialog form .firstSection div.nameFields div {
+  width: 50%;
+}
+dialog form .firstSection div.nameFields input {
+  padding: 0.8rem 0;
+  width: 100%;
+}
 dialog form label {
   margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  opacity: var(--icon-opacity);
 }
 dialog form input {
   color: var(--white-color);
@@ -383,12 +437,44 @@ dialog form input {
   max-width: 100%;
   transition: all 0.1s;
   outline: solid 0px var(--secondary-color);
-  padding: 0.5rem;
+  padding: 0.8rem;
   margin-bottom: 1rem;
-  background: var(--darkmode-primary-color);
+  font-family: inherit;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
 }
 dialog form input:focus {
   outline: solid 3px var(--secondary-color);
+}
+dialog form input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+dialog form select {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+}
+dialog form select:focus {
+  outline: solid 3px var(--secondary-color);
+}
+dialog form select::after {
+  content: "▼";
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 dialog form button {
   font-weight: 600;
@@ -397,11 +483,15 @@ dialog form button {
   background-color: var(--tertiary-color);
   cursor: pointer;
   transition: all 0.1s;
+  margin-top: 30px;
   padding: 0.7rem;
   color: var(--white-color);
 }
 dialog form button:hover {
   background: var(--secondary-color);
+}
+dialog form button:active {
+  transform: scale(0.95);
 }
 dialog form button:disabled,
 dialog form button [disabled] {

@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: Props) => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      history("/admin-dashboard");
+      history("/admin/dashboard");
       setUnauthorized(false);
 
       setLoading(false);

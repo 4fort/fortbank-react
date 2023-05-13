@@ -1,12 +1,28 @@
 import { User } from "../Models/UserModel";
 
-export interface FortbankUser {
-  id: number;
-  owner_name: string;
-  email: string;
+export interface UserAccount {
   card_num: string;
   card_pin: string;
   balance: string;
+}
+
+export interface UserProfile {
+  mobile_number: string;
+  birthdate: string;
+  gender: number;
+  civil_status: number;
+  address: string;
+}
+
+export interface FortbankUser {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  useraccount: UserAccount;
+  userprofile: UserProfile;
+  last_login: string;
 }
 
 export interface AuthContextType {
@@ -26,17 +42,31 @@ export interface AuthContextType {
 }
 
 export interface AdminContextType {
-  ownerName: string;
-  email: string;
-  cardNum: string;
-  cardPin: string;
-  balance: string;
+  // first_name: string;
+  // last_name: string;
+  // username: string;
+  // email: string;
+  // cardNum: string;
+  // cardPin: string;
+  // balance: string;
+  // mobile_number: string;
+  // birthdate: string;
+  // gender: number;
+  // civil_status: number;
+  // address: string;
 
-  setOwnerName: React.Dispatch<React.SetStateAction<string>>;
+  setFirstName: React.Dispatch<React.SetStateAction<string>>;
+  setLastName: React.Dispatch<React.SetStateAction<string>>;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   setCardNum: React.Dispatch<React.SetStateAction<string>>;
   setCardPin: React.Dispatch<React.SetStateAction<string>>;
   setBalance: React.Dispatch<React.SetStateAction<string>>;
+  setMobileNumber: React.Dispatch<React.SetStateAction<string>>;
+  setBirthDate: React.Dispatch<React.SetStateAction<string>>;
+  setGender: React.Dispatch<React.SetStateAction<number>>;
+  setCivilStatus: React.Dispatch<React.SetStateAction<number>>;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
 
   selectedUserValues: FortbankUser;
 

@@ -18,14 +18,14 @@ function App() {
           <AdminHeader />
           <Routes>
             <Route element={<PrivateRoutes />}>
-              <Route path='/admin-dashboard' element={<Admin />} />
+              <Route path='admin/dashboard' element={<Admin />} />
             </Route>
-            <Route path='/admin' element={<AdminLogin />} />
+            <Route path='admin' element={<AdminLogin />} />
           </Routes>
         </AdminProvider>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route path='/home' element={<Home />}></Route>
+            <Route path='/' element={<Home />}></Route>
           </Route>
           <Route path='login' element={<Login />} />
         </Routes>

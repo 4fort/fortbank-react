@@ -18,11 +18,19 @@ export const AdminProvider = ({ children }: ChildProp) => {
   ) ?? { baseUrl: "", user: null, authTokens: null };
 
   const [userId, setUserId] = useState(0);
-  const [ownerName, setOwnerName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [username, setUsername] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [cardNum, setCardNum] = useState("");
   const [cardPin, setCardPin] = useState("");
   const [balance, setBalance] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [birthdate, setBirthDate] = useState("");
+  const [gender, setGender] = useState(0);
+  const [civilStatus, setCivilStatus] = useState(0);
+  const [address, setAddress] = useState("");
+  const [lastLogin, setLastLogin] = useState("");
 
   const [modalMethod, setModalMethod] = useState<number>(0);
   const [selectedUser, setSelectedUser] = useState<FortbankUser | undefined>(
@@ -44,11 +52,18 @@ export const AdminProvider = ({ children }: ChildProp) => {
   const handleCloseModal = () => {
     setSelectedUser(undefined);
 
-    setOwnerName("");
+    setFirstName("");
+    setLastName("");
+    setUsername("");
     setEmail("");
     setCardNum("");
     setCardPin("");
     setBalance("");
+    setMobileNumber("");
+    setBirthDate("");
+    setGender(0);
+    setCivilStatus(0);
+    setAddress("");
 
     setIsValidated(true);
 
@@ -139,10 +154,12 @@ export const AdminProvider = ({ children }: ChildProp) => {
     return users.filter(
       (user: FortbankUser) =>
         String(user.id).includes(query) ||
-        user.owner_name.toLowerCase().includes(query.toLowerCase()) ||
+        user.first_name.toLowerCase().includes(query.toLowerCase()) ||
+        user.last_name.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase()) ||
-        String(user.card_num).includes(query) ||
-        String(user.balance).includes(query)
+        String(user.useraccount?.card_num).includes(query) ||
+        String(user.useraccount?.balance).includes(query) ||
+        String(user.userprofile?.mobile_number).includes(query)
     );
   };
 
@@ -150,34 +167,53 @@ export const AdminProvider = ({ children }: ChildProp) => {
 
   useEffect(() => {
     setUserId(selectedUser?.id || 0);
-    setOwnerName(selectedUser?.owner_name || "");
+    setFirstName(selectedUser?.first_name || "");
+    setLastName(selectedUser?.last_name || "");
     setEmail(selectedUser?.email || "");
-    setCardNum(selectedUser?.card_num || "");
-    setCardPin(selectedUser?.card_pin || "");
-    setBalance(selectedUser?.balance || "");
+    setCardNum(String(selectedUser?.useraccount?.card_num) || "");
+    setCardPin(String(selectedUser?.useraccount?.card_pin) || "");
+    setBalance(String(selectedUser?.useraccount?.balance) || "");
+    setMobileNumber(String(selectedUser?.userprofile?.mobile_number) || "");
+    setBirthDate(selectedUser?.userprofile?.birthdate || "");
+    setGender(selectedUser?.userprofile?.gender || 0);
+    setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
+    setAddress(selectedUser?.userprofile?.address || "");
   }, [selectedUser]);
 
   let selectedUserValues = {
     id: userId,
-    owner_name: ownerName,
+    first_name: firstName,
+    last_name: lastName,
+    username: username,
     email: email,
-    card_num: cardNum,
-    card_pin: cardPin,
-    balance: balance,
+    useraccount: {
+      card_num: cardNum,
+      card_pin: cardPin,
+      balance: balance,
+    },
+    userprofile: {
+      mobile_number: mobileNumber,
+      birthdate: birthdate,
+      gender: gender,
+      civil_status: civilStatus,
+      address: address,
+    },
+    last_login: lastLogin,
   };
 
   let adminContextData = {
-    ownerName: ownerName,
-    email: email,
-    cardNum: cardNum,
-    cardPin: cardPin,
-    balance: balance,
-
-    setOwnerName: setOwnerName,
+    setFirstName: setFirstName,
+    setLastName: setLastName,
+    setUsername: setUsername,
     setEmail: setEmail,
     setCardNum: setCardNum,
     setCardPin: setCardPin,
     setBalance: setBalance,
+    setMobileNumber: setMobileNumber,
+    setBirthDate: setBirthDate,
+    setGender: setGender,
+    setCivilStatus: setCivilStatus,
+    setAddress: setAddress,
 
     selectedUserValues: selectedUserValues,
 

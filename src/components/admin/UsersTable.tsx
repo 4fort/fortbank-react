@@ -27,10 +27,10 @@ const UsersTable = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
             <th>Email</th>
-            <th>Card Number</th>
-            <th>Card PIN</th>
             <th>Balance</th>
             <th>Actions</th>
           </tr>
@@ -40,16 +40,16 @@ const UsersTable = () => {
             filteredUsers.map((user: FortbankUser) => (
               <tr key={user.id}>
                 <td data-cell='id'>{user.id}</td>
-                <td data-cell='name'>{user.owner_name}</td>
+                <td data-cell='first_name'>{user.first_name}</td>
+                <td data-cell='last_name'>{user.last_name}</td>
+                <td data-cell='last_name'>{user.username}</td>
                 <td data-cell='email'>{user.email}</td>
-                <td data-cell='card number'>
-                  {String(user.card_num)
-                    ?.match(/.{1,3}/g)
-                    ?.join("-")}
-                </td>
-                <td data-cell='card pin'>{user.card_pin}</td>
                 <td data-cell='balance'>
-                  ₱{parseFloat(user.balance).toLocaleString("en-US")}
+                  {user.useraccount?.balance != null &&
+                    "₱" +
+                      parseFloat(
+                        String(user.useraccount?.balance)
+                      ).toLocaleString("en-US")}
                 </td>
                 <td data-cell='actions'>
                   <span>

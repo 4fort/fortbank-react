@@ -1,21 +1,50 @@
 export class User {
-  owner_name: string;
+  username: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  card_num: number;
-  card_pin: number;
-  balance: number;
+  useraccount: {
+    card_num: number;
+    card_pin: number;
+    balance: number;
+  };
+  userprofile: {
+    mobile_number: number;
+    birthdate: string;
+    gender: number;
+    civil_status: number;
+    address: string;
+  };
 
   constructor(
-    owner_name: string,
+    username: string,
+    first_name: string,
+    last_name: string,
     email: string,
     card_num: number,
     card_pin: number,
-    balance: number
+    balance: number,
+    mobile_number: number,
+    birthdate: string,
+    gender: number,
+    civil_status: number,
+    address: string
   ) {
-    this.owner_name = owner_name;
+    this.username = username;
+    this.first_name = first_name;
+    this.last_name = last_name;
     this.email = email;
-    this.card_num = card_num;
-    this.card_pin = card_pin;
-    this.balance = balance;
+    this.useraccount = {
+      card_num,
+      card_pin,
+      balance,
+    };
+    this.userprofile = {
+      mobile_number,
+      birthdate,
+      gender,
+      civil_status,
+      address,
+    };
   }
 }
