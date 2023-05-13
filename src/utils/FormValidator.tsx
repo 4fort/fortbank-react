@@ -78,11 +78,15 @@ export const balanceValidator: Validate = (e: string) => {
 };
 
 export const mobileNumberValidator: Validate = (e: string) => {
-  if (!e.trim()) {
+  if (!e) {
     return "Mobile number is required";
   }
-  if (!/^[0-9]{11}$/.test(e)) {
-    return "Mobile number must be a 11-digit number";
+  const mobile = String(e);
+  if (!mobile.trim()) {
+    return "Mobile number is required";
+  }
+  if (!/^[0-9]{10}$/.test(mobile)) {
+    return "Mobile number must be a 10-digit number";
   }
   return undefined;
 };
@@ -98,7 +102,7 @@ export const birthdateValidator: Validate = (birthdate: string) => {
   const ageInMs = 1000 * 60 * 60 * 24 * 365.25 * 18;
 
   if (diff < ageInMs) {
-    return "You must be at least 18 years old to register";
+    return "The user must be at least 18 years old to register";
   }
 
   return undefined;
@@ -109,7 +113,7 @@ export const genderValidator: Validate = (gender: string) => {
     return "Gender is required";
   }
 
-  if (gender !== "1" && gender !== "3") {
+  if (gender < "1" || gender > "3") {
     return "Gender must be either Male, Female, or Other";
   }
 

@@ -204,7 +204,7 @@ const Modal = () => {
       String(payload.address)
     );
 
-    console.log(user);
+    console.log(JSON.stringify(user));
 
     if (modalMethod === 0) {
       addUser(user);

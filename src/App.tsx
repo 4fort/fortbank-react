@@ -20,7 +20,7 @@ function App() {
             <Route element={<PrivateRoutes />}>
               <Route path='admin/dashboard' element={<Admin />} />
             </Route>
-            <Route path='admin' element={<AdminLogin />} />
+            <Route path='admin/login' element={<AdminLogin />} />
           </Routes>
         </AdminProvider>
         <Routes>

@@ -33,9 +33,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
   const [lastLogin, setLastLogin] = useState("");
 
   const [modalMethod, setModalMethod] = useState<number>(0);
-  const [selectedUser, setSelectedUser] = useState<FortbankUser | undefined>(
-    undefined
-  );
+  const [selectedUser, setSelectedUser] = useState<FortbankUser | null>(null);
 
   const [isValidated, setIsValidated] = useState(true);
 
@@ -50,7 +48,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
   };
 
   const handleCloseModal = () => {
-    setSelectedUser(undefined);
+    setSelectedUser(null);
 
     setFirstName("");
     setLastName("");
@@ -169,16 +167,32 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setUserId(selectedUser?.id || 0);
     setFirstName(selectedUser?.first_name || "");
     setLastName(selectedUser?.last_name || "");
+    setUsername(selectedUser?.username || "");
     setEmail(selectedUser?.email || "");
-    setCardNum(String(selectedUser?.useraccount?.card_num) || "");
-    setCardPin(String(selectedUser?.useraccount?.card_pin) || "");
-    setBalance(String(selectedUser?.useraccount?.balance) || "");
-    setMobileNumber(String(selectedUser?.userprofile?.mobile_number) || "");
+    setCardNum(selectedUser?.useraccount?.card_num || "");
+    setCardPin(selectedUser?.useraccount?.card_pin || "");
+    setBalance(selectedUser?.useraccount?.balance || "");
+    setMobileNumber(selectedUser?.userprofile?.mobile_number || "");
     setBirthDate(selectedUser?.userprofile?.birthdate || "");
     setGender(selectedUser?.userprofile?.gender || 0);
     setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
     setAddress(selectedUser?.userprofile?.address || "");
   }, [selectedUser]);
+
+  // useEffect(() => {
+  //   setUserId(selectedUser?.id || 0);
+  //   setFirstName(selectedUser?.first_name || "");
+  //   setLastName(selectedUser?.last_name || "");
+  //   setEmail(selectedUser?.email || "");
+  //   setCardNum(String(selectedUser?.useraccount?.card_num) || "");
+  //   setCardPin(String(selectedUser?.useraccount?.card_pin) || "");
+  //   setBalance(String(selectedUser?.useraccount?.balance) || "");
+  //   setMobileNumber(String(selectedUser?.userprofile?.mobile_number) || "");
+  //   setBirthDate(selectedUser?.userprofile?.birthdate || "");
+  //   setGender(selectedUser?.userprofile?.gender || 0);
+  //   setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
+  //   setAddress(selectedUser?.userprofile?.address || "");
+  // }, [selectedUser]);
 
   let selectedUserValues = {
     id: userId,

@@ -73,10 +73,8 @@ export interface AdminContextType {
   modalMethod: number;
   setModalMethod: React.Dispatch<React.SetStateAction<number>>;
 
-  selectedUser: FortbankUser | undefined;
-  setSelectedUser: React.Dispatch<
-    React.SetStateAction<FortbankUser | undefined>
-  >;
+  selectedUser: FortbankUser | null;
+  setSelectedUser: React.Dispatch<React.SetStateAction<FortbankUser | null>>;
 
   dialogRef: React.MutableRefObject<DialogRefInterface | null>;
 
