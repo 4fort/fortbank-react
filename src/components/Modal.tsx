@@ -144,42 +144,42 @@ const Modal = () => {
       civilStatusError ||
       addressError
     ) {
-      if (firstNameError) {
-        console.log(firstNameError);
-      }
-      if (lastNameError) {
-        console.log(lastNameError);
-      }
-      if (usernameError) {
-        console.log(usernameError);
-      }
-      if (emailError) {
-        console.log(emailError);
-      }
-      if (cardNumError) {
-        console.log(cardNumError);
-      }
-      if (cardPinError) {
-        console.log(cardPinError);
-      }
-      if (balanceError) {
-        console.log(balanceError);
-      }
-      if (mobileNumberError) {
-        console.log(mobileNumberError);
-      }
-      if (birthdateError) {
-        console.log(birthdateError);
-      }
-      if (genderError) {
-        console.log(genderError);
-      }
-      if (civilStatusError) {
-        console.log(civilStatusError);
-      }
-      if (addressError) {
-        console.log(addressError);
-      }
+      // if (firstNameError) {
+      //   console.log(firstNameError);
+      // }
+      // if (lastNameError) {
+      //   console.log(lastNameError);
+      // }
+      // if (usernameError) {
+      //   console.log(usernameError);
+      // }
+      // if (emailError) {
+      //   console.log(emailError);
+      // }
+      // if (cardNumError) {
+      //   console.log(cardNumError);
+      // }
+      // if (cardPinError) {
+      //   console.log(cardPinError);
+      // }
+      // if (balanceError) {
+      //   console.log(balanceError);
+      // }
+      // if (mobileNumberError) {
+      //   console.log(mobileNumberError);
+      // }
+      // if (birthdateError) {
+      //   console.log(birthdateError);
+      // }
+      // if (genderError) {
+      //   console.log(genderError);
+      // }
+      // if (civilStatusError) {
+      //   console.log(civilStatusError);
+      // }
+      // if (addressError) {
+      //   console.log(addressError);
+      // }
       setIsValidated(false);
       return;
     }

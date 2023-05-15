@@ -30,22 +30,42 @@ const FormInput = (props: Props) => {
   return (
     <>
       <label htmlFor={labelFor}>{inputLabel}</label>
-      <input
-        id={labelFor}
-        name={labelFor}
-        type={inputType}
-        value={value}
-        onChange={(e) => {
-          setErrorPrompt(validate(String(e.target.value)));
-          onInputChange(e.target.value);
-        }}
-      />
-      {errorPrompt ? (
-        <span className='error'>
-          <TbExclamationCircle />
-          {errorPrompt}
-        </span>
-      ) : null}
+      {labelFor === "card_num" ? (
+        <>
+          <input
+            id={labelFor}
+            name={labelFor}
+            type={inputType}
+            value={value}
+            disabled
+          />
+          {errorPrompt ? (
+            <span className='error'>
+              <TbExclamationCircle />
+              {errorPrompt}
+            </span>
+          ) : null}
+        </>
+      ) : (
+        <>
+          <input
+            id={labelFor}
+            name={labelFor}
+            type={inputType}
+            value={value}
+            onChange={(e) => {
+              setErrorPrompt(validate(String(e.target.value)));
+              onInputChange(e.target.value);
+            }}
+          />
+          {errorPrompt ? (
+            <span className='error'>
+              <TbExclamationCircle />
+              {errorPrompt}
+            </span>
+          ) : null}
+        </>
+      )}
     </>
   );
 };

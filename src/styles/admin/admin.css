@@ -230,6 +230,9 @@ header div.actions .logout {
 .loginWrapper .loginForm input:focus {
   outline: solid 3px var(--secondary-color);
 }
+.loginWrapper .loginForm input:disabled {
+  background: var(--darkmode-primary-color);
+}
 .loginWrapper .loginForm button {
   font-weight: 600;
   border: none;
@@ -283,6 +286,9 @@ header div.actions .logout {
 }
 .adminActions div span input:focus {
   outline: solid 3px var(--secondary-color);
+}
+.adminActions div span input:disabled {
+  background: var(--darkmode-primary-color);
 }
 .adminActions div button {
   font-weight: 600;
@@ -359,7 +365,7 @@ div.tableWrapper table td[data-cell=actions] svg:active {
 dialog {
   margin: auto;
   padding: 1em;
-  width: 90vw;
+  width: 70vw;
   overflow-y: overlay;
   background: var(--darkmode-tertiary-color);
   color: var(--white-color);
@@ -418,11 +424,7 @@ dialog form .firstSection div.nameFields {
   gap: 1vw;
 }
 dialog form .firstSection div.nameFields div {
-  width: 50%;
-}
-dialog form .firstSection div.nameFields input {
-  padding: 0.8rem 0;
-  width: 100%;
+  width: 48.5%;
 }
 dialog form label {
   margin-bottom: 0.2rem;
@@ -445,6 +447,9 @@ dialog form input {
 }
 dialog form input:focus {
   outline: solid 3px var(--secondary-color);
+}
+dialog form input:disabled {
+  background: var(--darkmode-primary-color);
 }
 dialog form input::-webkit-calendar-picker-indicator {
   filter: invert(1);
@@ -469,6 +474,9 @@ dialog form select {
 }
 dialog form select:focus {
   outline: solid 3px var(--secondary-color);
+}
+dialog form select:disabled {
+  background: var(--darkmode-primary-color);
 }
 dialog form select::after {
   content: "▼";

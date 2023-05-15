@@ -153,6 +153,9 @@ header {
   &:focus {
     outline: solid 3px var(--secondary-color);
   }
+  &:disabled {
+    background: var(--darkmode-primary-color);
+  }
 }
 
 @mixin button-style {
@@ -372,7 +375,7 @@ div.tableWrapper {
 dialog {
   margin: auto;
   padding: 1em;
-  width: 90vw;
+  width: 70vw;
   // height: 90vh;
   overflow-y: overlay;
   background: var(--darkmode-tertiary-color);
@@ -433,11 +436,7 @@ dialog {
           height: 100%;
           gap: 1vw;
           & div {
-            width: 50%;
-          }
-          input {
-            padding: 0.8rem 0;
-            width: 100%;
+            width: 48.5%;
           }
         }
       }

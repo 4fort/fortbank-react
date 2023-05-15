@@ -31,6 +31,27 @@ export const AdminProvider = ({ children }: ChildProp) => {
   const [civilStatus, setCivilStatus] = useState(0);
   const [address, setAddress] = useState("");
   const [lastLogin, setLastLogin] = useState("");
+  const generateCardNumber = (userId: string): string => {
+    let currentTime = new Date();
+    let currentDayOfYear =
+      (Date.UTC(
+        currentTime.getFullYear(),
+        currentTime.getMonth(),
+        currentTime.getDate()
+      ) -
+        Date.UTC(currentTime.getFullYear(), 0, 0)) /
+      24 /
+      60 /
+      60 /
+      1000;
+    let secondThreeDigits = ("00" + currentDayOfYear).slice(-3);
+
+    let thirdThreeDigits = ("00" + (parseInt(userId) % 1000)).slice(-3);
+
+    let cardNumber = "456" + secondThreeDigits + thirdThreeDigits;
+
+    return cardNumber;
+  };
 
   const [modalMethod, setModalMethod] = useState<number>(0);
   const [selectedUser, setSelectedUser] = useState<FortbankUser | null>(null);
@@ -50,6 +71,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
   const handleCloseModal = () => {
     setSelectedUser(null);
 
+    setUserId(0);
     setFirstName("");
     setLastName("");
     setUsername("");
@@ -164,12 +186,15 @@ export const AdminProvider = ({ children }: ChildProp) => {
   const filteredUsers: FortbankUser[] = getFilteredUsers(query, fortbankUsers);
 
   useEffect(() => {
-    setUserId(selectedUser?.id || 0);
+    setUserId(selectedUser?.id || fortbankUsers.slice(-1)[0]?.id);
     setFirstName(selectedUser?.first_name || "");
     setLastName(selectedUser?.last_name || "");
     setUsername(selectedUser?.username || "");
     setEmail(selectedUser?.email || "");
-    setCardNum(selectedUser?.useraccount?.card_num || "");
+    setCardNum(
+      selectedUser?.useraccount?.card_num ||
+        generateCardNumber(String(userId + 1))
+    );
     setCardPin(selectedUser?.useraccount?.card_pin || "");
     setBalance(selectedUser?.useraccount?.balance || "");
     setMobileNumber(selectedUser?.userprofile?.mobile_number || "");
@@ -177,7 +202,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setGender(selectedUser?.userprofile?.gender || 0);
     setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
     setAddress(selectedUser?.userprofile?.address || "");
-  }, [selectedUser]);
+  }, [selectedUser, userId]);
 
   // useEffect(() => {
   //   setUserId(selectedUser?.id || 0);

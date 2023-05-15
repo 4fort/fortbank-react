@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: Props) => {
   };
 
   let updateToken = async () => {
-    let response = await fetch("api/token/refresh/", {
+    let response = await fetch(`${baseUrl}api/token/refresh/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +91,6 @@ export const AuthProvider = ({ children }: Props) => {
       setUnauthorized(false);
     } else {
       setUnauthorized(true);
-
       logoutAdmin();
     }
   };
