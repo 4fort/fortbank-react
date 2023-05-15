@@ -37,7 +37,8 @@ const FormInput = (props: Props) => {
             name={labelFor}
             type={inputType}
             value={value}
-            disabled
+            readOnly
+            className='disabled'
           />
           {errorPrompt ? (
             <span className='error'>

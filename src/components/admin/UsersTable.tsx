@@ -31,6 +31,7 @@ const UsersTable = () => {
             <th>Last Name</th>
             <th>Username</th>
             <th>Email</th>
+            <th>Card Number</th>
             <th>Balance</th>
             <th>Actions</th>
           </tr>
@@ -44,6 +45,7 @@ const UsersTable = () => {
                 <td data-cell='last_name'>{user.last_name}</td>
                 <td data-cell='last_name'>{user.username}</td>
                 <td data-cell='email'>{user.email}</td>
+                <td data-cell='card_num'>{user.useraccount.card_num}</td>
                 <td data-cell='balance'>
                   {user.useraccount?.balance != null &&
                     "₱" +

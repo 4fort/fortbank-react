@@ -153,8 +153,14 @@ header {
   &:focus {
     outline: solid 3px var(--secondary-color);
   }
-  &:disabled {
-    background: var(--darkmode-primary-color);
+  &.disabled {
+    pointer-events: none;
+    &:read-only {
+      background: var(--darkmode-primary-color);
+    }
+    &:focus {
+      outline: solid 3px var(--darkmode-secondary-color);
+    }
   }
 }
 

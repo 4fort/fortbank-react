@@ -202,7 +202,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setGender(selectedUser?.userprofile?.gender || 0);
     setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
     setAddress(selectedUser?.userprofile?.address || "");
-  }, [selectedUser, userId]);
+  }, [selectedUser, userId, fortbankUsers]);
 
   // useEffect(() => {
   //   setUserId(selectedUser?.id || 0);

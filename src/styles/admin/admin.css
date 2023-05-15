@@ -230,8 +230,17 @@ header div.actions .logout {
 .loginWrapper .loginForm input:focus {
   outline: solid 3px var(--secondary-color);
 }
-.loginWrapper .loginForm input:disabled {
+.loginWrapper .loginForm input.disabled {
+  pointer-events: none;
+}
+.loginWrapper .loginForm input.disabled:-moz-read-only {
   background: var(--darkmode-primary-color);
+}
+.loginWrapper .loginForm input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.loginWrapper .loginForm input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
 }
 .loginWrapper .loginForm button {
   font-weight: 600;
@@ -287,8 +296,17 @@ header div.actions .logout {
 .adminActions div span input:focus {
   outline: solid 3px var(--secondary-color);
 }
-.adminActions div span input:disabled {
+.adminActions div span input.disabled {
+  pointer-events: none;
+}
+.adminActions div span input.disabled:-moz-read-only {
   background: var(--darkmode-primary-color);
+}
+.adminActions div span input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.adminActions div span input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
 }
 .adminActions div button {
   font-weight: 600;
@@ -448,8 +466,17 @@ dialog form input {
 dialog form input:focus {
   outline: solid 3px var(--secondary-color);
 }
-dialog form input:disabled {
+dialog form input.disabled {
+  pointer-events: none;
+}
+dialog form input.disabled:-moz-read-only {
   background: var(--darkmode-primary-color);
+}
+dialog form input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+dialog form input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
 }
 dialog form input::-webkit-calendar-picker-indicator {
   filter: invert(1);
@@ -475,8 +502,17 @@ dialog form select {
 dialog form select:focus {
   outline: solid 3px var(--secondary-color);
 }
-dialog form select:disabled {
+dialog form select.disabled {
+  pointer-events: none;
+}
+dialog form select.disabled:-moz-read-only {
   background: var(--darkmode-primary-color);
+}
+dialog form select.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+dialog form select.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
 }
 dialog form select::after {
   content: "▼";
