@@ -115,6 +115,8 @@ header {
     color: var(--quaternary-color);
     span {
       color: var(--white-color);
+    }
+    &.admin span {
       &::after {
         content: "admin";
         font-size: 0.6rem;

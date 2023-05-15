@@ -25,16 +25,21 @@ export interface FortbankUser {
   last_login: string;
 }
 
+export interface UserToken {
+  id: number;
+  username: string;
+  is_superuser: boolean;
+  is_active: boolean;
+}
+
 export interface AuthContextType {
   baseUrl: string;
-  user: {
-    username: string | null;
-  } | null;
+  user: UserToken | null;
   authTokens: {
     access: string | null;
     refresh: string | null;
   } | null;
-  loginAdmin: (e: React.FormEvent<HTMLFormElement>) => void;
+  login: (e: React.FormEvent<HTMLFormElement>) => void;
   logoutAdmin: () => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;

@@ -6,15 +6,15 @@ import { AuthContextType } from "../../Interfaces/interfaces";
 
 const AdminLogin = () => {
   const context = useContext<AuthContextType | null>(AuthContext) ?? {
-    loginAdmin: () => {},
+    login: () => {},
     unauthorized: true,
     setUnauthorized: () => {},
   };
-  let { loginAdmin, unauthorized } = context;
+  let { login: login, unauthorized } = context;
 
   return (
     <div className='loginWrapper'>
-      <form onSubmit={loginAdmin} className='loginForm'>
+      <form onSubmit={login} className='loginForm'>
         <span>Login Admin</span>
         {unauthorized ? (
           <span className='error'>

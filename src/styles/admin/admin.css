@@ -104,7 +104,7 @@ header div.logo {
 header div.logo span {
   color: var(--white-color);
 }
-header div.logo span::after {
+header div.logo.admin span::after {
   content: "admin";
   font-size: 0.6rem;
   vertical-align: super;

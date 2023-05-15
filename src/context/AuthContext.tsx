@@ -30,9 +30,9 @@ export const AuthProvider = ({ children }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [unauthorized, setUnauthorized] = useState<boolean>(false);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
-  let loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
+  let login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: Props) => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      history("admin/dashboard");
+      navigate("admin/dashboard");
       setUnauthorized(false);
 
       setLoading(false);
@@ -62,13 +62,13 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  let logoutAdmin = () => {
+  let logout = () => {
     setLoading(true);
 
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
-    history("admin/login");
+    navigate("admin");
 
     setLoading(false);
   };
@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }: Props) => {
       setUnauthorized(false);
     } else {
       setUnauthorized(true);
-      logoutAdmin();
+      logout();
     }
   };
 
@@ -99,8 +99,8 @@ export const AuthProvider = ({ children }: Props) => {
     baseUrl: baseUrl,
     user: user,
     authTokens: authTokens,
-    loginAdmin: loginAdmin,
-    logoutAdmin: logoutAdmin,
+    login: login,
+    logoutAdmin: logout,
     loading: loading,
     setLoading: setLoading,
     unauthorized: unauthorized,

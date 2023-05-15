@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../context/AuthContext";
-import { AuthContextType } from "../../Interfaces/interfaces";
+import AuthContext from "../context/AuthContext";
+import { AuthContextType } from "../Interfaces/interfaces";
 
 const AdminHeader = () => {
   let { user, logoutAdmin } = useContext<AuthContextType | null>(
@@ -10,7 +10,7 @@ const AdminHeader = () => {
 
   return (
     <header>
-      <div className='logo admin'>
+      <div className='logo'>
         FORT<span>BANK</span>
       </div>
       <div className='actions'>
