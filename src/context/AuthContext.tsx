@@ -32,11 +32,11 @@ export const AuthProvider = ({ children }: Props) => {
 
   const navigate = useNavigate();
 
-  let login = async (e: React.FormEvent<HTMLFormElement>) => {
+  let loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    let response = await fetch("/api/token/", {
+    let response = await fetch(`${baseUrl}/api/token/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,13 +62,54 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  let logout = () => {
+  let logoutAdmin = () => {
     setLoading(true);
 
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
     navigate("admin");
+
+    setLoading(false);
+  };
+
+  let login = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    let response = await fetch(`${baseUrl}/api/token/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: e.currentTarget.username.value,
+        password: e.currentTarget.password.value,
+      }),
+    });
+    let data = await response.json();
+    if (response.status === 200) {
+      setAuthTokens(data);
+      setUser(jwt_decode(data.access));
+      localStorage.setItem("authTokens", JSON.stringify(data));
+      navigate("/");
+      setUnauthorized(false);
+
+      setLoading(false);
+    } else {
+      setUnauthorized(true);
+
+      setLoading(false);
+    }
+  };
+
+  let logout = () => {
+    setLoading(true);
+
+    setAuthTokens(null);
+    setUser(null);
+    localStorage.removeItem("authTokens");
+    navigate("login");
 
     setLoading(false);
   };
@@ -91,7 +132,7 @@ export const AuthProvider = ({ children }: Props) => {
       setUnauthorized(false);
     } else {
       setUnauthorized(true);
-      logout();
+      logoutAdmin();
     }
   };
 
@@ -99,8 +140,10 @@ export const AuthProvider = ({ children }: Props) => {
     baseUrl: baseUrl,
     user: user,
     authTokens: authTokens,
+    loginAdmin: loginAdmin,
+    logoutAdmin: logoutAdmin,
     login: login,
-    logoutAdmin: logout,
+    logout: logout,
     loading: loading,
     setLoading: setLoading,
     unauthorized: unauthorized,

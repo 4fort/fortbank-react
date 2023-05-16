@@ -39,8 +39,10 @@ export interface AuthContextType {
     access: string | null;
     refresh: string | null;
   } | null;
-  login: (e: React.FormEvent<HTMLFormElement>) => void;
+  loginAdmin: (e: React.FormEvent<HTMLFormElement>) => void;
   logoutAdmin: () => void;
+  login: (e: React.FormEvent<HTMLFormElement>) => void;
+  logout: () => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   unauthorized: boolean;
@@ -113,4 +115,6 @@ export type ChildProp = {
   children: React.ReactNode;
 };
 
-export interface ClientContextType {}
+export interface ClientContextType {
+  userLoggedIn: FortbankUser;
+}

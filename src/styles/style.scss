@@ -1,0 +1,91 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--darkmode-quinary-color);
+  color: rgba(255, 255, 255, 0.87);
+
+  --primary-color: #4c3a51;
+  --secondary-color: #774360;
+  --tertiary-color: #b25068;
+  --quaternary-color: #e7ab79;
+  --darkmode-primary-color: #303030;
+  --darkmode-secondary-color: #2b2b2b;
+  --darkmode-tertiary-color: #252525;
+  --darkmode-quarternary-color: #1f1f1f;
+  --darkmode-quinary-color: #1b1c1e;
+  --white-color: #fefefe;
+  --light_white-color: #303030;
+
+  --icon-opacity: 0.5;
+}
+
+.atm_card {
+  width: 350px;
+  height: 200px;
+  background: rgb(178, 80, 104);
+  background: linear-gradient(
+    45deg,
+    rgba(178, 80, 104, 1) 0%,
+    rgba(119, 67, 96, 1) 100%
+  );
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0px 6px 8px #00000011;
+  transition: 0.8s;
+
+  .logo {
+    color: var(--white-color);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .qrcode {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 65px;
+    width: 65px;
+    border-radius: var(--radius-primary);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .atm_cardNum {
+    position: absolute;
+    top: 95px;
+    left: 20px;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  @mixin atm_cardDetails {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    font-size: 0.7rem;
+    opacity: 0.5;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+
+  .atm_cardHolder {
+    @include atm_cardDetails();
+
+    left: 20px;
+    bottom: 30px;
+  }
+
+  .atm_cardId {
+    @include atm_cardDetails();
+
+    left: 270px;
+    bottom: 30px;
+
+    span {
+      cursor: pointer;
+    }
+  }
+}

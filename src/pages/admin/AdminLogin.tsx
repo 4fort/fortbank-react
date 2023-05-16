@@ -6,11 +6,11 @@ import { AuthContextType } from "../../Interfaces/interfaces";
 
 const AdminLogin = () => {
   const context = useContext<AuthContextType | null>(AuthContext) ?? {
-    login: () => {},
+    loginAdmin: () => {},
     unauthorized: true,
     setUnauthorized: () => {},
   };
-  let { login: login, unauthorized } = context;
+  let { loginAdmin: login, unauthorized } = context;
 
   return (
     <div className='loginWrapper'>
