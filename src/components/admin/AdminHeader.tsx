@@ -9,7 +9,7 @@ const AdminHeader = () => {
   ) ?? { user: { username: "" } };
 
   return (
-    <header>
+    <header className='admin'>
       <div className='logo admin'>
         FORT<span>BANK</span>
       </div>

@@ -9,9 +9,16 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminHeader from "./components/admin/AdminHeader";
 import Header from "./components/Header";
 import Home from "./pages/home/Home";
+import Home2 from "./pages/home/Home2";
 import Login from "./pages/Login";
 import { ClientProvider } from "./context/ClientContext";
 import Unauthorized from "./pages/Unauthorized";
+import SidePanel from "./components/SidePanel";
+import Payment from "./pages/main/Payment";
+import Transactions from "./pages/main/Transactions";
+import Card from "./pages/main/Card";
+import Profile from "./pages/main/Profile";
+import Settings from "./pages/main/Settings";
 
 function App() {
   return (
@@ -38,17 +45,67 @@ function App() {
               </AdminProvider>
             }
           />
+
+          <Route element={<PrivateRoutes />}>
+            <Route
+              path='/payment'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <Payment />
+                </ClientProvider>
+              }
+            ></Route>
+          </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route
+              path='/transactions'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <Transactions />
+                </ClientProvider>
+              }
+            ></Route>
+          </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route
+              path='/card'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <Card />
+                </ClientProvider>
+              }
+            ></Route>
+          </Route>
+
           <Route element={<PrivateRoutes />}>
             <Route
               path='/'
               element={
                 <ClientProvider>
-                  <Header />
-                  <Home />
+                  <SidePanel />
+                  <Profile />
                 </ClientProvider>
               }
             ></Route>
           </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route
+              path='/settings'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <Settings />
+                </ClientProvider>
+              }
+            ></Route>
+          </Route>
+
           <Route
             path='login'
             element={

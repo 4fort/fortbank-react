@@ -115,7 +115,7 @@ export const AuthProvider = ({ children }: Props) => {
   };
 
   let updateToken = async () => {
-    let response = await fetch(`${baseUrl}api/token/refresh/`, {
+    let response = await fetch(`${baseUrl}/api/token/refresh/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -32,15 +32,6 @@ body {
   height: 100%;
 }
 
-.App {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: var(--darkmode-quinary-color);
@@ -86,19 +77,22 @@ body {
 }
 header {
   display: flex;
-  background: linear-gradient(180deg, var(--light_white-color) 0%, var(--darkmode-tertiary-color) 100%);
+  background: var(--darkmode-tertiary-color);
   height: 60px;
   min-height: 60px;
   max-height: 60px;
-  width: 90%;
   margin-top: 10px;
   border-radius: 10px;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.06);
+}
+header.admin {
+  width: 90%;
 }
 header div.logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 3rem;
+  margin-left: 2rem;
   font-weight: 700;
   font-size: 1.4rem;
   color: var(--quaternary-color);
@@ -117,7 +111,10 @@ header div.actions {
   justify-content: end;
   align-items: center;
   width: 100%;
-  margin-right: 3rem;
+  margin-right: 2rem;
+}
+header div.actions * {
+  transition: 0.2s;
 }
 header div.actions *:not(b, .logout) {
   padding-right: 2rem;
@@ -127,7 +124,12 @@ header div.actions a {
   text-decoration: none;
 }
 header div.actions .logout {
+  padding: 0.5rem;
+  border-radius: 5px;
   cursor: pointer;
+}
+header div.actions .logout:hover {
+  background: var(--darkmode-primary-color);
 }
 
 .loadingScreen {

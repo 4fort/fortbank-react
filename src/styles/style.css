@@ -1,7 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&display=swap");
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: var(--darkmode-quinary-color);
-  color: rgba(255, 255, 255, 0.87);
+  color: rgb(255, 255, 255);
   --primary-color: #4c3a51;
   --secondary-color: #774360;
   --tertiary-color: #b25068;
@@ -16,31 +17,65 @@
   --icon-opacity: 0.5;
 }
 
+* {
+  font-family: Inter;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+header {
+  width: 90%;
+}
+
 .atm_card {
   width: 350px;
   height: 200px;
+  position: relative;
   background: rgb(178, 80, 104);
   background: linear-gradient(45deg, rgb(178, 80, 104) 0%, rgb(119, 67, 96) 100%);
-  position: relative;
   border-radius: 15px;
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
   transition: 0.8s;
+  overflow: hidden;
+}
+.atm_card .backdrop {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: -40px;
+  top: -50px;
+  opacity: 0.2;
+  transform: rotate(-70deg);
+}
+.atm_card .backdrop svg {
+  font-size: 20rem;
+  stroke-width: 1.5;
 }
 .atm_card .logo {
-  color: var(--white-color);
   position: absolute;
   top: 20px;
   right: 20px;
+  color: var(--quaternary-color);
+  font-weight: 700;
+}
+.atm_card .logo span {
+  color: var(--white-color);
 }
 .atm_card .qrcode {
   position: absolute;
   top: 20px;
   left: 20px;
-  height: 65px;
-  width: 65px;
-  border-radius: var(--radius-primary);
+  height: 64px;
+  width: 64px;
+  background: var(--white-color);
+  border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
+}
+.atm_card .qrcode svg {
+  transform: scale(0.8);
 }
 .atm_card .atm_cardNum {
   position: absolute;
@@ -48,6 +83,9 @@
   left: 20px;
   font-size: 1.4rem;
   font-weight: 700;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
 }
 .atm_card .atm_cardHolder {
   display: flex;
@@ -69,7 +107,7 @@
   font-size: 0.7rem;
   opacity: 0.5;
   left: 270px;
-  bottom: 30px;
+  bottom: 35px;
 }
 .atm_card .atm_cardId span {
   font-size: 1.2rem;
@@ -77,4 +115,219 @@
 }
 .atm_card .atm_cardId span {
   cursor: pointer;
+}
+.atm_card .atm_cardId #atm_cardId {
+  height: 20px;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 80%;
+  gap: 8px;
+  padding: 0.8rem;
+}
+
+.detailsContainer {
+  display: flex;
+  width: 100%;
+  border-radius: 15px;
+}
+.detailsContainer .balance_container {
+  margin: auto;
+  margin-left: 5rem;
+}
+.detailsContainer .balance_container span {
+  font-size: 1.2rem;
+}
+.detailsContainer .balance_container div {
+  font-weight: 900;
+  font-size: 4rem;
+}
+
+.bottomContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.bottomContainer .transactions {
+  width: 75%;
+}
+.bottomContainer .actions {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  gap: 0.5rem;
+}
+.bottomContainer .actions .sub_actions {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: inherit;
+  width: auto;
+  padding: 1rem;
+  background: var(--darkmode-tertiary-color);
+  border-radius: 10px;
+}
+.bottomContainer .actions .sub_actions div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  background: var(--darkmode-primary-color);
+  border-radius: 25px;
+  transition: 0.1s;
+  cursor: pointer;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.bottomContainer .actions .sub_actions div svg {
+  padding-right: 5px;
+}
+.bottomContainer .actions .sub_actions div:hover {
+  background: var(--darkmode-secondary-color);
+}
+.bottomContainer .actions .sub_actions div:active {
+  color: var(--tertiary-color);
+  transform: scale(0.95);
+}
+.bottomContainer .actions .main_actions {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-content: space-between;
+  gap: inherit;
+}
+.bottomContainer .actions .main_actions div {
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  background: linear-gradient(80deg, var(--tertiary-color), var(--secondary-color) 50%, var(--primary-color)) var(--x, 0)/200%;
+  transition: 0.2s;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.bottomContainer .actions .main_actions div:hover {
+  --x: 100%;
+}
+.bottomContainer .actions .main_actions div:active {
+  transform: scale(0.95);
+}
+.bottomContainer .actions .main_actions div span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -40px;
+  left: -20px;
+  opacity: 0.2;
+  transition: 0.5s;
+}
+.bottomContainer .actions .main_actions div span svg {
+  transform: rotate(-10deg);
+  font-size: 10rem;
+  transition: inherit;
+}
+.bottomContainer .actions .main_actions div:hover span {
+  left: 10%;
+}
+.bottomContainer .actions .main_actions div:hover span svg {
+  transform: rotate(10deg);
+}
+
+.App {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  max-width: 80rem;
+  gap: 0.5rem;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-width: 80rem;
+  gap: 0.5rem;
+}
+
+.side-panel {
+  height: 90%;
+  padding: 1rem;
+  background: var(--darkmode-tertiary-color);
+  border-radius: 10px;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.side-panel .user {
+  display: flex;
+  flex-direction: column;
+}
+.side-panel .user span:first-child {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.side-panel .user span:nth-of-type(2n) {
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+.side-panel .balance {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.side-panel .balance span {
+  font-weight: 500;
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+.side-panel .actions {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.side-panel .actions a {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 10px;
+  gap: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+.side-panel .actions a:hover {
+  background: var(--darkmode-secondary-color);
+}
+.side-panel .actions a.active {
+  background: var(--darkmode-primary-color);
+  color: var(--tertiary-color);
+}
+.side-panel .logout {
+  padding: inherit;
+  border-radius: inherit;
+  cursor: pointer;
+}
+.side-panel .logout:hover {
+  background: var(--darkmode-primary-color);
+}
+
+.main-panel {
+  height: 90%;
+  padding: 1rem;
+  background: var(--darkmode-tertiary-color);
+  border-radius: 10px;
+  width: 80%;
 }/*# sourceMappingURL=style.css.map */
