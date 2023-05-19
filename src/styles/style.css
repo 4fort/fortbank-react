@@ -291,7 +291,7 @@ header {
 .side-panel .balance {
   display: flex;
   flex-direction: column;
-  font-size: 2rem;
+  font-size: 2cqi;
   font-weight: 700;
 }
 .side-panel .balance span {
@@ -345,6 +345,38 @@ header {
 }
 .main-panel.no-card-section {
   width: 82.8%;
+}
+.main-panel h1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-panel h1 a {
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  color: var(--tertiary-color);
+  padding: 0.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.main-panel h1 a * {
+  transition: 0.2s;
+}
+.main-panel h1 a:hover {
+  background: var(--darkmode-secondary-color);
+}
+.main-panel h1 a:hover svg {
+  padding-right: 0.4rem;
+}
+.main-panel h1 a:active {
+  transform: scale(0.95);
+}
+.main-panel h1 a svg {
+  font-size: 1.1rem;
+  padding-right: 0.2rem;
+  stroke-width: 3px;
 }
 
 .cards-panel {
@@ -421,7 +453,7 @@ header {
   width: 100%;
   gap: 1rem;
 }
-.transaction-actions div {
+.transaction-actions a {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -431,20 +463,29 @@ header {
   border-radius: 15px;
   color: var(--secondary-color);
   transition: 0.2s;
+  text-decoration: none;
 }
-.transaction-actions div:hover {
+.transaction-actions a:hover {
   color: var(--tertiary-color);
 }
-.transaction-actions div:active {
+.transaction-actions a:active {
   transform: scale(0.95);
 }
-.transaction-actions div svg {
+.transaction-actions a svg {
   font-size: 8rem;
   stroke-width: 1.5px;
 }
-.transaction-actions div p {
+.transaction-actions a p {
   color: #fefefe;
-  padding-top: 2rem;
+  padding: 2.5rem 0.5rem 1rem 0.5rem;
   font-size: 0.9rem;
   opacity: 0.5;
+}
+
+.reference-code-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=style.css.map */

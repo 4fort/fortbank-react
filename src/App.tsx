@@ -8,13 +8,14 @@ import Admin from "./pages/admin/Admin";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminHeader from "./components/admin/AdminHeader";
 import Header from "./components/Header";
-import Home from "./pages/home/Home";
-import Home2 from "./pages/home/Home2";
 import Login from "./pages/Login";
 import { ClientProvider } from "./context/ClientContext";
 import Unauthorized from "./pages/Unauthorized";
 import SidePanel from "./components/SidePanel";
-import Payment from "./pages/main/Payment";
+
+import Payment from "./pages/main/Payment/Payment";
+import Pay from "./pages/main/Payment/Pay";
+
 import Transactions from "./pages/main/Transactions";
 import Card from "./pages/main/Card";
 import Profile from "./pages/main/Profile";
@@ -57,7 +58,17 @@ function App() {
                   <CardsPanel />
                 </ClientProvider>
               }
-            ></Route>
+            />
+            <Route
+              path='/payment/pay'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <Pay />
+                  <CardsPanel />
+                </ClientProvider>
+              }
+            />
 
             <Route
               path='/transactions'
@@ -68,7 +79,7 @@ function App() {
                   <CardsPanel />
                 </ClientProvider>
               }
-            ></Route>
+            />
 
             <Route
               path='/card'
@@ -78,7 +89,7 @@ function App() {
                   <Card />
                 </ClientProvider>
               }
-            ></Route>
+            />
 
             <Route
               path='/'
@@ -88,7 +99,7 @@ function App() {
                   <Profile />
                 </ClientProvider>
               }
-            ></Route>
+            />
 
             <Route
               path='/settings'
@@ -98,7 +109,7 @@ function App() {
                   <Settings />
                 </ClientProvider>
               }
-            ></Route>
+            />
           </Route>
 
           <Route

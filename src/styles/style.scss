@@ -317,7 +317,7 @@ header {
   .balance {
     display: flex;
     flex-direction: column;
-    font-size: 2rem;
+    font-size: 2cqi;
     font-weight: 700;
     span {
       font-weight: 500;
@@ -368,6 +368,40 @@ header {
   width: 55%;
   &.no-card-section {
     width: 82.8%;
+  }
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    a {
+      display: flex;
+      align-items: center;
+      opacity: 0.8;
+      font-size: 0.9rem;
+      color: var(--tertiary-color);
+      padding: 0.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      * {
+        transition: 0.2s;
+      }
+      &:hover {
+        background: var(--darkmode-secondary-color);
+        & {
+          svg {
+            padding-right: 0.4rem;
+          }
+        }
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+      svg {
+        font-size: 1.1rem;
+        padding-right: 0.2rem;
+        stroke-width: 3px;
+      }
+    }
   }
 }
 
@@ -446,7 +480,7 @@ header {
   width: 100%;
   gap: 1rem;
 
-  div {
+  a {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -456,6 +490,7 @@ header {
     border-radius: 15px;
     color: var(--secondary-color);
     transition: 0.2s;
+    text-decoration: none;
     &:hover {
       color: var(--tertiary-color);
     }
@@ -469,9 +504,17 @@ header {
     }
     p {
       color: #fefefe;
-      padding-top: 2rem;
+      padding: 2.5rem 0.5rem 1rem 0.5rem;
       font-size: 0.9rem;
       opacity: 0.5;
     }
   }
+}
+
+.reference-code-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
