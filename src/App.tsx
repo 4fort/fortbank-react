@@ -19,6 +19,7 @@ import Transactions from "./pages/main/Transactions";
 import Card from "./pages/main/Card";
 import Profile from "./pages/main/Profile";
 import Settings from "./pages/main/Settings";
+import CardsPanel from "./components/CardsPanel";
 
 function App() {
   return (
@@ -53,24 +54,20 @@ function App() {
                 <ClientProvider>
                   <SidePanel />
                   <Payment />
+                  <CardsPanel />
                 </ClientProvider>
               }
             ></Route>
-          </Route>
-
-          <Route element={<PrivateRoutes />}>
             <Route
               path='/transactions'
               element={
                 <ClientProvider>
                   <SidePanel />
                   <Transactions />
+                  <CardsPanel />
                 </ClientProvider>
               }
             ></Route>
-          </Route>
-
-          <Route element={<PrivateRoutes />}>
             <Route
               path='/card'
               element={
@@ -81,6 +78,8 @@ function App() {
               }
             ></Route>
           </Route>
+
+          <Route element={<PrivateRoutes />}></Route>
 
           <Route element={<PrivateRoutes />}>
             <Route

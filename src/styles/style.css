@@ -29,14 +29,15 @@ header {
 }
 
 .atm_card {
-  width: 350px;
-  height: 200px;
   position: relative;
+  width: 100%;
+  height: 200px;
   background: rgb(178, 80, 104);
   background: linear-gradient(45deg, rgb(178, 80, 104) 0%, rgb(119, 67, 96) 100%);
   border-radius: 15px;
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
-  transition: 0.8s;
+  transition: 0.4s;
+  z-index: 11;
   overflow: hidden;
 }
 .atm_card .backdrop {
@@ -59,6 +60,7 @@ header {
   right: 20px;
   color: var(--quaternary-color);
   font-weight: 700;
+  font-size: inherit;
 }
 .atm_card .logo span {
   color: var(--white-color);
@@ -246,7 +248,7 @@ header {
   margin: auto;
   height: 100%;
   width: 100%;
-  max-width: 80rem;
+  max-width: 98%;
   gap: 0.5rem;
 }
 
@@ -270,14 +272,15 @@ header {
   justify-content: space-between;
 }
 .side-panel .user {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
-.side-panel .user span:first-child {
+.side-panel .user span:first-child:not(.logo span) {
   font-weight: 700;
   font-size: 1.2rem;
 }
-.side-panel .user span:nth-of-type(2n) {
+.side-panel .user span:nth-of-type(2n):not(.logo span) {
   opacity: 0.5;
   font-size: 0.9rem;
 }
@@ -308,9 +311,13 @@ header {
   gap: inherit;
   text-decoration: none;
   color: inherit;
+  transition: 0.1s;
 }
 .side-panel .actions a:hover {
   background: var(--darkmode-secondary-color);
+}
+.side-panel .actions a:active {
+  transform: scale(0.95);
 }
 .side-panel .actions a.active {
   background: var(--darkmode-primary-color);
@@ -330,5 +337,65 @@ header {
   padding: 1rem;
   background: var(--darkmode-tertiary-color);
   border-radius: 10px;
-  width: 80%;
+  width: 55%;
+}
+.main-panel.no-card-section {
+  width: 82.8%;
+}
+
+.cards-panel {
+  height: 90%;
+  padding: 1rem;
+  background: var(--darkmode-tertiary-color);
+  border-radius: 10px;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cards-panel .cards {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: overlay;
+  gap: 1rem;
+}
+.cards-panel .cards h5 {
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: -10px;
+  opacity: 0.5;
+}
+.cards-panel .cards a {
+  padding: 1rem;
+  color: inherit;
+  font-size: 0.9rem;
+  text-decoration: none;
+  text-align: center;
+  width: 30%;
+  border-radius: 10px;
+  transition: 0.1s;
+}
+.cards-panel .cards a:hover {
+  background: var(--darkmode-secondary-color);
+}
+.cards-panel .cards a:active {
+  transform: scale(0.95);
+}
+.cards-panel p {
+  font-size: 0.8rem;
+  opacity: 0.3;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cards-panel p svg {
+  padding-right: 0.5rem;
+}
+.cards-panel p a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
 }/*# sourceMappingURL=style.css.map */

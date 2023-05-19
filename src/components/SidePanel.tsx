@@ -50,13 +50,12 @@ const SidePanel = () => {
           <span>@{userLoggedIn?.username}</span>
         </div>
         <div className='balance'>
-          <span>Balance</span>P{userLoggedIn?.useraccount?.balance}
+          <span>Wallet Balance</span>₱
+          {parseFloat(userLoggedIn?.useraccount?.balance).toLocaleString(
+            "en-US"
+          )}
         </div>
         <div className='actions'>
-          <NavLink to='/' className='profile'>
-            <TbUserCircle />
-            Profile
-          </NavLink>
           <NavLink to='/payment' className='payment'>
             <TbCreditCard />
             Payment
@@ -68,6 +67,10 @@ const SidePanel = () => {
           <NavLink to='/card' className='card'>
             <TbCreditCard />
             Card
+          </NavLink>
+          <NavLink to='/' className='profile'>
+            <TbUserCircle />
+            Profile
           </NavLink>
           <NavLink to='/settings' className='settings'>
             <TbSettings />
