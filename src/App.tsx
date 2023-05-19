@@ -58,6 +58,7 @@ function App() {
                 </ClientProvider>
               }
             ></Route>
+
             <Route
               path='/transactions'
               element={
@@ -68,6 +69,7 @@ function App() {
                 </ClientProvider>
               }
             ></Route>
+
             <Route
               path='/card'
               element={
@@ -77,11 +79,7 @@ function App() {
                 </ClientProvider>
               }
             ></Route>
-          </Route>
 
-          <Route element={<PrivateRoutes />}></Route>
-
-          <Route element={<PrivateRoutes />}>
             <Route
               path='/'
               element={
@@ -91,9 +89,7 @@ function App() {
                 </ClientProvider>
               }
             ></Route>
-          </Route>
 
-          <Route element={<PrivateRoutes />}>
             <Route
               path='/settings'
               element={
