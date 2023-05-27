@@ -1,9 +1,14 @@
 import { User } from "../Models/UserModel";
 
+export interface UserWallet {
+  balance: string;
+}
+
 export interface UserAccount {
+  brand: string;
   card_num: string;
   card_pin: string;
-  balance: string;
+  date_added: string;
 }
 
 export interface UserProfile {
@@ -14,16 +19,28 @@ export interface UserProfile {
   address: string;
 }
 
+export interface TransactionTicket {
+  reference_id: number;
+  user: number;
+}
+
 export interface FortbankUser {
   id: number;
   username: string;
   first_name: string;
   last_name: string;
   email: string;
-  useraccount: UserAccount;
+  userwallet: UserWallet;
+  useraccount: [UserAccount];
   userprofile: UserProfile;
+  transactionticket_set: [TransactionTicket];
   last_login: string;
+
+  is_active: boolean | undefined;
+  is_superuser: boolean | undefined;
 }
+interface ModifiedFortbankUser
+  extends Omit<FortbankUser, "transactionticket_set" | "useraccount"> {}
 
 export interface UserToken {
   id: number;
@@ -32,13 +49,15 @@ export interface UserToken {
   is_active: boolean;
 }
 
+export interface AuthTokensType {
+  access: string;
+  refresh: string;
+}
+
 export interface AuthContextType {
   baseUrl: string;
   user: UserToken | null;
-  authTokens: {
-    access: string | null;
-    refresh: string | null;
-  } | null;
+  authTokens: AuthTokensType;
   loginAdmin: (e: React.FormEvent<HTMLFormElement>) => void;
   logoutAdmin: () => void;
   login: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -66,16 +85,16 @@ export interface AdminContextType {
   setLastName: React.Dispatch<React.SetStateAction<string>>;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
-  setCardNum: React.Dispatch<React.SetStateAction<string>>;
-  setCardPin: React.Dispatch<React.SetStateAction<string>>;
   setBalance: React.Dispatch<React.SetStateAction<string>>;
   setMobileNumber: React.Dispatch<React.SetStateAction<string>>;
   setBirthDate: React.Dispatch<React.SetStateAction<string>>;
   setGender: React.Dispatch<React.SetStateAction<number>>;
   setCivilStatus: React.Dispatch<React.SetStateAction<number>>;
   setAddress: React.Dispatch<React.SetStateAction<string>>;
+  setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSuperUser: React.Dispatch<React.SetStateAction<boolean>>;
 
-  selectedUserValues: FortbankUser;
+  selectedUserValues: ModifiedFortbankUser;
 
   modalMethod: number;
   setModalMethod: React.Dispatch<React.SetStateAction<number>>;

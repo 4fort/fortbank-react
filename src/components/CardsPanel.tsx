@@ -15,7 +15,7 @@ const CardsPanel = () => {
       first_name: "",
       last_name: "",
       email: "",
-      useraccount: {
+      userwallet: {
         card_num: "",
         card_pin: "",
         balance: "",

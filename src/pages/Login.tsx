@@ -3,6 +3,7 @@ import { TbExclamationCircle } from "react-icons/tb";
 import AuthContext from "../context/AuthContext";
 import "../styles/style.css";
 import { AuthContextType } from "../Interfaces/interfaces";
+import AdminHeader from "../components/Header";
 
 const Login = () => {
   const context = useContext<AuthContextType | null>(AuthContext) ?? {

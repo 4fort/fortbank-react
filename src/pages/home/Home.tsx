@@ -21,7 +21,7 @@ const Home = () => {
       first_name: "",
       last_name: "",
       email: "",
-      useraccount: {
+      userwallet: {
         card_num: "",
         card_pin: "",
         balance: "",
@@ -64,7 +64,7 @@ const Home = () => {
             </div>
             <div className='atm_cardNum'>
               {userLoggedIn
-                ? String(userLoggedIn?.useraccount?.card_num)
+                ? String(userLoggedIn?.userwallet?.card_num)
                     .match(/.{1,3}/g)
                     .join("-")
                 : "loading.."}
@@ -86,7 +86,7 @@ const Home = () => {
                 }}
               >
                 {viewPin && userLoggedIn
-                  ? userLoggedIn?.useraccount?.card_pin
+                  ? userLoggedIn?.userwallet?.card_pin
                   : "⦁⦁⦁⦁"}
               </span>
             </div>
@@ -95,7 +95,7 @@ const Home = () => {
             <span>You have</span>
             <div>
               ₱
-              {parseFloat(userLoggedIn?.useraccount?.balance).toLocaleString(
+              {parseFloat(userLoggedIn?.userwallet?.balance).toLocaleString(
                 "en-US"
               )}
             </div>

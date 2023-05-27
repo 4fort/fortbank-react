@@ -22,36 +22,15 @@ export const AdminProvider = ({ children }: ChildProp) => {
   const [username, setUsername] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [cardNum, setCardNum] = useState("");
-  const [cardPin, setCardPin] = useState("");
   const [balance, setBalance] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [birthdate, setBirthDate] = useState("");
   const [gender, setGender] = useState(0);
   const [civilStatus, setCivilStatus] = useState(0);
   const [address, setAddress] = useState("");
+  const [isActive, setIsActive] = useState(false);
+  const [isSuperUser, setIsSuperUser] = useState(false);
   const [lastLogin, setLastLogin] = useState("");
-  const generateCardNumber = (userId: string): string => {
-    let currentTime = new Date();
-    let currentDayOfYear =
-      (Date.UTC(
-        currentTime.getFullYear(),
-        currentTime.getMonth(),
-        currentTime.getDate()
-      ) -
-        Date.UTC(currentTime.getFullYear(), 0, 0)) /
-      24 /
-      60 /
-      60 /
-      1000;
-    let secondThreeDigits = ("00" + currentDayOfYear).slice(-3);
-
-    let thirdThreeDigits = ("00" + (parseInt(userId) % 1000)).slice(-3);
-
-    let cardNumber = "456" + secondThreeDigits + thirdThreeDigits;
-
-    return cardNumber;
-  };
 
   const [modalMethod, setModalMethod] = useState<number>(0);
   const [selectedUser, setSelectedUser] = useState<FortbankUser | null>(null);
@@ -76,14 +55,14 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setLastName("");
     setUsername("");
     setEmail("");
-    setCardNum("");
-    setCardPin("");
     setBalance("");
     setMobileNumber("");
     setBirthDate("");
     setGender(0);
     setCivilStatus(0);
     setAddress("");
+    setIsActive(false);
+    setIsSuperUser(false);
 
     setIsValidated(true);
 
@@ -177,8 +156,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
         user.first_name.toLowerCase().includes(query.toLowerCase()) ||
         user.last_name.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase()) ||
-        String(user.useraccount?.card_num).includes(query) ||
-        String(user.useraccount?.balance).includes(query) ||
+        String(user.userwallet?.balance).includes(query) ||
         String(user.userprofile?.mobile_number).includes(query)
     );
   };
@@ -191,17 +169,14 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setLastName(selectedUser?.last_name || "");
     setUsername(selectedUser?.username || "");
     setEmail(selectedUser?.email || "");
-    setCardNum(
-      selectedUser?.useraccount?.card_num ||
-        generateCardNumber(String(userId + 1))
-    );
-    setCardPin(selectedUser?.useraccount?.card_pin || "");
-    setBalance(selectedUser?.useraccount?.balance || "");
+    setBalance(selectedUser?.userwallet?.balance || "");
     setMobileNumber(selectedUser?.userprofile?.mobile_number || "");
     setBirthDate(selectedUser?.userprofile?.birthdate || "");
     setGender(selectedUser?.userprofile?.gender || 0);
     setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
     setAddress(selectedUser?.userprofile?.address || "");
+    setIsActive(selectedUser?.is_active || false);
+    setIsSuperUser(selectedUser?.is_superuser || false);
   }, [selectedUser, userId, fortbankUsers]);
 
   // useEffect(() => {
@@ -225,9 +200,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
     last_name: lastName,
     username: username,
     email: email,
-    useraccount: {
-      card_num: cardNum,
-      card_pin: cardPin,
+    userwallet: {
       balance: balance,
     },
     userprofile: {
@@ -237,6 +210,8 @@ export const AdminProvider = ({ children }: ChildProp) => {
       civil_status: civilStatus,
       address: address,
     },
+    is_active: isActive,
+    is_superuser: isSuperUser,
     last_login: lastLogin,
   };
 
@@ -245,14 +220,14 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setLastName: setLastName,
     setUsername: setUsername,
     setEmail: setEmail,
-    setCardNum: setCardNum,
-    setCardPin: setCardPin,
     setBalance: setBalance,
     setMobileNumber: setMobileNumber,
     setBirthDate: setBirthDate,
     setGender: setGender,
     setCivilStatus: setCivilStatus,
     setAddress: setAddress,
+    setIsActive: setIsActive,
+    setIsSuperUser: setIsSuperUser,
 
     selectedUserValues: selectedUserValues,
 

@@ -21,6 +21,8 @@ import Card from "./pages/main/Card";
 import Profile from "./pages/main/Profile";
 import Settings from "./pages/main/Settings";
 import CardsPanel from "./components/CardsPanel";
+import Home from "./pages/main/Home";
+import Receive from "./pages/main/Payment/Receive";
 
 function App() {
   return (
@@ -32,8 +34,10 @@ function App() {
               path='admin/dashboard'
               element={
                 <AdminProvider>
-                  <AdminHeader />
-                  <Admin />
+                  <div className='container'>
+                    <AdminHeader />
+                    <Admin />
+                  </div>
                 </AdminProvider>
               }
             />
@@ -42,13 +46,25 @@ function App() {
             path='admin'
             element={
               <AdminProvider>
-                <AdminHeader />
-                <AdminLogin />
+                <div className='container'>
+                  <AdminHeader />
+                  <AdminLogin />
+                </div>
               </AdminProvider>
             }
           />
 
           <Route element={<PrivateRoutes />}>
+            <Route
+              path='/'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <Home />
+                  <CardsPanel />
+                </ClientProvider>
+              }
+            />
             <Route
               path='/payment'
               element={
@@ -65,6 +81,16 @@ function App() {
                 <ClientProvider>
                   <SidePanel />
                   <Pay />
+                  <CardsPanel />
+                </ClientProvider>
+              }
+            />
+            <Route
+              path='/payment/receive'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <Receive />
                   <CardsPanel />
                 </ClientProvider>
               }
@@ -92,7 +118,7 @@ function App() {
             />
 
             <Route
-              path='/'
+              path='/profile'
               element={
                 <ClientProvider>
                   <SidePanel />
@@ -116,8 +142,10 @@ function App() {
             path='login'
             element={
               <ClientProvider>
-                <Header />
-                <Login />
+                <div className='container'>
+                  <Header />
+                  <Login />
+                </div>
               </ClientProvider>
             }
           />

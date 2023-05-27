@@ -133,7 +133,11 @@ header div.actions .logout:hover {
 }
 
 .loadingScreen {
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 .loadingScreen .lds-ripple {
   display: inline-block;

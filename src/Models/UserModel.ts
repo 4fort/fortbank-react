@@ -3,11 +3,7 @@ export class User {
   first_name: string;
   last_name: string;
   email: string;
-  useraccount: {
-    card_num: number;
-    card_pin: number;
-    balance: number;
-  };
+  userwallet: { balance: number };
   userprofile: {
     mobile_number: number;
     birthdate: string;
@@ -15,28 +11,28 @@ export class User {
     civil_status: number;
     address: string;
   };
+  is_active: boolean;
+  is_superuser: boolean;
 
   constructor(
     username: string,
     first_name: string,
     last_name: string,
     email: string,
-    card_num: number,
-    card_pin: number,
     balance: number,
     mobile_number: number,
     birthdate: string,
     gender: number,
     civil_status: number,
-    address: string
+    address: string,
+    is_active: boolean,
+    is_superuser: boolean
   ) {
     this.username = username;
     this.first_name = first_name;
     this.last_name = last_name;
     this.email = email;
-    this.useraccount = {
-      card_num,
-      card_pin,
+    this.userwallet = {
       balance,
     };
     this.userprofile = {
@@ -46,5 +42,6 @@ export class User {
       civil_status,
       address,
     };
+    (this.is_active = is_active), (this.is_superuser = is_superuser);
   }
 }

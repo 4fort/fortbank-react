@@ -8,6 +8,7 @@ import {
   TbArrowsTransferUp,
   TbPolygon,
   TbSettings,
+  TbHome,
 } from "react-icons/tb";
 import ClientContext from "../context/ClientContext";
 import { ClientContextType } from "../Interfaces/interfaces";
@@ -27,7 +28,7 @@ const SidePanel = () => {
       first_name: "",
       last_name: "",
       email: "",
-      useraccount: {
+      userwallet: {
         card_num: "",
         card_pin: "",
         balance: "",
@@ -54,11 +55,15 @@ const SidePanel = () => {
           {!userLoggedIn
             ? "Processing..."
             : "₱" +
-              parseFloat(userLoggedIn?.useraccount?.balance).toLocaleString(
+              parseFloat(userLoggedIn?.userwallet?.balance).toLocaleString(
                 "en-US"
               )}
         </div>
         <div className='actions'>
+          <NavLink to='/' className='home'>
+            <TbHome />
+            Home
+          </NavLink>
           <NavLink to='/payment' className='payment'>
             <TbCreditCard />
             Payment
@@ -71,7 +76,7 @@ const SidePanel = () => {
             <TbCreditCard />
             Card
           </NavLink>
-          <NavLink to='/' className='profile'>
+          <NavLink to='/Profile' className='profile'>
             <TbUserCircle />
             Profile
           </NavLink>
@@ -83,6 +88,7 @@ const SidePanel = () => {
         <div onClick={logout} className='logout'>
           <span>Logout</span>
         </div>
+        <span className='footer'>FortPay © Fort 2023</span>
       </div>
     </>
   );

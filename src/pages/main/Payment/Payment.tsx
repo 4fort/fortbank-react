@@ -13,7 +13,7 @@ const Payment = () => {
             <h3>Pay</h3>
             <p>Make payments using reference code or by scanning qr code</p>
           </NavLink>
-          <NavLink to='' className='receive-payment'>
+          <NavLink to='/payment/receive' className='receive-payment'>
             <TbQrcode />
             <h3>Receive Payment</h3>
             <p>Receive payments using reference code or by using qr code</p>

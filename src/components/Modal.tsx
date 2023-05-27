@@ -13,14 +13,14 @@ const Modal = () => {
     setLastName,
     setUsername,
     setEmail,
-    setCardNum,
-    setCardPin,
     setBalance,
     setMobileNumber,
     setBirthDate,
     setGender,
     setCivilStatus,
     setAddress,
+    setIsActive,
+    setIsSuperUser,
 
     dialogRef,
     modalMethod,
@@ -38,14 +38,14 @@ const Modal = () => {
     setLastName: () => {},
     setUsername: () => {},
     setEmail: () => {},
-    setCardNum: () => {},
-    setCardPin: () => {},
     setBalance: () => {},
     setMobileNumber: () => {},
     setBirthDate: () => {},
     setGender: () => {},
     setCivilStatus: () => {},
     setAddress: () => {},
+    setIsActive: () => {},
+    setIsSuperUser: () => {},
     dialogRef: {
       current: null,
       showModal: () => {},
@@ -61,9 +61,7 @@ const Modal = () => {
       last_name: "",
       username: "",
       email: "",
-      useraccount: {
-        card_num: "",
-        card_pin: "",
+      userwallet: {
         balance: "",
       },
       userprofile: {
@@ -73,6 +71,8 @@ const Modal = () => {
         civil_status: 0,
         address: "",
       },
+      is_active: undefined,
+      is_superuser: undefined,
     },
 
     addUser: () => {},
@@ -87,8 +87,6 @@ const Modal = () => {
   let lastNameError: string | undefined;
   let usernameError: string | undefined;
   let emailError: string | undefined;
-  let cardNumError: string | undefined;
-  let cardPinError: string | undefined;
   let balanceError: string | undefined;
   let mobileNumberError: string | undefined;
   let birthdateError: string | undefined;
@@ -105,14 +103,14 @@ const Modal = () => {
     lastNameError = validator.lastNameValidator(selectedUserValues.last_name);
     usernameError = validator.usernameValidator(selectedUserValues.username);
     emailError = validator.emailValidator(selectedUserValues.email);
-    cardNumError = validator.cardNumValidator(
-      String(selectedUserValues.useraccount.card_num)
-    );
-    cardPinError = validator.cardPinValidator(
-      String(selectedUserValues.useraccount.card_pin)
-    );
+    // cardNumError = validator.cardNumValidator(
+    //   String(selectedUserValues.userwallet?.card_num)
+    // );
+    // cardPinError = validator.cardPinValidator(
+    //   String(selectedUserValues.userwallet?.card_pin)
+    // );
     balanceError = validator.balanceValidator(
-      String(selectedUserValues.useraccount.balance)
+      String(selectedUserValues.userwallet?.balance)
     );
     mobileNumberError = validator.mobileNumberValidator(
       selectedUserValues.userprofile.mobile_number
@@ -135,8 +133,6 @@ const Modal = () => {
       lastNameError ||
       usernameError ||
       emailError ||
-      cardNumError ||
-      cardPinError ||
       balanceError ||
       mobileNumberError ||
       birthdateError ||
@@ -188,20 +184,19 @@ const Modal = () => {
     const payload = Object.fromEntries(data);
     console.log(payload);
 
-    let cardNum = parseInt(String(payload.card_num).replace(/-/g, ""));
     let user = new User(
       String(payload.username),
       String(payload.first_name),
       String(payload.last_name),
       String(payload.email),
-      cardNum,
-      Number(payload.card_pin),
-      Number(payload.balance),
+      Number(payload.wallet_balance),
       Number(payload.mobile_number),
       String(payload.birthdate),
       Number(payload.gender),
       Number(payload.civil_status),
-      String(payload.address)
+      String(payload.address),
+      Boolean(payload.is_active),
+      Boolean(payload.is_superuser)
     );
 
     console.log(JSON.stringify(user));
@@ -304,30 +299,30 @@ const Modal = () => {
             />
           </div>
           <div className='accountInputs'>
-            <span className='fieldTitle'>Bank Account Fields</span>
+            <span className='fieldTitle'>Other Fields</span>
             <FormInput
-              labelFor='card_num'
+              labelFor='wallet_balance'
               inputType='text'
-              inputLabel='Card Num'
-              value={selectedUserValues.useraccount.card_num}
-              onInputChange={setCardNum}
-              validate={validator.cardNumValidator}
-            />
-            <FormInput
-              labelFor='card_pin'
-              inputType='text'
-              inputLabel='Card Pin'
-              value={selectedUserValues.useraccount.card_pin}
-              onInputChange={setCardPin}
-              validate={validator.cardPinValidator}
-            />
-            <FormInput
-              labelFor='balance'
-              inputType='text'
-              inputLabel='Balance'
-              value={selectedUserValues.useraccount.balance}
+              inputLabel='Wallet Balance'
+              value={selectedUserValues.userwallet.balance}
               onInputChange={setBalance}
               validate={validator.balanceValidator}
+            />
+            <label htmlFor='is_active'>Active</label>
+            <input
+              type='checkbox'
+              id='is_active'
+              name='is_active'
+              checked={selectedUserValues.is_active}
+              onChange={(e) => setIsActive(Boolean(e.target.checked))}
+            />
+            <label htmlFor='is_superuser'>Super User</label>
+            <input
+              type='checkbox'
+              id='is_superuser'
+              name='is_superuser'
+              checked={selectedUserValues.is_superuser}
+              onChange={(e) => setIsSuperUser(Boolean(e.target.checked))}
             />
           </div>
         </div>

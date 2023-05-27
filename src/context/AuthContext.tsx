@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { AuthContextType } from "../Interfaces/interfaces";
+import Loading from "../components/Loading";
 
 type Props = {
   children: React.ReactNode;
@@ -162,12 +163,7 @@ export const AuthProvider = ({ children }: Props) => {
   return (
     <>
       {loading ? (
-        <div className='loadingScreen'>
-          <div className='lds-ripple'>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
+        <Loading />
       ) : (
         <AuthContext.Provider value={contextData}>
           {children}

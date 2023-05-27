@@ -247,7 +247,6 @@ header {
 
 .App {
   display: flex;
-  flex-direction: row;
   align-items: center;
   margin: auto;
   height: 100%;
@@ -268,7 +267,6 @@ header {
 .side-panel {
   height: 90%;
   padding: 1rem;
-  background: var(--darkmode-tertiary-color);
   border-radius: 10px;
   width: 20%;
   display: flex;
@@ -339,9 +337,9 @@ header {
 .main-panel {
   height: 90%;
   padding: 1rem;
-  background: var(--darkmode-tertiary-color);
   border-radius: 10px;
   width: 55%;
+  background: rgba(37, 37, 37, 0.5);
 }
 .main-panel.no-card-section {
   width: 82.8%;
@@ -382,8 +380,8 @@ header {
 .cards-panel {
   height: 90%;
   padding: 1rem;
-  background: var(--darkmode-tertiary-color);
   border-radius: 10px;
+  background: rgba(37, 37, 37, 0.5);
   width: 25%;
   display: flex;
   flex-direction: column;
@@ -441,8 +439,6 @@ header {
   flex-direction: column;
   width: 100%;
   height: 100%;
-}
-.container:has(.transaction-actions) {
   justify-content: center;
   align-items: center;
 }
@@ -484,8 +480,188 @@ header {
 
 .reference-code-wrapper {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.reference-code-wrapper div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.reference-code-wrapper div * {
+  transition: 0.1s;
+}
+.reference-code-wrapper div label {
+  opacity: 0.5;
+  font-size: 0.85rem;
+  padding-bottom: 0.5rem;
+}
+.reference-code-wrapper div span {
+  width: 50%;
+}
+.reference-code-wrapper div span input {
+  width: 70%;
+  color: inherit;
+  background: var(--darkmode-primary-color);
+  padding: 1rem;
+  outline: none;
+  border: none;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.reference-code-wrapper div span button {
+  width: 20%;
+  height: 100%;
+  background: var(--tertiary-color);
+  color: inherit;
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.reference-code-wrapper div span button:hover {
+  background: var(--secondary-color);
+}
+.reference-code-wrapper hr {
+  position: relative;
+  width: 30%;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 2px solid var(--darkmode-primary-color);
+  margin: 1rem 0;
+  margin-bottom: -0.2rem;
+  padding: 0;
+}
+.reference-code-wrapper #html5qr-code-full-region {
+  width: 50%;
+  transform: scale(0.9);
+  border: none !important;
+}
+.reference-code-wrapper #html5qr-code-full-region * {
+  transition: 0.2s;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__scan_region {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1rem;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr select {
+  background: var(--darkmode-primary-color);
+  color: inherit;
+  padding: 0.8rem;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr button {
+  color: inherit;
+  border: none;
+  font-size: 1rem;
+  padding: 1.1rem 0;
+  width: 60%;
+  border-radius: 10px;
+  background: var(--tertiary-color);
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr button:hover {
+  background: var(--primary-color);
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr button:active {
+  transform: scale(0.95);
+}
+.reference-code-wrapper #html5qr-code-full-region #html5-qrcode-anchor-scan-type-change {
+  color: inherit;
+  border: none;
+  font-size: 1rem;
+  padding: 1.1rem 0;
+  width: 60%;
+  border-radius: 10px;
+  width: 100%;
+  background: var(--quaternary-color);
+  color: var(--darkmode-quinary-color);
+  text-decoration: none !important;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5-qrcode-anchor-scan-type-change:hover {
+  background: var(--primary-color);
+}
+.reference-code-wrapper .qrcode {
+  width: 30%;
+  margin: 1.5rem;
+  padding: 1rem;
+  background-color: var(--white-color);
+  border-radius: 15px;
+}
+.reference-code-wrapper .qrcode span {
+  color: #1b1c1e;
+}
+.reference-code-wrapper .qrcode span span {
+  font-weight: 700;
+}
+
+.success-screen,
+.fail-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.success-screen svg,
+.fail-screen svg {
+  font-size: 8rem;
+  stroke-width: 2;
+}
+
+.success-screen {
+  color: var(--quaternary-color);
+}
+
+.fail-screen {
+  color: var(--tertiary-color);
+}
+
+.proceed-payment .receiverDetails {
+  display: flex;
+  justify-content: center;
+}
+.proceed-payment .receiverDetails span {
+  width: auto;
+  opacity: 0.5;
+  padding-bottom: 5rem;
+}
+.proceed-payment input {
+  background: var(--darkmode-primary-color);
+  outline: none;
+  color: inherit;
+  font-size: 1rem;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 10px;
+}
+.proceed-payment button {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  color: inherit;
+  border: none;
+  border-radius: 25px;
+  background: var(--tertiary-color);
+}
+
+.footer {
+  opacity: 0.3;
+  font-size: 0.8rem;
 }/*# sourceMappingURL=style.css.map */
