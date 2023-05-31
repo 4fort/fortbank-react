@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { TbChevronLeft, TbCircleCheck, TbCircleX } from "react-icons/tb";
 import Html5QrcodePlugin from "../../../components/Html5QrcodePlugin";
@@ -10,6 +10,7 @@ import {
 } from "../../../Interfaces/interfaces";
 import AuthContext from "../../../context/AuthContext";
 import {
+  TransacPayment,
   getBalance,
   getTicket,
   getUser,
@@ -37,9 +38,13 @@ const Pay = () => {
       last_name: "",
       email: "",
       userwallet: {
+        balance: 0,
+      },
+      userwallet_set: {
+        brand: "",
         card_num: "",
         card_pin: "",
-        balance: "",
+        date_added: "",
       },
       userprofile: {
         mobile_number: "",
@@ -95,7 +100,7 @@ const Pay = () => {
       ? setTimeout(() => {
           setIsPaying(true);
           setLoading(false);
-        }, timeoutInterval - 1000)
+        }, timeoutInterval - 2000)
       : setIsPaying(true);
     // return makePayment();
   };
@@ -121,22 +126,7 @@ const Pay = () => {
 
   const makePayment = async () => {
     setLoading(true);
-
-    const receiverBalance = receiverDetails?.userwallet?.balance;
     const senderBalance = userLoggedIn?.userwallet?.balance;
-    const newReceiverBalance = {
-      useraccount: {
-        balance: Number(receiverBalance) + Number(amount),
-      },
-    };
-    const newSenderBalance = {
-      useraccount: {
-        balance: Number(senderBalance) - Number(amount),
-      },
-    };
-
-    console.log(senderBalance, Number(senderBalance) - Number(amount));
-    console.log(receiverBalance, Number(receiverBalance) + Number(amount));
 
     if (Number(senderBalance) < amount) {
       setLoading(false);
@@ -147,12 +137,21 @@ const Pay = () => {
       }, timeoutInterval);
     }
 
-    let newBalance = await updateBalance(
-      userLoggedIn.id,
-      newSenderBalance,
-      authTokens!
-    );
-    await updateBalance(ticket!.user, newReceiverBalance, authTokens!);
+    const paymentData = {
+      user1: userLoggedIn.id,
+      user2: receiverDetails!.id,
+      amount: amount,
+    };
+
+    const newBalance = await TransacPayment(paymentData, authTokens!);
+
+    if (typeof newBalance !== "number") {
+      setLoading(false);
+      setIsFail(true);
+      setTimeout(() => {
+        navigate("/payment");
+      }, timeoutInterval);
+    }
 
     userLoggedIn.userwallet.balance = String(newBalance?.balance);
 

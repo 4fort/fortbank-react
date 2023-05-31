@@ -119,6 +119,10 @@ header {
 
     left: 20px;
     bottom: 30px;
+
+    span {
+      font-size: 0.8rem;
+    }
   }
 
   .atm_cardId {
@@ -293,24 +297,81 @@ header {
   gap: 0.5rem;
 }
 
+.hidden {
+  min-width: 50px !important;
+  width: 50px !important;
+
+  .user {
+    justify-content: center !important;
+    span {
+      // display: none !important;
+      margin-left: -500px;
+    }
+  }
+  .balance {
+    // display: none !important;
+    margin-left: -500px;
+    width: 20px;
+  }
+  .actions {
+    margin-top: -120px;
+    a {
+      svg {
+        display: block;
+      }
+      p {
+        display: none;
+      }
+    }
+  }
+  .logout {
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
 .side-panel {
   @include container();
-  width: 20%;
+  min-width: 18%;
+  // max-width: 15%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  --transition-interval: 0.2s;
+  transition: var(--transition-interval);
+
+  .show-hide-sidepanel {
+    svg {
+      transition: 0.1s;
+      padding: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      &:hover {
+        background: var(--darkmode-secondary-color);
+      }
+    }
+  }
 
   .user {
-    position: relative;
     display: flex;
-    flex-direction: column;
-    span:first-child:not(.logo span) {
-      font-weight: 700;
-      font-size: 1.2rem;
-    }
-    span:nth-of-type(2n):not(.logo span) {
-      opacity: 0.5;
-      font-size: 0.9rem;
+    justify-content: space-between;
+    .details {
+      display: flex;
+      flex-direction: column;
+      span {
+        transition: var(--transition-interval);
+      }
+      span:first-child:not(.logo span) {
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+      span:nth-of-type(2n):not(.logo span) {
+        opacity: 0.5;
+        font-size: 0.9rem;
+      }
     }
   }
   .balance {
@@ -318,6 +379,7 @@ header {
     flex-direction: column;
     font-size: 2cqi;
     font-weight: 700;
+    transition: var(--transition-interval);
     span {
       font-weight: 500;
       font-size: 0.9rem;
@@ -330,6 +392,7 @@ header {
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 6rem;
+    transition: var(--transition-interval);
     a {
       display: flex;
       justify-content: start;
@@ -364,11 +427,11 @@ header {
 
 .main-panel {
   @include container();
-  width: 55%;
+  width: 100%;
   background: rgba(#252525, 0.5);
 
   &.no-card-section {
-    width: 82.8%;
+    // width: 100%;
   }
   h1 {
     display: flex;
@@ -409,7 +472,9 @@ header {
 .cards-panel {
   @include container();
   background: rgba(#252525, 0.5);
-  width: 25%;
+  // width: 35%;
+  // max-width: 35%;
+  min-width: 23%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -701,4 +766,88 @@ header {
 .footer {
   opacity: 0.3;
   font-size: 0.8rem;
+}
+
+.transactions {
+  table {
+    margin-top: 1rem;
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0 1rem;
+
+    tbody {
+      display: block;
+      height: 100%;
+      width: 100%;
+      margin-top: -30px;
+      overflow-y: auto;
+    }
+
+    tr.activity {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      margin-bottom: -20px;
+
+      td:first-child,
+      th:first-child {
+        border-radius: 10px 0 0 10px;
+      }
+      td:last-child,
+      th:last-child {
+        border-radius: 0 10px 10px 0;
+      }
+    }
+    th,
+    td {
+      padding: 1rem;
+
+      div.type {
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        svg {
+          font-size: 2rem;
+          padding-right: 1rem;
+        }
+        div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          span:last-child {
+            display: flex;
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0.5;
+          }
+        }
+      }
+      div.amount {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 0.3rem;
+        span:first-child {
+          font-size: 1.15rem;
+          font-weight: 700;
+        }
+        span:nth-child(2n) {
+          font-weight: 700;
+          font-size: 0.9rem;
+          opacity: 0.9;
+        }
+        span:last-child {
+          font-size: 0.8rem;
+          opacity: 0.3;
+        }
+      }
+    }
+    th {
+      text-align: start;
+    }
+    td {
+      background: var(--darkmode-secondary-color);
+    }
+  }
 }

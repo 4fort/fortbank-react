@@ -16,7 +16,7 @@ import SidePanel from "./components/SidePanel";
 import Payment from "./pages/main/Payment/Payment";
 import Pay from "./pages/main/Payment/Pay";
 
-import Transactions from "./pages/main/Transactions";
+import Transactions from "./pages/main/Transactions/Transactions";
 import Card from "./pages/main/Card";
 import Profile from "./pages/main/Profile";
 import Settings from "./pages/main/Settings";
@@ -65,6 +65,7 @@ function App() {
                 </ClientProvider>
               }
             />
+
             <Route
               path='/payment'
               element={

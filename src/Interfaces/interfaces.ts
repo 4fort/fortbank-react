@@ -11,6 +11,9 @@ export interface UserAccount {
   date_added: string;
 }
 
+export interface ModifiedUserAccount
+  extends Omit<UserAccount, "brand" | "date_added"> {}
+
 export interface UserProfile {
   mobile_number: string;
   birthdate: string;
@@ -24,6 +27,16 @@ export interface TransactionTicket {
   user: number;
 }
 
+export interface UserTransactions {
+  id: number;
+  user: number;
+  sent_to: string;
+  amount: number;
+  previous_balance: number;
+  transaction_type: string;
+  transaction_date: string;
+}
+
 export interface FortbankUser {
   id: number;
   username: string;
@@ -31,16 +44,20 @@ export interface FortbankUser {
   last_name: string;
   email: string;
   userwallet: UserWallet;
-  useraccount: [UserAccount];
+  useraccount_set: [UserAccount];
   userprofile: UserProfile;
   transactionticket_set: [TransactionTicket];
+  transactionhistory_set: [UserTransactions];
   last_login: string;
 
   is_active: boolean | undefined;
   is_superuser: boolean | undefined;
 }
 interface ModifiedFortbankUser
-  extends Omit<FortbankUser, "transactionticket_set" | "useraccount"> {}
+  extends Omit<
+    FortbankUser,
+    "transactionticket_set" | "useraccount" | "transactionhistory_set"
+  > {}
 
 export interface UserToken {
   id: number;
@@ -57,7 +74,7 @@ export interface AuthTokensType {
 export interface AuthContextType {
   baseUrl: string;
   user: UserToken | null;
-  authTokens: AuthTokensType;
+  authTokens: AuthTokensType | null;
   loginAdmin: (e: React.FormEvent<HTMLFormElement>) => void;
   logoutAdmin: () => void;
   login: (e: React.FormEvent<HTMLFormElement>) => void;

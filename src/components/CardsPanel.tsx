@@ -15,9 +15,15 @@ const CardsPanel = () => {
       first_name: "",
       last_name: "",
       email: "",
+      useraccount_set: [
+        {
+          brand: "",
+          card_num: "",
+          card_pin: "",
+          date_added: "",
+        },
+      ],
       userwallet: {
-        card_num: "",
-        card_pin: "",
         balance: "",
       },
       userprofile: {
@@ -36,11 +42,26 @@ const CardsPanel = () => {
       <div className='cards-panel'>
         <h3>Your Cards</h3>
         <div className='cards'>
-          <h5>Card #1</h5>
-          <ATMCard userLoggedIn={userLoggedIn} />
-          <h5>Card #2</h5>
-          <ATMCard userLoggedIn={userLoggedIn} />
-          <NavLink to='/card'>See more</NavLink>
+          {userLoggedIn?.useraccount_set[0] ? (
+            <>
+              {userLoggedIn?.useraccount_set
+                .map((e) => {
+                  return (
+                    <ATMCard
+                      key={e.card_num}
+                      brand={e.brand}
+                      card_num={e.card_num}
+                      card_pin={e.card_pin}
+                      date_added={e.date_added}
+                    />
+                  );
+                })
+                .slice(0, 2)}
+              <NavLink to='/card'>See more</NavLink>
+            </>
+          ) : (
+            <NavLink to='/card'>Add Card</NavLink>
+          )}
         </div>
         <p className='description'>
           <TbExclamationCircle />

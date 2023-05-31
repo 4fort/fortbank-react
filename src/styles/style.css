@@ -106,6 +106,9 @@ header {
   font-size: 1.2rem;
   font-weight: 700;
 }
+.atm_card .atm_cardHolder span {
+  font-size: 0.8rem;
+}
 .atm_card .atm_cardId {
   display: flex;
   flex-direction: column;
@@ -264,25 +267,71 @@ header {
   gap: 0.5rem;
 }
 
+.hidden {
+  min-width: 50px !important;
+  width: 50px !important;
+}
+.hidden .user {
+  justify-content: center !important;
+}
+.hidden .user span {
+  margin-left: -500px;
+}
+.hidden .balance {
+  margin-left: -500px;
+  width: 20px;
+}
+.hidden .actions {
+  margin-top: -120px;
+}
+.hidden .actions a svg {
+  display: block;
+}
+.hidden .actions a p {
+  display: none;
+}
+.hidden .logout span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .side-panel {
   height: 90%;
   padding: 1rem;
   border-radius: 10px;
-  width: 20%;
+  min-width: 18%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  --transition-interval: 0.2s;
+  transition: var(--transition-interval);
+}
+.side-panel .show-hide-sidepanel svg {
+  transition: 0.1s;
+  padding: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.side-panel .show-hide-sidepanel svg:hover {
+  background: var(--darkmode-secondary-color);
 }
 .side-panel .user {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.side-panel .user .details {
   display: flex;
   flex-direction: column;
 }
-.side-panel .user span:first-child:not(.logo span) {
+.side-panel .user .details span {
+  transition: var(--transition-interval);
+}
+.side-panel .user .details span:first-child:not(.logo span) {
   font-weight: 700;
   font-size: 1.2rem;
 }
-.side-panel .user span:nth-of-type(2n):not(.logo span) {
+.side-panel .user .details span:nth-of-type(2n):not(.logo span) {
   opacity: 0.5;
   font-size: 0.9rem;
 }
@@ -291,6 +340,7 @@ header {
   flex-direction: column;
   font-size: 2cqi;
   font-weight: 700;
+  transition: var(--transition-interval);
 }
 .side-panel .balance span {
   font-weight: 500;
@@ -303,6 +353,7 @@ header {
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 6rem;
+  transition: var(--transition-interval);
 }
 .side-panel .actions a {
   display: flex;
@@ -338,11 +389,8 @@ header {
   height: 90%;
   padding: 1rem;
   border-radius: 10px;
-  width: 55%;
+  width: 100%;
   background: rgba(37, 37, 37, 0.5);
-}
-.main-panel.no-card-section {
-  width: 82.8%;
 }
 .main-panel h1 {
   display: flex;
@@ -382,7 +430,7 @@ header {
   padding: 1rem;
   border-radius: 10px;
   background: rgba(37, 37, 37, 0.5);
-  width: 25%;
+  min-width: 23%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -664,4 +712,90 @@ header {
 .footer {
   opacity: 0.3;
   font-size: 0.8rem;
+}
+
+.transactions table {
+  margin-top: 1rem;
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+}
+.transactions table tbody {
+  display: block;
+  height: 100%;
+  width: 100%;
+  margin-top: -30px;
+  overflow-y: auto;
+}
+.transactions table tr.activity {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  margin-bottom: -20px;
+}
+.transactions table tr.activity td:first-child,
+.transactions table tr.activity th:first-child {
+  border-radius: 10px 0 0 10px;
+}
+.transactions table tr.activity td:last-child,
+.transactions table tr.activity th:last-child {
+  border-radius: 0 10px 10px 0;
+}
+.transactions table th,
+.transactions table td {
+  padding: 1rem;
+}
+.transactions table th div.type,
+.transactions table td div.type {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+.transactions table th div.type svg,
+.transactions table td div.type svg {
+  font-size: 2rem;
+  padding-right: 1rem;
+}
+.transactions table th div.type div,
+.transactions table td div.type div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.transactions table th div.type div span:last-child,
+.transactions table td div.type div span:last-child {
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.5;
+}
+.transactions table th div.amount,
+.transactions table td div.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 0.3rem;
+}
+.transactions table th div.amount span:first-child,
+.transactions table td div.amount span:first-child {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.transactions table th div.amount span:nth-child(2n),
+.transactions table td div.amount span:nth-child(2n) {
+  font-weight: 700;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+.transactions table th div.amount span:last-child,
+.transactions table td div.amount span:last-child {
+  font-size: 0.8rem;
+  opacity: 0.3;
+}
+.transactions table th {
+  text-align: start;
+}
+.transactions table td {
+  background: var(--darkmode-secondary-color);
 }/*# sourceMappingURL=style.css.map */

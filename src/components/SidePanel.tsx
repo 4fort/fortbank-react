@@ -9,6 +9,9 @@ import {
   TbPolygon,
   TbSettings,
   TbHome,
+  TbLayoutSidebarLeftExpand,
+  TbLayoutSidebarLeftCollapse,
+  TbLogout,
 } from "react-icons/tb";
 import ClientContext from "../context/ClientContext";
 import { ClientContextType } from "../Interfaces/interfaces";
@@ -43,12 +46,27 @@ const SidePanel = () => {
       last_login: "",
     },
   };
+
+  const [sidePanelState, setSidePanelState] = useState(true);
   return (
     <>
-      <div className='side-panel'>
+      <div className={sidePanelState ? "side-panel" : "side-panel hidden"}>
         <div className='user'>
-          <span>{userLoggedIn?.first_name}</span>
-          <span>@{userLoggedIn?.username}</span>
+          <div className='details'>
+            <span>{userLoggedIn?.first_name}</span>
+            <span>@{userLoggedIn?.username}</span>
+          </div>
+          <div className='show-hide-sidepanel'>
+            {sidePanelState ? (
+              <TbLayoutSidebarLeftCollapse
+                onClick={() => setSidePanelState(!sidePanelState)}
+              />
+            ) : (
+              <TbLayoutSidebarLeftExpand
+                onClick={() => setSidePanelState(!sidePanelState)}
+              />
+            )}
+          </div>
         </div>
         <div className='balance'>
           <span>Wallet Balance</span>
@@ -62,33 +80,35 @@ const SidePanel = () => {
         <div className='actions'>
           <NavLink to='/' className='home'>
             <TbHome />
-            Home
+            <p>Home</p>
           </NavLink>
           <NavLink to='/payment' className='payment'>
             <TbCreditCard />
-            Payment
+            <p>Payment</p>
           </NavLink>
           <NavLink to='/transactions' className='transactions'>
             <TbHistory />
-            Transactions
+            <p>Transactions</p>
           </NavLink>
           <NavLink to='/card' className='card'>
             <TbCreditCard />
-            Card
+            <p>Account</p>
           </NavLink>
           <NavLink to='/Profile' className='profile'>
             <TbUserCircle />
-            Profile
+            <p>Profile</p>
           </NavLink>
           <NavLink to='/settings' className='settings'>
             <TbSettings />
-            Settings
+            <p>Settings</p>
           </NavLink>
         </div>
         <div onClick={logout} className='logout'>
-          <span>Logout</span>
+          <span>{sidePanelState ? "Logout" : <TbLogout />}</span>
         </div>
-        <span className='footer'>FortPay © Fort 2023</span>
+        <span className='footer'>
+          {sidePanelState ? "FortPay © Fort 2023" : "FortPay © 2023"}
+        </span>
       </div>
     </>
   );

@@ -3,18 +3,18 @@ import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
 const PrivateRoutes = ({ isSuperUserRequired, ...rest }: any) => {
-  let { user }: any = useContext(AuthContext);
+  let { user, logout }: any = useContext(AuthContext);
   const location = useLocation();
 
   return isSuperUserRequired && !user?.is_superuser ? (
     <>
       <Navigate to={"/admin"} state={{ from: location }} replace />
-      {localStorage.removeItem("authTokens")}
+      {logout()}
     </>
   ) : !user?.is_active ? (
     <>
       <Navigate to={"/login"} state={{ from: location }} replace />
-      {localStorage.removeItem("authTokens")}
+      {logout()}
     </>
   ) : (
     <Outlet {...rest} />

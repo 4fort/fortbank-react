@@ -2,11 +2,14 @@ import axios from "axios";
 import {
   AuthTokensType,
   FortbankUser,
+  ModifiedUserAccount,
   TransactionTicket,
   UserAccount,
+  UserTransactions,
+  UserWallet,
 } from "../Interfaces/interfaces";
 import { User } from "../Models/UserModel";
-import { baseUrl } from "../context/GlobalVars";
+import { baseUrl, bankUrl } from "../context/GlobalVars";
 
 export const getUser = async (
   userId: number,
@@ -70,19 +73,17 @@ export const getBalance = async (
 };
 
 interface newBalance {
-  useraccount: {
-    balance: number;
-  };
+  balance: number;
 }
 
 export const updateBalance = async (
   userId: number,
   newBalance: newBalance,
   authTokens: AuthTokensType
-): Promise<UserAccount | null> => {
+): Promise<UserWallet | null> => {
   try {
     const response = await axios.put(
-      `${baseUrl}/api/users/${userId}/updatebalance`,
+      `${baseUrl}/api/users/updatebalance/${userId}`,
       newBalance,
       {
         headers: {
@@ -108,6 +109,152 @@ export const getTicket = async (
         Authorization: "Bearer " + String(authTokens?.access),
       },
     });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const addCard = async (
+  userId: number,
+  cardDetails: ModifiedUserAccount,
+  authTokens: AuthTokensType
+): Promise<UserAccount | null> => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/api/users/account/${userId}`,
+      cardDetails,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens?.access),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const updateCard = async (
+  userId: number,
+  cardDetails: ModifiedUserAccount,
+  authTokens: AuthTokensType
+): Promise<UserAccount | null> => {
+  try {
+    const response = await axios.put(
+      `${baseUrl}/api/users/account/${userId}`,
+      cardDetails,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens?.access),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+interface PaymentData {
+  user1: number;
+  user2: number;
+  amount: number;
+}
+
+export const TransacPayment = async (
+  data: PaymentData,
+  authTokens: AuthTokensType
+): Promise<UserWallet | null> => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/api/transaction/payment`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens?.access),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+interface AddFundsData {
+  user: number;
+  card_num: number;
+  card_pin: number;
+  amount: number;
+}
+
+export const AddFunds = async (
+  data: AddFundsData,
+  authTokens: AuthTokensType
+): Promise<UserWallet | null> => {
+  try {
+    const response = await axios.put(
+      `${baseUrl}/api/transaction/addfunds`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens?.access),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const CashOutFunds = async (
+  data: AddFundsData,
+  authTokens: AuthTokensType
+): Promise<UserWallet | null> => {
+  try {
+    const response = await axios.put(
+      `${baseUrl}/api/transaction/cashoutfunds`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens?.access),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getHistorySet = async (
+  userId: number,
+  authTokens: AuthTokensType
+): Promise<UserTransactions[] | null> => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/api/transaction/history/${userId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens?.access),
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(error);

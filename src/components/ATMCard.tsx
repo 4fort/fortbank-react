@@ -1,14 +1,17 @@
 import { useState } from "react";
 import QRCode from "react-qr-code";
 import { TbPolygon } from "react-icons/tb";
+import { UserAccount } from "../Interfaces/interfaces";
 
-const ATMCard = (props) => {
-  const { userLoggedIn } = props;
+const ATMCard = (props: UserAccount) => {
+  const { brand, card_num, card_pin, date_added } = props;
+
+  const date = new Date(date_added);
 
   const [viewPin, setViewPin] = useState<boolean>(false);
 
   let qrValue = {
-    username: userLoggedIn?.username,
+    username: card_num,
   };
 
   return (
@@ -18,7 +21,13 @@ const ATMCard = (props) => {
           <TbPolygon />
         </span>
         <div className='logo'>
-          FORT<span>BANK</span>
+          {brand == "FortBank" ? (
+            <>
+              FORT<span>BANK</span>
+            </>
+          ) : (
+            "brand"
+          )}
         </div>
         <div className='qrcode'>
           <QRCode
@@ -29,18 +38,16 @@ const ATMCard = (props) => {
           />
         </div>
         <div className='atm_cardNum'>
-          {userLoggedIn
-            ? String(userLoggedIn?.useraccount?.card_num)
-                .match(/.{1,3}/g)
-                .join("-")
+          {card_num
+            ? String(card_num)
+                ?.match(/.{1,3}/g)
+                ?.join(" ")
             : "loading.."}
         </div>
         <div className='atm_cardHolder'>
-          CARD HOLDER
+          Date added
           <span id='atm_cardHolder'>
-            {userLoggedIn
-              ? userLoggedIn?.first_name + " " + userLoggedIn.last_name
-              : "loading..."}
+            {date_added ? date.toLocaleString() : "loading..."}
           </span>
         </div>
         <div className='atm_cardId'>
@@ -51,9 +58,7 @@ const ATMCard = (props) => {
               setViewPin(!viewPin);
             }}
           >
-            {viewPin && userLoggedIn
-              ? userLoggedIn?.useraccount?.card_pin
-              : "⦁⦁⦁⦁"}
+            {viewPin && card_pin ? card_pin : "⦁⦁⦁⦁"}
           </span>
         </div>
       </div>
