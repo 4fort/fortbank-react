@@ -33,10 +33,23 @@ header {
   width: 90%;
 }
 
+.cards-panel {
+  .cards {
+    .atm_card {
+      width: 100%;
+    }
+  }
+}
+
+@mixin CardDimensions {
+  min-width: 340px;
+  height: 200px;
+  border-radius: 15px;
+}
+
 .atm_card {
   position: relative;
-  width: 100%;
-  height: 200px;
+  @include CardDimensions();
   //   position: relative;
   background: rgb(178, 80, 104);
   background: linear-gradient(
@@ -44,11 +57,14 @@ header {
     rgba(178, 80, 104, 1) 0%,
     rgba(119, 67, 96, 1) 100%
   );
-  border-radius: 15px;
   box-shadow: 0px 6px 8px #00000011;
   transition: 0.4s;
   z-index: 11;
   overflow: hidden;
+
+  .actions {
+    display: none;
+  }
 
   .backdrop {
     display: block;
@@ -136,6 +152,18 @@ header {
     #atm_cardId {
       height: 20px;
     }
+  }
+}
+
+.otherbrand {
+  background: rgb(178, 80, 104);
+  background: linear-gradient(
+    90deg,
+    var(--darkmode-primary-color) 0%,
+    rgba(76, 58, 81, 1) 100%
+  );
+  .logo {
+    color: var(--white-color);
   }
 }
 
@@ -429,6 +457,7 @@ header {
   @include container();
   width: 100%;
   background: rgba(#252525, 0.5);
+  overflow: hidden;
 
   &.no-card-section {
     // width: 100%;
@@ -848,6 +877,230 @@ header {
     }
     td {
       background: var(--darkmode-secondary-color);
+    }
+  }
+}
+
+.user-account {
+  .container {
+    justify-content: start;
+    .cards {
+      align-items: start;
+      width: 100%;
+      height: 240px;
+      display: flex;
+      overflow-x: overlay;
+      * {
+        transition: 0.2s;
+      }
+      .atm_card,
+      .add_card {
+        margin: 1rem;
+      }
+      .atm_card {
+        z-index: 1;
+
+        .actions {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+
+          * {
+            z-index: 99;
+          }
+          div {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+
+            cursor: pointer;
+            svg {
+              opacity: 0.4;
+              font-size: 2.5rem;
+              stroke-width: 1.5;
+              filter: drop-shadow(0 0 20px var(--darkmode-quinary-color));
+            }
+          }
+          .edit {
+            margin-left: -500px;
+            background: rgb(178, 80, 104);
+            background: linear-gradient(
+              270deg,
+              rgba(178, 80, 104, 0) 0%,
+              rgba(37, 37, 37, 0.8) 100%
+            );
+          }
+          .delete {
+            margin-right: -500px;
+            background: rgb(178, 80, 104);
+            background: linear-gradient(
+              90deg,
+              rgba(178, 80, 104, 0) 0%,
+              rgba(76, 58, 81, 0.8) 100%
+            );
+          }
+        }
+        &:hover {
+          .actions {
+            div {
+              margin: 0;
+              &:hover {
+                width: 60%;
+                svg {
+                  opacity: 0.8;
+                  transform: scale(1.1);
+                }
+              }
+            }
+            .edit:hover {
+              background: rgb(178, 80, 104);
+              background: linear-gradient(
+                270deg,
+                rgba(178, 80, 104, 0) 0%,
+                rgba(37, 37, 37, 0.9) 100%
+              );
+            }
+            .delete:hover {
+              background: rgb(178, 80, 104);
+              background: linear-gradient(
+                90deg,
+                rgba(178, 80, 104, 0) 0%,
+                rgba(76, 58, 81, 0.9) 100%
+              );
+            }
+          }
+        }
+      }
+      .add_card {
+        @include CardDimensions();
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: dashed #fff 2px;
+        opacity: 0.5;
+        cursor: pointer;
+        &:hover {
+          transform: scale(1.01);
+        }
+        &:active {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}
+
+.modal-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  background: #00000055;
+  backdrop-filter: blur(5px);
+  z-index: 99;
+  .modal {
+    background: rgba(#252525, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    width: 350px;
+    border-radius: 10px;
+    * {
+      transition: 0.1s;
+    }
+
+    .delete-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p,
+      .alert-icon {
+        opacity: 0.8;
+        margin-bottom: 1rem;
+      }
+      svg.alert-icon {
+        font-size: 5rem;
+      }
+      div.buttons {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+        width: 100%;
+        .yes {
+          background: var(--tertiary-color);
+        }
+        button {
+          color: var(--white-color);
+          background: var(--secondary-color);
+          width: 50%;
+          padding: 0.8rem;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          &:active {
+            transform: scale(0.95);
+          }
+        }
+      }
+    }
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+      svg {
+        cursor: pointer;
+      }
+    }
+    .card-preview {
+      margin-bottom: 2rem;
+      .actions {
+        display: none;
+      }
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      label {
+        opacity: 0.5;
+        font-size: 0.8rem;
+        padding-bottom: 5px;
+      }
+      input {
+        color: #fefefe;
+        margin-bottom: 15px;
+        padding: 0.5rem;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        background: var(--darkmode-primary-color);
+      }
+      .error {
+        word-wrap: break-word;
+        width: 100%;
+        height: auto;
+        padding: 0;
+        svg {
+          padding: 0.8rem;
+        }
+      }
+      button {
+        color: #fefefe;
+        background: var(--tertiary-color);
+        border: none;
+        border-radius: 5px;
+        padding: 0.6rem;
+        cursor: pointer;
+        &:active {
+          transform: scale(0.98);
+        }
+      }
     }
   }
 }

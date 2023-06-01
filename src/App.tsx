@@ -17,12 +17,13 @@ import Payment from "./pages/main/Payment/Payment";
 import Pay from "./pages/main/Payment/Pay";
 
 import Transactions from "./pages/main/Transactions/Transactions";
-import Card from "./pages/main/Card";
+import Card from "./pages/main/Account/Card";
 import Profile from "./pages/main/Profile";
 import Settings from "./pages/main/Settings";
 import CardsPanel from "./components/CardsPanel";
 import Home from "./pages/main/Home";
 import Receive from "./pages/main/Payment/Receive";
+import AddCard from "./pages/main/Account/AddCard";
 
 function App() {
   return (
@@ -117,6 +118,15 @@ function App() {
                 </ClientProvider>
               }
             />
+            {/* <Route
+              path='/card/add'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <AddCard />
+                </ClientProvider>
+              }
+            /> */}
 
             <Route
               path='/profile'

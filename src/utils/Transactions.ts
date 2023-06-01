@@ -5,6 +5,7 @@ import {
   ModifiedUserAccount,
   TransactionTicket,
   UserAccount,
+  UserCards,
   UserTransactions,
   UserWallet,
 } from "../Interfaces/interfaces";
@@ -55,19 +56,17 @@ export const updateWholeUser = async (
 export const getBalance = async (
   userId: number,
   authTokens: AuthTokensType
-): Promise<UserAccount | null> => {
+): Promise<UserWallet | null> => {
   try {
-    const response = await axios.get(
-      `${baseUrl}/api/users/${userId}/updatebalance`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens?.access),
-        },
-      }
-    );
+    const response = await axios.get(`${baseUrl}/api/users/wallet/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens?.access),
+      },
+    });
     return response.data;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -104,6 +103,24 @@ export const getTicket = async (
 ): Promise<TransactionTicket | null> => {
   try {
     const response = await axios.get(`${baseUrl}/api/tickets/${reference_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens?.access),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getCard = async (
+  userId: number,
+  authTokens: AuthTokensType
+): Promise<UserCards[] | null> => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/users/account/${userId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + String(authTokens?.access),
@@ -153,6 +170,29 @@ export const updateCard = async (
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(authTokens?.access),
         },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const deleteCard = async (
+  userId: number,
+  cardDetails: ModifiedUserAccount,
+  authTokens: AuthTokensType
+): Promise<UserAccount | null> => {
+  try {
+    const response = await axios.delete(
+      `${baseUrl}/api/users/account/${userId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens?.access),
+        },
+        data: cardDetails,
       }
     );
     return response.data;

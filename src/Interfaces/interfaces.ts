@@ -11,6 +11,10 @@ export interface UserAccount {
   date_added: string;
 }
 
+export interface UserCards extends UserAccount {
+  id: number;
+}
+
 export interface ModifiedUserAccount
   extends Omit<UserAccount, "brand" | "date_added"> {}
 

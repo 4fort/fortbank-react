@@ -32,17 +32,24 @@ header {
   width: 90%;
 }
 
+.cards-panel .cards .atm_card {
+  width: 100%;
+}
+
 .atm_card {
   position: relative;
-  width: 100%;
+  min-width: 340px;
   height: 200px;
+  border-radius: 15px;
   background: rgb(178, 80, 104);
   background: linear-gradient(45deg, rgb(178, 80, 104) 0%, rgb(119, 67, 96) 100%);
-  border-radius: 15px;
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
   transition: 0.4s;
   z-index: 11;
   overflow: hidden;
+}
+.atm_card .actions {
+  display: none;
 }
 .atm_card .backdrop {
   display: block;
@@ -127,6 +134,14 @@ header {
 }
 .atm_card .atm_cardId #atm_cardId {
   height: 20px;
+}
+
+.otherbrand {
+  background: rgb(178, 80, 104);
+  background: linear-gradient(90deg, var(--darkmode-primary-color) 0%, rgb(76, 58, 81) 100%);
+}
+.otherbrand .logo {
+  color: var(--white-color);
 }
 
 .appContainer {
@@ -391,6 +406,7 @@ header {
   border-radius: 10px;
   width: 100%;
   background: rgba(37, 37, 37, 0.5);
+  overflow: hidden;
 }
 .main-panel h1 {
   display: flex;
@@ -798,4 +814,206 @@ header {
 }
 .transactions table td {
   background: var(--darkmode-secondary-color);
+}
+
+.user-account .container {
+  justify-content: start;
+}
+.user-account .container .cards {
+  align-items: start;
+  width: 100%;
+  height: 240px;
+  display: flex;
+  overflow-x: overlay;
+}
+.user-account .container .cards * {
+  transition: 0.2s;
+}
+.user-account .container .cards .atm_card,
+.user-account .container .cards .add_card {
+  margin: 1rem;
+}
+.user-account .container .cards .atm_card {
+  z-index: 1;
+}
+.user-account .container .cards .atm_card .actions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.user-account .container .cards .atm_card .actions * {
+  z-index: 99;
+}
+.user-account .container .cards .atm_card .actions div {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+.user-account .container .cards .atm_card .actions div svg {
+  opacity: 0.4;
+  font-size: 2.5rem;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 20px var(--darkmode-quinary-color));
+}
+.user-account .container .cards .atm_card .actions .edit {
+  margin-left: -500px;
+  background: rgb(178, 80, 104);
+  background: linear-gradient(270deg, rgba(178, 80, 104, 0) 0%, rgba(37, 37, 37, 0.8) 100%);
+}
+.user-account .container .cards .atm_card .actions .delete {
+  margin-right: -500px;
+  background: rgb(178, 80, 104);
+  background: linear-gradient(90deg, rgba(178, 80, 104, 0) 0%, rgba(76, 58, 81, 0.8) 100%);
+}
+.user-account .container .cards .atm_card:hover .actions div {
+  margin: 0;
+}
+.user-account .container .cards .atm_card:hover .actions div:hover {
+  width: 60%;
+}
+.user-account .container .cards .atm_card:hover .actions div:hover svg {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+.user-account .container .cards .atm_card:hover .actions .edit:hover {
+  background: rgb(178, 80, 104);
+  background: linear-gradient(270deg, rgba(178, 80, 104, 0) 0%, rgba(37, 37, 37, 0.9) 100%);
+}
+.user-account .container .cards .atm_card:hover .actions .delete:hover {
+  background: rgb(178, 80, 104);
+  background: linear-gradient(90deg, rgba(178, 80, 104, 0) 0%, rgba(76, 58, 81, 0.9) 100%);
+}
+.user-account .container .cards .add_card {
+  min-width: 340px;
+  height: 200px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: dashed #fff 2px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+.user-account .container .cards .add_card:hover {
+  transform: scale(1.01);
+}
+.user-account .container .cards .add_card:active {
+  transform: scale(1);
+}
+
+.modal-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3333333333);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  z-index: 99;
+}
+.modal-container .modal {
+  background: rgba(37, 37, 37, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding: 1rem;
+  width: 350px;
+  border-radius: 10px;
+}
+.modal-container .modal * {
+  transition: 0.1s;
+}
+.modal-container .modal .delete-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal-container .modal .delete-card p,
+.modal-container .modal .delete-card .alert-icon {
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+.modal-container .modal .delete-card svg.alert-icon {
+  font-size: 5rem;
+}
+.modal-container .modal .delete-card div.buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+}
+.modal-container .modal .delete-card div.buttons .yes {
+  background: var(--tertiary-color);
+}
+.modal-container .modal .delete-card div.buttons button {
+  color: var(--white-color);
+  background: var(--secondary-color);
+  width: 50%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal-container .modal .delete-card div.buttons button:active {
+  transform: scale(0.95);
+}
+.modal-container .modal .title {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+.modal-container .modal .title svg {
+  cursor: pointer;
+}
+.modal-container .modal .card-preview {
+  margin-bottom: 2rem;
+}
+.modal-container .modal .card-preview .actions {
+  display: none;
+}
+.modal-container .modal form {
+  display: flex;
+  flex-direction: column;
+}
+.modal-container .modal form label {
+  opacity: 0.5;
+  font-size: 0.8rem;
+  padding-bottom: 5px;
+}
+.modal-container .modal form input {
+  color: #fefefe;
+  margin-bottom: 15px;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background: var(--darkmode-primary-color);
+}
+.modal-container .modal form .error {
+  word-wrap: break-word;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
+.modal-container .modal form .error svg {
+  padding: 0.8rem;
+}
+.modal-container .modal form button {
+  color: #fefefe;
+  background: var(--tertiary-color);
+  border: none;
+  border-radius: 5px;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+.modal-container .modal form button:active {
+  transform: scale(0.98);
 }/*# sourceMappingURL=style.css.map */

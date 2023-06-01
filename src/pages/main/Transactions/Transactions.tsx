@@ -61,17 +61,17 @@ const Transactions = () => {
 
   const [transactionHistory, setTransactionHistory] = useState<
     UserTransactions[] | null
-  >([]);
+  >(userLoggedIn?.transactionhistory_set);
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      if (userLoggedIn?.id) {
+      if (userLoggedIn) {
         const data = await getHistorySet(userLoggedIn.id, authTokens!);
         setTransactionHistory(data);
       }
     };
 
     fetchData();
-  }, [userLoggedIn, authTokens]);
+  }, [userLoggedIn?.transactionhistory_set]);
 
   return (
     <div className='main-panel transactions'>
@@ -103,7 +103,13 @@ const Transactions = () => {
                 yesterday.setDate(currentDate.getDate() - 1);
 
                 if (date.toDateString() === yesterday.toDateString()) {
-                  displayDate = "Yesterday";
+                  let time = date.toLocaleTimeString(undefined, {
+                    hour12: true,
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: undefined,
+                  });
+                  displayDate = `Yesterday at ${time}`;
                 } else {
                   displayDate = date.toLocaleString();
                 }

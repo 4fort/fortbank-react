@@ -1,12 +1,41 @@
 import { useState } from "react";
 import QRCode from "react-qr-code";
-import { TbPolygon } from "react-icons/tb";
+import { TbEdit, TbPolygon, TbTrash } from "react-icons/tb";
 import { UserAccount } from "../Interfaces/interfaces";
 
-const ATMCard = (props: UserAccount) => {
-  const { brand, card_num, card_pin, date_added } = props;
+interface Props extends UserAccount {
+  setIsModal?: (e: boolean) => void;
+  selectedCard?: {
+    card_num: string;
+    card_pin: string;
+  };
+  modalProps?: {
+    setCardNum: (e: string) => void;
+    setCardPin: (e: string) => void;
+    modalMode: number;
+    setModalMode: (e: number) => void;
+  };
+}
+
+const ATMCard = (props: Props) => {
+  const {
+    brand,
+    card_num,
+    card_pin,
+    date_added,
+    setIsModal,
+    modalProps,
+    selectedCard,
+  } = props;
 
   const date = new Date(date_added);
+  const dateAdded = date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
 
   const [viewPin, setViewPin] = useState<boolean>(false);
 
@@ -16,7 +45,35 @@ const ATMCard = (props: UserAccount) => {
 
   return (
     <>
-      <div className='atm_card'>
+      <div
+        className={
+          brand == "FortBank" ? "atm_card fortbank" : "atm_card otherbrand"
+        }
+      >
+        <div className='actions'>
+          <div
+            className='edit'
+            onClick={() => {
+              setIsModal!(true);
+              modalProps!.setCardNum!(card_num);
+              modalProps!.setCardPin!(card_pin);
+              modalProps!.setModalMode(1);
+            }}
+          >
+            <TbEdit />
+          </div>
+          <div
+            className='delete'
+            onClick={() => {
+              setIsModal!(true);
+              modalProps!.setCardNum!(card_num);
+              modalProps!.setCardPin!(card_pin);
+              modalProps!.setModalMode(2);
+            }}
+          >
+            <TbTrash />
+          </div>
+        </div>
         <span className='backdrop'>
           <TbPolygon />
         </span>
@@ -47,7 +104,7 @@ const ATMCard = (props: UserAccount) => {
         <div className='atm_cardHolder'>
           Date added
           <span id='atm_cardHolder'>
-            {date_added ? date.toLocaleString() : "loading..."}
+            {date_added ? dateAdded : "loading..."}
           </span>
         </div>
         <div className='atm_cardId'>

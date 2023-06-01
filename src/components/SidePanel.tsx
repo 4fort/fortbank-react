@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   TbUserCircle,
@@ -14,13 +14,17 @@ import {
   TbLogout,
 } from "react-icons/tb";
 import ClientContext from "../context/ClientContext";
-import { ClientContextType } from "../Interfaces/interfaces";
+import { ClientContextType, UserWallet } from "../Interfaces/interfaces";
 import AuthContext from "../context/AuthContext";
 import { AuthContextType } from "../Interfaces/interfaces";
+import { getBalance } from "../utils/Transactions";
 
 const SidePanel = () => {
-  let { logout } = useContext<AuthContextType | null>(AuthContext) ?? {
+  let { logout, authTokens } = useContext<AuthContextType | null>(
+    AuthContext
+  ) ?? {
     logout: () => {},
+    authTokens: null,
   };
   let { userLoggedIn } = useContext<ClientContextType | null>(
     ClientContext
@@ -31,9 +35,16 @@ const SidePanel = () => {
       first_name: "",
       last_name: "",
       email: "",
+      useraccount_set: [
+        {
+          id: 0,
+          brand: "",
+          card_num: "",
+          card_pin: "",
+          date_added: "",
+        },
+      ],
       userwallet: {
-        card_num: "",
-        card_pin: "",
         balance: "",
       },
       userprofile: {
@@ -43,11 +54,37 @@ const SidePanel = () => {
         civil_status: 0,
         address: "",
       },
+      transactionhistory_set: [
+        {
+          id: 0,
+          user: 0,
+          sent_to: "",
+          amount: 0,
+          previous_balance: 0,
+          transaction_type: "",
+          transaction_date: "",
+        },
+      ],
       last_login: "",
     },
   };
 
-  const [sidePanelState, setSidePanelState] = useState(true);
+  const [userBalance, setUserBalance] = useState<UserWallet["balance"] | null>(
+    userLoggedIn?.userwallet?.balance
+  );
+  useEffect(() => {
+    const fetchData = async () => {
+      if (userLoggedIn && authTokens) {
+        const data = await getBalance(userLoggedIn.id, authTokens);
+        data && setUserBalance(data.balance);
+      }
+    };
+    fetchData();
+  }, [userLoggedIn?.transactionhistory_set]);
+
+  const [sidePanelState, setSidePanelState] = useState(
+    Boolean(localStorage.getItem("sidePanelState"))
+  );
   return (
     <>
       <div className={sidePanelState ? "side-panel" : "side-panel hidden"}>
@@ -59,11 +96,17 @@ const SidePanel = () => {
           <div className='show-hide-sidepanel'>
             {sidePanelState ? (
               <TbLayoutSidebarLeftCollapse
-                onClick={() => setSidePanelState(!sidePanelState)}
+                onClick={() => {
+                  setSidePanelState(!sidePanelState);
+                  localStorage.removeItem("sidePanelState");
+                }}
               />
             ) : (
               <TbLayoutSidebarLeftExpand
-                onClick={() => setSidePanelState(!sidePanelState)}
+                onClick={() => {
+                  setSidePanelState(!sidePanelState);
+                  localStorage.setItem("sidePanelState", JSON.stringify(true));
+                }}
               />
             )}
           </div>
@@ -72,10 +115,7 @@ const SidePanel = () => {
           <span>Wallet Balance</span>
           {!userLoggedIn
             ? "Processing..."
-            : "₱" +
-              parseFloat(userLoggedIn?.userwallet?.balance).toLocaleString(
-                "en-US"
-              )}
+            : "₱" + parseFloat(userBalance!).toLocaleString("en-US")}
         </div>
         <div className='actions'>
           <NavLink to='/' className='home'>

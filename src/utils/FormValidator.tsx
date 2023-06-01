@@ -44,12 +44,8 @@ export const cardNumValidator: Validate = (e: string) => {
   if (!e.trim()) {
     return "Card Num is required";
   }
-  if (!/^[0-9]+-?[0-9]+-?[0-9]+-?[0-9]{0,4}$/.test(e)) {
-    return "Card Num must be a sequence of digits separated by dashes (optional)";
-  }
-  const digits = e.replace(/-/g, "");
-  if (digits.length !== 9) {
-    return "Card Num must contain exactly 9 digits";
+  if (!/^[0-9]{6}(-[0-9]{1,4})?$/.test(e)) {
+    return "Card Num must be a 6-digit number optionally separated by a dash";
   }
   return undefined;
 };
