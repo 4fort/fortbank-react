@@ -85,6 +85,8 @@ const AddCard = (props: Props) => {
   let today = new Date();
   let [cardNumError, setCardNumError] = useState<String | undefined>(undefined);
   let [cardPinError, setCardPinError] = useState<String | undefined>(undefined);
+  let NumError: string | undefined;
+  let PinError: string | undefined;
   let cardDetails: ModifiedUserAccount = {
     card_num: selectedCard.card_num,
     card_pin: selectedCard.card_pin,
@@ -101,20 +103,31 @@ const AddCard = (props: Props) => {
       card_num: String(payload.card_num),
       card_pin: String(payload.card_pin),
     };
+    NumError = cardNumValidator(cardDetails.card_num);
+    PinError = cardPinValidator(cardDetails.card_pin);
 
     setCardNumError(cardNumValidator(cardDetails.card_num));
     setCardPinError(cardPinValidator(cardDetails.card_pin));
-    if (cardNumError !== undefined && cardPinError !== undefined) {
-      console.log(cardNumError);
-      console.log(cardPinError);
+    if (
+      (cardNumError !== undefined && cardPinError !== undefined) ||
+      (NumError && PinError)
+    ) {
+      console.log(NumError);
+      console.log(NumError);
       return;
     }
     if (modalProps.modalMode === 1) {
       await updateCard(userLoggedIn.id, cardDetails, authTokens!);
+      modalProps.setCardNum("");
+      modalProps.setCardPin("");
       setIsModal(false);
+      return;
     }
     await addCard(userLoggedIn.id, cardDetails, authTokens!);
+    modalProps.setCardNum("");
+    modalProps.setCardPin("");
     setIsModal(false);
+    return;
   };
 
   const modalMode = ["Add Card", "Edit Card"];
@@ -144,7 +157,15 @@ const AddCard = (props: Props) => {
               >
                 Yes
               </button>
-              <button onClick={() => setIsModal(false)}>No</button>
+              <button
+                onClick={() => {
+                  setIsModal(false);
+                  modalProps.setCardNum("");
+                  modalProps.setCardPin("");
+                }}
+              >
+                No
+              </button>
             </div>
           </div>
         ) : (

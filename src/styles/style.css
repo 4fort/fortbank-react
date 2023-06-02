@@ -42,7 +42,7 @@ header {
   height: 200px;
   border-radius: 15px;
   background: rgb(178, 80, 104);
-  background: linear-gradient(45deg, rgb(178, 80, 104) 0%, rgb(119, 67, 96) 100%);
+  background: linear-gradient(90deg, var(--darkmode-primary-color) 0%, rgb(76, 58, 81) 100%);
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
   transition: 0.4s;
   z-index: 11;
@@ -283,7 +283,7 @@ header {
 }
 
 .hidden {
-  min-width: 50px !important;
+  min-width: 48px !important;
   width: 50px !important;
 }
 .hidden .user {
@@ -502,7 +502,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 95%;
   justify-content: center;
   align-items: center;
 }
@@ -822,9 +822,13 @@ header {
 .user-account .container .cards {
   align-items: start;
   width: 100%;
-  height: 240px;
+  min-height: 240px;
   display: flex;
+  overflow: hidden;
   overflow-x: overlay;
+}
+.user-account .container .cards::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0);
 }
 .user-account .container .cards * {
   transition: 0.2s;
@@ -906,6 +910,70 @@ header {
 }
 .user-account .container .cards .add_card:active {
   transform: scale(1);
+}
+.user-account .container .bottom-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+}
+.user-account .container .bottom-container .recent-transactions {
+  height: 100%;
+  width: 100%;
+}
+.user-account .container .bottom-container .recent-transactions table {
+  margin-top: 0;
+}
+.user-account .container .bottom-container .recent-transactions table tbody {
+  height: 115%;
+}
+.user-account .container .bottom-container .actions {
+  min-width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+.user-account .container .bottom-container .actions div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  background: linear-gradient(80deg, var(--tertiary-color), var(--secondary-color) 30%, var(--primary-color)) var(--x, 0)/200%;
+  transition: 0.2s;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.user-account .container .bottom-container .actions div:hover {
+  --x: 30%;
+}
+.user-account .container .bottom-container .actions div:active {
+  transform: scale(0.95);
+}
+.user-account .container .bottom-container .actions div span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -30px;
+  left: -20px;
+  opacity: 0.2;
+  transition: 0.5s;
+}
+.user-account .container .bottom-container .actions div span svg {
+  transform: rotate(-10deg);
+  font-size: 20rem;
+  transition: inherit;
+}
+.user-account .container .bottom-container .actions div:hover span {
+  left: 20%;
+}
+.user-account .container .bottom-container .actions div:hover span svg {
+  transform: rotate(10deg) scale(1.1);
 }
 
 .modal-container {
@@ -1016,4 +1084,22 @@ header {
 }
 .modal-container .modal form button:active {
   transform: scale(0.98);
+}
+
+.container.carousel {
+  width: 100%;
+  height: 100%;
+  justify-content: space-evenly;
+}
+.container.carousel .cards {
+  width: 100%;
+  min-height: 60%;
+  display: flex;
+  justify-content: center;
+}
+.container.carousel .cards .selected {
+  margin-left: -2rem;
+  margin-right: -2rem;
+  transform: scale(1.2);
+  z-index: 999;
 }/*# sourceMappingURL=style.css.map */

@@ -118,12 +118,12 @@ const SidePanel = () => {
             : "₱" + parseFloat(userBalance!).toLocaleString("en-US")}
         </div>
         <div className='actions'>
-          <NavLink to='/' className='home'>
+          {/* <NavLink to='/' className='home'>
             <TbHome />
             <p>Home</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink to='/payment' className='payment'>
-            <TbCreditCard />
+            <TbCash />
             <p>Payment</p>
           </NavLink>
           <NavLink to='/transactions' className='transactions'>
@@ -134,14 +134,14 @@ const SidePanel = () => {
             <TbCreditCard />
             <p>Account</p>
           </NavLink>
-          <NavLink to='/Profile' className='profile'>
+          {/* <NavLink to='/Profile' className='profile'>
             <TbUserCircle />
             <p>Profile</p>
           </NavLink>
           <NavLink to='/settings' className='settings'>
             <TbSettings />
             <p>Settings</p>
-          </NavLink>
+          </NavLink> */}
         </div>
         <div onClick={logout} className='logout'>
           <span>{sidePanelState ? "Logout" : <TbLogout />}</span>

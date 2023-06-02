@@ -4,13 +4,20 @@ import {
   ClientContextType,
   UserAccount,
   UserCards,
+  UserTransactions,
 } from "../../../Interfaces/interfaces";
 import ClientContext from "../../../context/ClientContext";
-import { getCard } from "../../../utils/Transactions";
+import { getCard, getHistorySet } from "../../../utils/Transactions";
 import AuthContext from "../../../context/AuthContext";
 import ATMCard from "../../../components/ATMCard";
 import { useNavigate } from "react-router-dom";
 import AddCard from "./AddCard";
+import {
+  TbCreditCard,
+  TbSquareRoundedArrowDownFilled,
+  TbSquareRoundedArrowUpFilled,
+  TbWallet,
+} from "react-icons/tb";
 
 const Card = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
@@ -59,6 +66,8 @@ const Card = () => {
     },
   };
 
+  const navigate = useNavigate();
+
   const [cardNum, setCardNum] = useState("");
   const [cardPin, setCardPin] = useState("");
 
@@ -87,6 +96,20 @@ const Card = () => {
     };
     fetchData();
   }, [userLoggedIn?.useraccount_set, isModal]);
+
+  const [transactionHistory, setTransactionHistory] = useState<
+    UserTransactions[] | null
+  >(userLoggedIn?.transactionhistory_set);
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      if (userLoggedIn) {
+        const data = await getHistorySet(userLoggedIn.id, authTokens!);
+        setTransactionHistory(data);
+      }
+    };
+
+    fetchData();
+  }, [userLoggedIn?.transactionhistory_set]);
 
   return (
     <>
@@ -124,6 +147,110 @@ const Card = () => {
               }}
             >
               <p>Add card</p>
+            </div>
+          </div>
+          <div className='bottom-container'>
+            <div className='recent-transactions transactions'>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Recent Activity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {transactionHistory
+                    ?.slice()
+                    .reverse()
+                    .map((e) => {
+                      let date = new Date(e.transaction_date);
+                      let currentDate = new Date();
+
+                      let displayDate;
+                      if (date.toDateString() === currentDate.toDateString()) {
+                        displayDate = date.toLocaleTimeString(undefined, {
+                          hour12: true,
+                          hour: "numeric",
+                          minute: "numeric",
+                          second: undefined,
+                        });
+                      } else {
+                        let yesterday = new Date(currentDate);
+                        yesterday.setDate(currentDate.getDate() - 1);
+
+                        if (date.toDateString() === yesterday.toDateString()) {
+                          let time = date.toLocaleTimeString(undefined, {
+                            hour12: true,
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: undefined,
+                          });
+                          displayDate = `Yesterday at ${time}`;
+                        } else {
+                          displayDate = date.toLocaleString();
+                        }
+                      }
+
+                      return (
+                        <tr key={e.id} className='activity'>
+                          <td>
+                            <div className='type'>
+                              {e.transaction_type === "Pay" ? (
+                                <TbSquareRoundedArrowUpFilled />
+                              ) : (
+                                <TbSquareRoundedArrowDownFilled />
+                              )}
+                              <div className=''>
+                                <span>{e.transaction_type}</span>
+                                <span>
+                                  {e.transaction_type === "Pay" ? (
+                                    <p>Payment sent to @{e.sent_to}</p>
+                                  ) : (
+                                    <p>Received payment from @{e.sent_to}</p>
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div className='amount'>
+                              <span
+                                style={
+                                  e.transaction_type === "Pay"
+                                    ? { color: "red" }
+                                    : { color: "green" }
+                                }
+                              >
+                                {e.transaction_type !== "Pay" ? "+" : "-"} ₱
+                                {e.amount.toLocaleString("en-US")}
+                              </span>
+                              <span>
+                                ₱{e.previous_balance.toLocaleString("en-US")}
+                              </span>
+                              <span>{displayDate}</span>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+            <div className='actions'>
+              <div
+                className='add-funds'
+                onClick={() => navigate("/card/add-funds")}
+              >
+                <span>
+                  <TbWallet />
+                </span>
+                Add funds
+              </div>
+              <div className='transfer-to-bank'>
+                <span>
+                  <TbCreditCard />
+                </span>
+                Transfer to bank
+              </div>
             </div>
           </div>
         </div>

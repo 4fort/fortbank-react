@@ -10,11 +10,12 @@ interface Props extends UserAccount {
     card_pin: string;
   };
   modalProps?: {
-    setCardNum: (e: string) => void;
-    setCardPin: (e: string) => void;
-    modalMode: number;
-    setModalMode: (e: number) => void;
+    setCardNum?: (e: string) => void;
+    setCardPin?: (e: string) => void;
+    modalMode?: number;
+    setModalMode?: (e: number) => void;
   };
+  className?: string;
 }
 
 const ATMCard = (props: Props) => {
@@ -26,6 +27,7 @@ const ATMCard = (props: Props) => {
     setIsModal,
     modalProps,
     selectedCard,
+    className,
   } = props;
 
   const date = new Date(date_added);
@@ -47,8 +49,10 @@ const ATMCard = (props: Props) => {
     <>
       <div
         className={
-          brand == "FortBank" ? "atm_card fortbank" : "atm_card otherbrand"
+          // brand == "FortBank" ? "atm_card fortbank" : "atm_card otherbrand"
+          selectedCard?.card_num == card_num ? "selected atm_card" : "atm_card"
         }
+        onClick={() => modalProps?.setCardNum!(card_num)}
       >
         <div className='actions'>
           <div
@@ -57,7 +61,7 @@ const ATMCard = (props: Props) => {
               setIsModal!(true);
               modalProps!.setCardNum!(card_num);
               modalProps!.setCardPin!(card_pin);
-              modalProps!.setModalMode(1);
+              modalProps!.setModalMode!(1);
             }}
           >
             <TbEdit />
@@ -68,7 +72,7 @@ const ATMCard = (props: Props) => {
               setIsModal!(true);
               modalProps!.setCardNum!(card_num);
               modalProps!.setCardPin!(card_pin);
-              modalProps!.setModalMode(2);
+              modalProps!.setModalMode!(2);
             }}
           >
             <TbTrash />

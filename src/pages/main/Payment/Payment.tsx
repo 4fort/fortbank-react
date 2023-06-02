@@ -18,7 +18,7 @@ const Payment = () => {
             <h3>Receive Payment</h3>
             <p>Receive payments using reference code or by using qr code</p>
           </NavLink>
-          <NavLink to='' className='add-funds'>
+          <NavLink to='/card' className='add-funds'>
             <TbWallet />
             <h3>Add Funds</h3>
             <p>Add funds to your wallet from your selected atm card</p>
