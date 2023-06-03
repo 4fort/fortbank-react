@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import QRCode from "react-qr-code";
 import { TbEdit, TbPolygon, TbTrash } from "react-icons/tb";
 import { UserAccount } from "../Interfaces/interfaces";
@@ -45,14 +45,25 @@ const ATMCard = (props: Props) => {
     username: card_num,
   };
 
+  const atm = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let isSelected = atm.current?.classList.contains("selected");
+    console.log("test");
+    if (isSelected) {
+      modalProps?.setCardNum!(card_num);
+      modalProps?.setCardPin!(card_pin);
+    }
+  }, [atm]);
+
   return (
     <>
       <div
         className={
           // brand == "FortBank" ? "atm_card fortbank" : "atm_card otherbrand"
-          selectedCard?.card_num == card_num ? "selected atm_card" : "atm_card"
+          "atm_card"
         }
-        onClick={() => modalProps?.setCardNum!(card_num)}
+        ref={atm}
+        // onClick={() => modalProps?.setCardNum!(card_num)}
       >
         <div className='actions'>
           <div

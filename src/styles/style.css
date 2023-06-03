@@ -1086,20 +1086,74 @@ header {
   transform: scale(0.98);
 }
 
-.container.carousel {
-  width: 100%;
-  height: 100%;
-  justify-content: space-evenly;
+.add-funds * {
+  transition: 0.1s;
 }
-.container.carousel .cards {
+.add-funds .container.carousel {
   width: 100%;
+  height: 50%;
+  justify-content: space-evenly;
+  overflow: hidden;
+}
+.add-funds .container.carousel .cards {
   min-height: 60%;
   display: flex;
-  justify-content: center;
+  gap: 20px;
 }
-.container.carousel .cards .selected {
-  margin-left: -2rem;
-  margin-right: -2rem;
-  transform: scale(1.2);
+.add-funds .container.carousel .cards .atm_card {
+  flex: 0 0 340px;
+  min-width: 0;
+}
+.add-funds .container.carousel .cards .selected {
+  transform: scale(1.4);
+  box-shadow: 0px 6px 8px 5px rgba(0, 0, 0, 0.1333333333);
   z-index: 999;
+}
+.add-funds .bottom-container {
+  margin-top: -4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 50%;
+}
+.add-funds .bottom-container .nav-btns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.add-funds .bottom-container .nav-btns svg {
+  opacity: 0.3;
+  font-size: 3rem;
+  cursor: pointer;
+}
+.add-funds .bottom-container .nav-btns svg:active {
+  transform: scale(0.95);
+}
+.add-funds .bottom-container .options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.add-funds .bottom-container .options label {
+  opacity: 0.5;
+}
+.add-funds .bottom-container .options input {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  color: white;
+  background: var(--darkmode-primary-color);
+  margin-bottom: 1rem;
+}
+.add-funds .bottom-container .options button {
+  padding: 0.8rem;
+  text-transform: capitalize;
+  border-radius: 8px;
+  border: none;
+  background: var(--tertiary-color);
+  color: white;
 }/*# sourceMappingURL=style.css.map */

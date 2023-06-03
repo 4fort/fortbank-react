@@ -1,5 +1,9 @@
-import { useContext, useState, useEffect } from "react";
-import { TbChevronLeft } from "react-icons/tb";
+import { useContext, useState, useEffect, useCallback } from "react";
+import {
+  TbChevronLeft,
+  TbSquareRoundedChevronLeft,
+  TbSquareRoundedChevronRight,
+} from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 import {
   AuthContextType,
@@ -10,6 +14,9 @@ import AuthContext from "../../../context/AuthContext";
 import ClientContext from "../../../context/ClientContext";
 import { getCard } from "../../../utils/Transactions";
 import ATMCard from "../../../components/ATMCard";
+
+import useEmblaCarousel from "embla-carousel-react";
+import ClassNames from "embla-carousel-class-names";
 
 const AddFunds = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
@@ -71,7 +78,7 @@ const AddFunds = () => {
     fetchData();
   }, [userLoggedIn?.useraccount_set]);
 
-  const [cardNum, setCardNum] = useState("456123");
+  const [cardNum, setCardNum] = useState("");
   const [cardPin, setCardPin] = useState("");
   const selectedCard = {
     card_num: cardNum,
@@ -79,72 +86,64 @@ const AddFunds = () => {
   };
   const modalProps = {
     setCardNum: setCardNum,
+    setCardPin: setCardPin,
   };
 
-  let cardsSize: number = userCards?.length! + 1;
-  const [startSlice, setStartSlice] = useState(0);
-  const [endSlice, setEndSlice] = useState(cardsSize - 2);
-
-  const nextCard = () => {
-    if (startSlice < 4) {
-      setStartSlice(startSlice + 1);
-      setEndSlice(endSlice + 1);
-    } else {
-      setStartSlice(0);
-      setEndSlice(cardsSize - 2);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: false,
+    },
+    [ClassNames({ selected: "selected" })]
+  );
+  useEffect(() => {
+    console.log("here");
+    if (emblaApi) {
+      console.log(emblaApi.slidesInView());
     }
-  };
-  console.log(startSlice, endSlice);
+  }, [emblaApi]);
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   return (
-    <div className='main-panel pay'>
+    <div className='main-panel add-funds'>
       <h1>
         Account
         <NavLink to='/card'>
           <TbChevronLeft /> Return
         </NavLink>
       </h1>
-      <div className='container carousel'>
+      <div className='container carousel' ref={emblaRef}>
         <div className='cards'>
           {userCards &&
-            userCards
-              ?.map((e) => {
-                return (
-                  <ATMCard
-                    selectedCard={selectedCard}
-                    modalProps={modalProps}
-                    key={e.id}
-                    brand={e.brand}
-                    card_num={e.card_num}
-                    card_pin={e.card_pin}
-                    date_added={e.date_added}
-                  />
-                );
-              })
-              .slice(startSlice, endSlice)
-              .concat(
-                userCards
-                  ?.map((e) => {
-                    return (
-                      <ATMCard
-                        selectedCard={selectedCard}
-                        modalProps={modalProps}
-                        key={e.id}
-                        brand={e.brand}
-                        card_num={e.card_num}
-                        card_pin={e.card_pin}
-                        date_added={e.date_added}
-                      />
-                    );
-                  })
-                  .slice(0, endSlice >= 5 ? endSlice - 4 : 0)
-              )}
+            userCards?.map((e) => {
+              return (
+                <ATMCard
+                  selectedCard={selectedCard}
+                  modalProps={modalProps}
+                  key={e.id}
+                  brand={e.brand}
+                  card_num={e.card_num}
+                  card_pin={e.card_pin}
+                  date_added={e.date_added}
+                />
+              );
+            })}
         </div>
-        <button>prev</button>
-        <button onClick={() => nextCard()}>next</button>
+      </div>
+      <div className='bottom-container'>
+        <div className='nav-btns'>
+          <TbSquareRoundedChevronLeft onClick={scrollPrev} />
+          <TbSquareRoundedChevronRight onClick={scrollNext} />
+        </div>
         <div className='options'>
+          <label htmlFor='amount'>Amount</label>
           <input type='text' />
-          <button>add funds</button>
+          <button onClick={() => console.log(selectedCard)}>add funds</button>
         </div>
       </div>
     </div>

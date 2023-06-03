@@ -1185,20 +1185,77 @@ header {
   }
 }
 
-.container.carousel {
-  width: 100%;
-  height: 100%;
-  justify-content: space-evenly;
-  .cards {
+.add-funds {
+  * {
+    transition: 0.1s;
+  }
+  .container.carousel {
     width: 100%;
-    min-height: 60%;
+    height: 50%;
+    justify-content: space-evenly;
+    overflow: hidden;
+    .cards {
+      min-height: 60%;
+      display: flex;
+      gap: 20px;
+
+      .atm_card {
+        flex: 0 0 340px;
+        min-width: 0;
+      }
+      .selected {
+        transform: scale(1.4);
+        box-shadow: 0px 6px 8px 5px #00000022;
+        z-index: 999;
+      }
+    }
+  }
+  .bottom-container {
+    margin-top: -4rem;
     display: flex;
-    justify-content: center;
-    .selected {
-      margin-left: -2rem;
-      margin-right: -2rem;
-      transform: scale(1.2);
-      z-index: 999;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 50%;
+    .nav-btns {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      svg {
+        opacity: 0.3;
+        font-size: 3rem;
+        cursor: pointer;
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      label {
+        opacity: 0.5;
+      }
+      input {
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        color: white;
+        background: var(--darkmode-primary-color);
+        margin-bottom: 1rem;
+      }
+      button {
+        padding: 0.8rem;
+        text-transform: capitalize;
+        border-radius: 8px;
+        border: none;
+        background: var(--tertiary-color);
+        color: white;
+      }
     }
   }
 }
