@@ -19,6 +19,8 @@ import {
   TbWallet,
 } from "react-icons/tb";
 
+import { ToastContainer, toast } from "react-toastify";
+
 const Card = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
     authTokens: null,
@@ -276,6 +278,7 @@ const Card = () => {
           </div>
         </div>
       </div>
+      <ToastContainer newestOnTop hideProgressBar pauseOnHover theme='dark' />
     </>
   );
 };

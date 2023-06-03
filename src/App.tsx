@@ -23,8 +23,9 @@ import Settings from "./pages/main/Settings";
 import CardsPanel from "./components/CardsPanel";
 import Home from "./pages/main/Home";
 import Receive from "./pages/main/Payment/Receive";
-import AddCard from "./pages/main/Account/AddCard";
 import AddFunds from "./pages/main/Account/AddFunds";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

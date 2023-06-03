@@ -21,6 +21,8 @@ import {
   cardPinValidator,
 } from "../../../utils/FormValidator";
 
+import { ToastContainer, toast } from "react-toastify";
+
 interface Props {
   setIsModal: (e: boolean) => void;
   selectedCard: {
@@ -117,7 +119,12 @@ const AddCard = (props: Props) => {
       return;
     }
     if (modalProps.modalMode === 1) {
-      await updateCard(userLoggedIn.id, cardDetails, authTokens!);
+      let edited = await updateCard(userLoggedIn.id, cardDetails, authTokens!);
+      if (!edited) {
+        return toast.error("Failed to edit card", {
+          className: "toast tst",
+        });
+      }
       modalProps.setCardNum("");
       modalProps.setCardPin("");
       setIsModal(false);
@@ -129,14 +136,29 @@ const AddCard = (props: Props) => {
     });
 
     if (isExist) {
+      toast.error("Card already exist in your account", {
+        className: "toast tst",
+      });
       console.log("Account already exists");
       return;
     } else if (!isExist) {
-      await addCard(userLoggedIn.id, cardDetails, authTokens!);
+      let added = await addCard(userLoggedIn.id, cardDetails, authTokens!);
+      if (!added) {
+        return toast.error("Failed to add card", {
+          className: "toast tst",
+        });
+      }
       modalProps.setCardNum("");
       modalProps.setCardPin("");
       setIsModal(false);
-      return;
+      return toast.success(
+        `Card successfully ${
+          modalProps.modalMode === 0 ? "added" : "edited"
+        } to your account`,
+        {
+          className: "toast tst",
+        }
+      );
     }
   };
 
@@ -161,6 +183,11 @@ const AddCard = (props: Props) => {
               <button
                 className='yes'
                 onClick={() => {
+                  toast.success("Card deleted in your account", {
+                    className: "toast tst",
+                  });
+                  modalProps.setCardNum("");
+                  modalProps.setCardPin("");
                   deleteCard(userLoggedIn.id, cardDetails, authTokens!);
                   setIsModal(false);
                 }}
@@ -169,7 +196,6 @@ const AddCard = (props: Props) => {
               </button>
               <button
                 onClick={() => {
-                  setIsModal(false);
                   modalProps.setCardNum("");
                   modalProps.setCardPin("");
                 }}
@@ -236,7 +262,11 @@ const AddCard = (props: Props) => {
                   {cardPinError}
                 </span>
               ) : null}
-              <button>{modalMode[modalProps.modalMode]}</button>
+              <button
+                className={cardNumError || cardPinError ? "btn disabled" : ""}
+              >
+                {modalMode[modalProps.modalMode]}
+              </button>
             </form>
           </>
         )}

@@ -1182,4 +1182,19 @@ header {
   display: flex;
   align-items: center;
   padding: 0.5rem 0;
+}
+
+.toast.tst {
+  background: rgba(37, 37, 37, 0.8);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.btn.disabled {
+  pointer-events: none;
+  background: var(--darkmode-secondary-color) !important;
+  opacity: 0.8;
 }/*# sourceMappingURL=style.css.map */
