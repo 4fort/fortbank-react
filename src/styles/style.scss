@@ -1071,6 +1071,19 @@ header {
           }
         }
       }
+      .actions.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        div {
+          background: var(--darkmode-primary-color);
+          &:hover span {
+            left: -20px;
+            svg {
+              transform: rotate(-10deg) scale(1);
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -1188,17 +1201,86 @@ header {
 .container.carousel {
   width: 100%;
   height: 100%;
-  justify-content: space-evenly;
+  justify-content: start;
   .cards {
+    align-items: start;
     width: 100%;
-    min-height: 60%;
+    min-height: 240px;
     display: flex;
-    justify-content: center;
+    overflow: hidden;
+    overflow-x: overlay;
+    &::-webkit-scrollbar-thumb {
+      background: #88888800;
+    }
+    .atm_card {
+      margin: 1rem;
+      cursor: pointer;
+    }
     .selected {
-      margin-left: -2rem;
-      margin-right: -2rem;
-      transform: scale(1.2);
+      // margin-left: -2rem;
+      // margin-right: -2rem;
+      transform: scale(1.1);
       z-index: 999;
+      box-shadow: 0px 6px 8px 1px #00000031;
+    }
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+    * {
+      color: white;
+      transition: 0.1s;
+    }
+    .presets {
+      display: flex;
+      gap: 1rem;
+      div {
+        width: 5rem;
+        aspect-ratio: 2/1.2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid var(--darkmode-primary-color);
+        border-radius: 50px;
+      }
+      .selected {
+        transform: scale(1.1);
+        background: var(--darkmode-secondary-color);
+      }
+    }
+    .custom {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+      margin-top: 5rem;
+      input {
+        padding: 0.8rem;
+        border: none;
+        border-radius: 8px;
+        background: var(--darkmode-primary-color);
+        outline: none;
+        margin-bottom: 1rem;
+      }
+      button {
+        text-transform: capitalize;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 8px;
+        background: var(--tertiary-color);
+      }
+      .error {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        height: auto;
+        span {
+          display: flex;
+          align-items: center;
+          padding: 0.5rem 0;
+        }
+      }
     }
   }
 }

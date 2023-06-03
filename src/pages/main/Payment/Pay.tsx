@@ -28,7 +28,7 @@ const Pay = () => {
     authTokens: null,
   };
 
-  let { userLoggedIn } = useContext<ClientContextType | null>(
+  let { userLoggedIn, setUserBalance } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -55,6 +55,7 @@ const Pay = () => {
       },
       last_login: "",
     },
+    setUserBalance: (e: number) => {},
   };
 
   const navigate = useNavigate();
@@ -153,7 +154,7 @@ const Pay = () => {
       }, timeoutInterval);
     }
 
-    userLoggedIn.userwallet.balance = String(newBalance?.balance);
+    setUserBalance(Number(newBalance?.balance));
 
     setLoading(false);
     setIsSuccessful(true);

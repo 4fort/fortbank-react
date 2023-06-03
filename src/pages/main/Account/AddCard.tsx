@@ -123,11 +123,21 @@ const AddCard = (props: Props) => {
       setIsModal(false);
       return;
     }
-    await addCard(userLoggedIn.id, cardDetails, authTokens!);
-    modalProps.setCardNum("");
-    modalProps.setCardPin("");
-    setIsModal(false);
-    return;
+
+    const isExist = userLoggedIn.useraccount_set.some((e) => {
+      return e.card_num == cardDetails.card_num;
+    });
+
+    if (isExist) {
+      console.log("Account already exists");
+      return;
+    } else if (!isExist) {
+      await addCard(userLoggedIn.id, cardDetails, authTokens!);
+      modalProps.setCardNum("");
+      modalProps.setCardPin("");
+      setIsModal(false);
+      return;
+    }
   };
 
   const modalMode = ["Add Card", "Edit Card"];

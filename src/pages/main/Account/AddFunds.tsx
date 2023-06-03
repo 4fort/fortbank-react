@@ -1,6 +1,11 @@
 import { useContext, useState, useEffect } from "react";
-import { TbChevronLeft } from "react-icons/tb";
-import { NavLink } from "react-router-dom";
+import {
+  TbChevronLeft,
+  TbCircleCheck,
+  TbCircleX,
+  TbExclamationCircle,
+} from "react-icons/tb";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   AuthContextType,
   ClientContextType,
@@ -8,14 +13,21 @@ import {
 } from "../../../Interfaces/interfaces";
 import AuthContext from "../../../context/AuthContext";
 import ClientContext from "../../../context/ClientContext";
-import { getCard } from "../../../utils/Transactions";
+import { addFunds, getCard } from "../../../utils/Transactions";
 import ATMCard from "../../../components/ATMCard";
+import {
+  selectedAmountValidator,
+  selectedCardValidator,
+} from "../../../utils/FormValidator";
+import Loading from "../../../components/Loading";
+import Alert from "../../../components/Alert";
+import { timeoutInterval } from "../../../context/GlobalVars";
 
 const AddFunds = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
     authTokens: null,
   };
-  let { userLoggedIn } = useContext<ClientContextType | null>(
+  let { userLoggedIn, setUserBalance } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -56,7 +68,14 @@ const AddFunds = () => {
       ],
       last_login: "",
     },
+    setUserBalance: (e: number) => {},
   };
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [isFail, setIsFail] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
 
   const [userCards, setUserCards] = useState<UserCards[] | null>(
     userLoggedIn?.useraccount_set as UserCards[]
@@ -71,7 +90,7 @@ const AddFunds = () => {
     fetchData();
   }, [userLoggedIn?.useraccount_set]);
 
-  const [cardNum, setCardNum] = useState("456123");
+  const [cardNum, setCardNum] = useState("");
   const [cardPin, setCardPin] = useState("");
   const selectedCard = {
     card_num: cardNum,
@@ -79,52 +98,92 @@ const AddFunds = () => {
   };
   const modalProps = {
     setCardNum: setCardNum,
+    setCardPin: setCardPin,
   };
 
-  let cardsSize: number = userCards?.length! + 1;
-  const [startSlice, setStartSlice] = useState(0);
-  const [endSlice, setEndSlice] = useState(cardsSize - 2);
+  const presetAmount = [100, 300, 500, 1000, 5000];
+  const [amount, setAmount] = useState(0);
+  let cardError: string | undefined;
+  let amountError: string | undefined;
+  const [cardErrorMsg, setCardErrorMsg] = useState("");
+  const [amountErrorMsg, setAmountErrorMsg] = useState("");
 
-  const nextCard = () => {
-    if (startSlice < 4) {
-      setStartSlice(startSlice + 1);
-      setEndSlice(endSlice + 1);
-    } else {
-      setStartSlice(0);
-      setEndSlice(cardsSize - 2);
+  useEffect(() => {
+    if (cardNum && cardPin) {
+      setCardErrorMsg("");
     }
-  };
-  console.log(startSlice, endSlice);
+    if (amount !== 0) {
+      setAmountErrorMsg("");
+    }
+  }, [selectedCard]);
 
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    const data = {
+      user: userLoggedIn.id,
+      card_num: Number(cardNum),
+      card_pin: Number(cardPin),
+      amount: amount,
+    };
+    cardError = selectedCardValidator(data);
+    setCardErrorMsg(cardError!);
+    amountError = selectedAmountValidator(data.amount);
+    setAmountErrorMsg(amountError!);
+
+    if (cardError === undefined && amountError === undefined) {
+      const newBalance = await addFunds(data, authTokens!);
+      if (newBalance) {
+        setUserBalance(Number(newBalance.balance));
+        setLoading(false);
+        setIsSuccessful(true);
+        setTimeout(() => {
+          return navigate("/card");
+        }, timeoutInterval);
+      } else if (!newBalance) {
+        setLoading(false);
+        setIsFail(true);
+        setTimeout(() => {
+          return navigate("/card");
+        }, timeoutInterval);
+      }
+    }
+    console.log(data);
+    console.log(cardError);
+    setLoading(false);
+    return;
+  };
   return (
-    <div className='main-panel pay'>
-      <h1>
-        Account
-        <NavLink to='/card'>
-          <TbChevronLeft /> Return
-        </NavLink>
-      </h1>
-      <div className='container carousel'>
-        <div className='cards'>
-          {userCards &&
-            userCards
-              ?.map((e) => {
-                return (
-                  <ATMCard
-                    selectedCard={selectedCard}
-                    modalProps={modalProps}
-                    key={e.id}
-                    brand={e.brand}
-                    card_num={e.card_num}
-                    card_pin={e.card_pin}
-                    date_added={e.date_added}
-                  />
-                );
-              })
-              .slice(startSlice, endSlice)
-              .concat(
-                userCards
-                  ?.map((e) => {
+    <>
+      <div className='main-panel pay'>
+        {loading ? (
+          <Loading />
+        ) : isSuccessful ? (
+          <Alert
+            className='success-screen'
+            msg={alertMsg}
+            icon={<TbCircleCheck />}
+            title='Success!'
+          />
+        ) : isFail ? (
+          <Alert
+            className='fail-screen'
+            msg={alertMsg}
+            icon={<TbCircleX />}
+            title='Fail!'
+          />
+        ) : (
+          <>
+            <h1>
+              Account
+              <NavLink to='/card'>
+                <TbChevronLeft /> Return
+              </NavLink>
+            </h1>
+            <div className='container carousel'>
+              <div className='cards'>
+                {userCards &&
+                  userCards?.map((e) => {
                     return (
                       <ATMCard
                         selectedCard={selectedCard}
@@ -136,18 +195,54 @@ const AddFunds = () => {
                         date_added={e.date_added}
                       />
                     );
-                  })
-                  .slice(0, endSlice >= 5 ? endSlice - 4 : 0)
-              )}
-        </div>
-        <button>prev</button>
-        <button onClick={() => nextCard()}>next</button>
-        <div className='options'>
-          <input type='text' />
-          <button>add funds</button>
-        </div>
+                  })}
+              </div>
+              <div className='options'>
+                <div className='presets'>
+                  {presetAmount.map((e) => {
+                    return (
+                      <div
+                        className={
+                          amount === e
+                            ? "preset-amount selected"
+                            : "preset-amount"
+                        }
+                        onClick={() => {
+                          setAmount(e);
+                        }}
+                        key={e}
+                      >
+                        {e}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className='custom'>
+                  {/* <input type='text' onChange={(e) => setAmount(e.target.value)} /> */}
+                  {cardErrorMsg || amountErrorMsg ? (
+                    <div className='error'>
+                      {cardErrorMsg ? (
+                        <span>
+                          <TbExclamationCircle />
+                          {cardErrorMsg}
+                        </span>
+                      ) : null}
+                      {amountErrorMsg ? (
+                        <span>
+                          <TbExclamationCircle />
+                          {amountErrorMsg}
+                        </span>
+                      ) : null}
+                    </div>
+                  ) : null}
+                  <button onClick={handleSubmit}>add funds</button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

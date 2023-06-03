@@ -975,6 +975,19 @@ header {
 .user-account .container .bottom-container .actions div:hover span svg {
   transform: rotate(10deg) scale(1.1);
 }
+.user-account .container .bottom-container .actions.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.user-account .container .bottom-container .actions.disabled div {
+  background: var(--darkmode-primary-color);
+}
+.user-account .container .bottom-container .actions.disabled div:hover span {
+  left: -20px;
+}
+.user-account .container .bottom-container .actions.disabled div:hover span svg {
+  transform: rotate(-10deg) scale(1);
+}
 
 .modal-container {
   position: absolute;
@@ -1089,17 +1102,84 @@ header {
 .container.carousel {
   width: 100%;
   height: 100%;
-  justify-content: space-evenly;
+  justify-content: start;
 }
 .container.carousel .cards {
+  align-items: start;
   width: 100%;
-  min-height: 60%;
+  min-height: 240px;
   display: flex;
-  justify-content: center;
+  overflow: hidden;
+  overflow-x: overlay;
+}
+.container.carousel .cards::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0);
+}
+.container.carousel .cards .atm_card {
+  margin: 1rem;
+  cursor: pointer;
 }
 .container.carousel .cards .selected {
-  margin-left: -2rem;
-  margin-right: -2rem;
-  transform: scale(1.2);
+  transform: scale(1.1);
   z-index: 999;
+  box-shadow: 0px 6px 8px 1px rgba(0, 0, 0, 0.1921568627);
+}
+.container.carousel .options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+}
+.container.carousel .options * {
+  color: white;
+  transition: 0.1s;
+}
+.container.carousel .options .presets {
+  display: flex;
+  gap: 1rem;
+}
+.container.carousel .options .presets div {
+  width: 5rem;
+  aspect-ratio: 2/1.2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--darkmode-primary-color);
+  border-radius: 50px;
+}
+.container.carousel .options .presets .selected {
+  transform: scale(1.1);
+  background: var(--darkmode-secondary-color);
+}
+.container.carousel .options .custom {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin-top: 5rem;
+}
+.container.carousel .options .custom input {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--darkmode-primary-color);
+  outline: none;
+  margin-bottom: 1rem;
+}
+.container.carousel .options .custom button {
+  text-transform: capitalize;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--tertiary-color);
+}
+.container.carousel .options .custom .error {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  height: auto;
+}
+.container.carousel .options .custom .error span {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
 }/*# sourceMappingURL=style.css.map */

@@ -8,8 +8,10 @@ import {
   UserWallet,
 } from "../../../Interfaces/interfaces";
 import {
+  TbCreditCard,
   TbSquareRoundedArrowDownFilled,
   TbSquareRoundedArrowUpFilled,
+  TbWallet,
 } from "react-icons/tb";
 import { getHistorySet } from "../../../utils/Transactions";
 import AuthContext from "../../../context/AuthContext";
@@ -121,17 +123,25 @@ const Transactions = () => {
                     <div className='type'>
                       {e.transaction_type === "Pay" ? (
                         <TbSquareRoundedArrowUpFilled />
-                      ) : (
+                      ) : e.transaction_type === "Add funds" ? (
+                        <TbWallet />
+                      ) : e.transaction_type === "Receive Payment" ? (
                         <TbSquareRoundedArrowDownFilled />
-                      )}
+                      ) : e.transaction_type === "Cashout Funds" ? (
+                        <TbCreditCard />
+                      ) : null}
                       <div className=''>
                         <span>{e.transaction_type}</span>
                         <span>
                           {e.transaction_type === "Pay" ? (
                             <p>Payment sent to @{e.sent_to}</p>
-                          ) : (
+                          ) : e.transaction_type === "Receive Payment" ? (
                             <p>Received payment from @{e.sent_to}</p>
-                          )}
+                          ) : e.transaction_type === "Add funds" ? (
+                            <p>Added funds from {e.sent_to}</p>
+                          ) : e.transaction_type === "Cashout Funds" ? (
+                            <p>Transfered funds to {e.sent_to}</p>
+                          ) : null}
                         </span>
                       </div>
                     </div>

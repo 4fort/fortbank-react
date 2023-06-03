@@ -52,7 +52,10 @@ const ATMCard = (props: Props) => {
           // brand == "FortBank" ? "atm_card fortbank" : "atm_card otherbrand"
           selectedCard?.card_num == card_num ? "selected atm_card" : "atm_card"
         }
-        onClick={() => modalProps?.setCardNum!(card_num)}
+        onClick={() => {
+          modalProps?.setCardNum!(card_num);
+          modalProps?.setCardPin!(card_pin);
+        }}
       >
         <div className='actions'>
           <div

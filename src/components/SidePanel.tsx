@@ -26,7 +26,7 @@ const SidePanel = () => {
     logout: () => {},
     authTokens: null,
   };
-  let { userLoggedIn } = useContext<ClientContextType | null>(
+  let { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -69,19 +69,6 @@ const SidePanel = () => {
     },
   };
 
-  const [userBalance, setUserBalance] = useState<UserWallet["balance"] | null>(
-    userLoggedIn?.userwallet?.balance
-  );
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userLoggedIn && authTokens) {
-        const data = await getBalance(userLoggedIn.id, authTokens);
-        data && setUserBalance(data.balance);
-      }
-    };
-    fetchData();
-  }, [userLoggedIn?.transactionhistory_set]);
-
   const [sidePanelState, setSidePanelState] = useState(
     Boolean(localStorage.getItem("sidePanelState"))
   );
@@ -115,7 +102,7 @@ const SidePanel = () => {
           <span>Wallet Balance</span>
           {!userLoggedIn
             ? "Processing..."
-            : "₱" + parseFloat(userBalance!).toLocaleString("en-US")}
+            : "₱" + userBalance!.toLocaleString("en-US")}
         </div>
         <div className='actions'>
           {/* <NavLink to='/' className='home'>

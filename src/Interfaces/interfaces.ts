@@ -64,7 +64,7 @@ interface ModifiedFortbankUser
   > {}
 
 export interface UserToken {
-  id: number;
+  user_id: number;
   username: string;
   is_superuser: boolean;
   is_active: boolean;
@@ -157,4 +157,6 @@ export type ChildProp = {
 
 export interface ClientContextType {
   userLoggedIn: FortbankUser;
+  userBalance: number;
+  setUserBalance: React.Dispatch<React.SetStateAction<number>>;
 }

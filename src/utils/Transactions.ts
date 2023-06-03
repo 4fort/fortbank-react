@@ -237,7 +237,7 @@ interface AddFundsData {
   amount: number;
 }
 
-export const AddFunds = async (
+export const addFunds = async (
   data: AddFundsData,
   authTokens: AuthTokensType
 ): Promise<UserWallet | null> => {

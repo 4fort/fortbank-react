@@ -111,6 +111,16 @@ const Card = () => {
     fetchData();
   }, [userLoggedIn?.transactionhistory_set]);
 
+  const getFilteredHistory = (
+    query: string,
+    histories: UserTransactions[] | null
+  ) => {
+    return histories?.filter((e) => {
+      return e.transaction_type.toLowerCase().includes(query);
+    });
+  };
+  const filtereredHistory = getFilteredHistory("funds", transactionHistory);
+
   return (
     <>
       {isModal ? (
@@ -154,11 +164,11 @@ const Card = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>Recent Activity</th>
+                    <th>Recent Card Activities</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {transactionHistory
+                  {filtereredHistory
                     ?.slice()
                     .reverse()
                     .map((e) => {
@@ -196,17 +206,26 @@ const Card = () => {
                             <div className='type'>
                               {e.transaction_type === "Pay" ? (
                                 <TbSquareRoundedArrowUpFilled />
-                              ) : (
+                              ) : e.transaction_type === "Add funds" ? (
+                                <TbWallet />
+                              ) : e.transaction_type === "Receive Payment" ? (
                                 <TbSquareRoundedArrowDownFilled />
-                              )}
+                              ) : e.transaction_type === "Cashout Funds" ? (
+                                <TbCreditCard />
+                              ) : null}
                               <div className=''>
                                 <span>{e.transaction_type}</span>
                                 <span>
                                   {e.transaction_type === "Pay" ? (
                                     <p>Payment sent to @{e.sent_to}</p>
-                                  ) : (
+                                  ) : e.transaction_type ===
+                                    "Receive Payment" ? (
                                     <p>Received payment from @{e.sent_to}</p>
-                                  )}
+                                  ) : e.transaction_type === "Add funds" ? (
+                                    <p>Added funds from {e.sent_to}</p>
+                                  ) : e.transaction_type === "Cashout Funds" ? (
+                                    <p>Transfered funds to {e.sent_to}</p>
+                                  ) : null}
                                 </span>
                               </div>
                             </div>
@@ -235,7 +254,9 @@ const Card = () => {
                 </tbody>
               </table>
             </div>
-            <div className='actions'>
+            <div
+              className={!userCards?.length ? "actions disabled" : "actions"}
+            >
               <div
                 className='add-funds'
                 onClick={() => navigate("/card/add-funds")}
