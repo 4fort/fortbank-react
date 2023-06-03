@@ -139,3 +139,24 @@ export const addressValidator: Validate = (address: string) => {
 
   return undefined;
 };
+
+interface cardDetails {
+  user: number;
+  card_num: number;
+  card_pin: number;
+  amount: number;
+}
+
+export const selectedCardValidator = (cardDetails: cardDetails) => {
+  if (cardDetails.card_num === 0 && cardDetails.card_pin === 0) {
+    return "Must select a card";
+  }
+  return undefined;
+};
+
+export const selectedAmountValidator = (amount: number) => {
+  if (amount === 0) {
+    return "Must select amount";
+  }
+  return undefined;
+};
