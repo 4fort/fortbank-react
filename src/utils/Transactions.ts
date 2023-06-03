@@ -137,7 +137,7 @@ export const addCard = async (
   userId: number,
   cardDetails: ModifiedUserAccount,
   authTokens: AuthTokensType
-): Promise<UserAccount | null> => {
+): Promise<UserAccount> => {
   try {
     const response = await axios.post(
       `${baseUrl}/api/users/account/${userId}`,
@@ -152,7 +152,7 @@ export const addCard = async (
     return response.data;
   } catch (error) {
     console.log(error);
-    return null;
+    throw error;
   }
 };
 
@@ -160,7 +160,7 @@ export const updateCard = async (
   userId: number,
   cardDetails: ModifiedUserAccount,
   authTokens: AuthTokensType
-): Promise<UserAccount | null> => {
+): Promise<UserAccount> => {
   try {
     const response = await axios.put(
       `${baseUrl}/api/users/account/${userId}`,
@@ -175,7 +175,7 @@ export const updateCard = async (
     return response.data;
   } catch (error) {
     console.log(error);
-    return null;
+    throw error;
   }
 };
 
@@ -240,7 +240,7 @@ interface AddFundsData {
 export const addFunds = async (
   data: AddFundsData,
   authTokens: AuthTokensType
-): Promise<UserWallet | null> => {
+): Promise<UserWallet> => {
   try {
     const response = await axios.put(
       `${baseUrl}/api/transaction/addfunds`,
@@ -252,17 +252,18 @@ export const addFunds = async (
         },
       }
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
-    return null;
+    throw error;
   }
 };
 
 export const CashOutFunds = async (
   data: AddFundsData,
   authTokens: AuthTokensType
-): Promise<UserWallet | null> => {
+): Promise<UserWallet> => {
   try {
     const response = await axios.put(
       `${baseUrl}/api/transaction/cashoutfunds`,
@@ -277,7 +278,7 @@ export const CashOutFunds = async (
     return response.data;
   } catch (error) {
     console.log(error);
-    return null;
+    throw error;
   }
 };
 

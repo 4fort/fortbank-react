@@ -26,11 +26,15 @@ import Receive from "./pages/main/Payment/Receive";
 import AddFunds from "./pages/main/Account/AddFunds";
 
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import TransferToBank from "./pages/main/Account/TransferToBank";
 
 function App() {
   return (
     <div className='App'>
       <AuthProvider>
+        <ToastContainer newestOnTop hideProgressBar pauseOnHover theme='dark' />
+
         <Routes>
           <Route element={<PrivateRoutes isSuperUserRequired />}>
             <Route
@@ -126,6 +130,15 @@ function App() {
                 <ClientProvider>
                   <SidePanel />
                   <AddFunds />
+                </ClientProvider>
+              }
+            />
+            <Route
+              path='/card/transfer-to-bank'
+              element={
+                <ClientProvider>
+                  <SidePanel />
+                  <TransferToBank />
                 </ClientProvider>
               }
             />

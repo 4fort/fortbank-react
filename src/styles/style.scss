@@ -1287,8 +1287,8 @@ header {
 
 .toast {
   &.tst {
-    background: rgba(37, 37, 37, 0.8);
     backdrop-filter: blur(5px);
+    background: rgba(37, 37, 37, 0.8);
     border-radius: 8px;
     font-size: 0.9rem;
     opacity: 0.8;

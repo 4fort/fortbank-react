@@ -119,16 +119,20 @@ const AddCard = (props: Props) => {
       return;
     }
     if (modalProps.modalMode === 1) {
-      let edited = await updateCard(userLoggedIn.id, cardDetails, authTokens!);
-      if (!edited) {
-        return toast.error("Failed to edit card", {
+      let edited;
+      try {
+        edited = await updateCard(userLoggedIn.id, cardDetails, authTokens!);
+      } catch (error) {
+        return toast.error("Failed to edit card. Card isn't verified.", {
           className: "toast tst",
         });
       }
       modalProps.setCardNum("");
       modalProps.setCardPin("");
       setIsModal(false);
-      return;
+      return toast.success("Card edited successfully", {
+        className: "toast tst",
+      });
     }
 
     const isExist = userLoggedIn.useraccount_set.some((e) => {
@@ -142,12 +146,15 @@ const AddCard = (props: Props) => {
       console.log("Account already exists");
       return;
     } else if (!isExist) {
-      let added = await addCard(userLoggedIn.id, cardDetails, authTokens!);
-      if (!added) {
-        return toast.error("Failed to add card", {
+      let added;
+      try {
+        added = await addCard(userLoggedIn.id, cardDetails, authTokens!);
+      } catch (error) {
+        return toast.error("Failed to add card. Card isn't verified.", {
           className: "toast tst",
         });
       }
+
       modalProps.setCardNum("");
       modalProps.setCardPin("");
       setIsModal(false);
@@ -198,6 +205,7 @@ const AddCard = (props: Props) => {
                 onClick={() => {
                   modalProps.setCardNum("");
                   modalProps.setCardPin("");
+                  setIsModal(false);
                 }}
               >
                 No

@@ -13,7 +13,7 @@ import {
 } from "../../../Interfaces/interfaces";
 import AuthContext from "../../../context/AuthContext";
 import ClientContext from "../../../context/ClientContext";
-import { addFunds, getCard } from "../../../utils/Transactions";
+import { CashOutFunds, addFunds, getCard } from "../../../utils/Transactions";
 import ATMCard from "../../../components/ATMCard";
 import {
   selectedAmountValidator,
@@ -25,7 +25,7 @@ import { timeoutInterval } from "../../../context/GlobalVars";
 
 import { toast } from "react-toastify";
 
-const AddFunds = () => {
+const TransferToBank = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
     authTokens: null,
   };
@@ -133,10 +133,14 @@ const AddFunds = () => {
     amountError = selectedAmountValidator(data.amount);
     setAmountErrorMsg(amountError!);
 
-    if (cardError === undefined && amountError === undefined) {
+    if (
+      cardError === undefined &&
+      amountError === undefined &&
+      amount < Number(userLoggedIn.userwallet.balance)
+    ) {
       let newBalance;
       try {
-        newBalance = await addFunds(data, authTokens!);
+        newBalance = await CashOutFunds(data, authTokens!);
       } catch (error: any) {
         setLoading(false);
         return toast.error(
@@ -147,7 +151,7 @@ const AddFunds = () => {
         );
       }
 
-      toast.success("Successfully added funds to your account.", {
+      toast.success("Successfully transfered cash to bank.", {
         className: "toast tst",
       });
       setUserBalance(Number(newBalance.balance));
@@ -245,7 +249,7 @@ const AddFunds = () => {
                       ) : null}
                     </div>
                   ) : null}
-                  <button onClick={handleSubmit}>add funds</button>
+                  <button onClick={handleSubmit}>Transfer to Bank</button>
                 </div>
               </div>
             </div>
@@ -256,4 +260,4 @@ const AddFunds = () => {
   );
 };
 
-export default AddFunds;
+export default TransferToBank;

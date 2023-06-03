@@ -102,7 +102,7 @@ const SidePanel = () => {
           <span>Wallet Balance</span>
           {!userLoggedIn
             ? "Processing..."
-            : "₱" + userBalance!.toLocaleString("en-US")}
+            : "₱" + userBalance?.toLocaleString("en-US")}
         </div>
         <div className='actions'>
           {/* <NavLink to='/' className='home'>

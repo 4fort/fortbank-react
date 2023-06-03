@@ -15,6 +15,7 @@ import {
 } from "react-icons/tb";
 import { getHistorySet } from "../../../utils/Transactions";
 import AuthContext from "../../../context/AuthContext";
+import HistoryRow from "../../../components/HistoryRow";
 
 const Transactions = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
@@ -118,51 +119,14 @@ const Transactions = () => {
               }
 
               return (
-                <tr key={e.id} className='activity'>
-                  <td>
-                    <div className='type'>
-                      {e.transaction_type === "Pay" ? (
-                        <TbSquareRoundedArrowUpFilled />
-                      ) : e.transaction_type === "Add funds" ? (
-                        <TbWallet />
-                      ) : e.transaction_type === "Receive Payment" ? (
-                        <TbSquareRoundedArrowDownFilled />
-                      ) : e.transaction_type === "Cashout Funds" ? (
-                        <TbCreditCard />
-                      ) : null}
-                      <div className=''>
-                        <span>{e.transaction_type}</span>
-                        <span>
-                          {e.transaction_type === "Pay" ? (
-                            <p>Payment sent to @{e.sent_to}</p>
-                          ) : e.transaction_type === "Receive Payment" ? (
-                            <p>Received payment from @{e.sent_to}</p>
-                          ) : e.transaction_type === "Add funds" ? (
-                            <p>Added funds from {e.sent_to}</p>
-                          ) : e.transaction_type === "Cashout Funds" ? (
-                            <p>Transfered funds to {e.sent_to}</p>
-                          ) : null}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className='amount'>
-                      <span
-                        style={
-                          e.transaction_type === "Pay"
-                            ? { color: "red" }
-                            : { color: "green" }
-                        }
-                      >
-                        {e.transaction_type !== "Pay" ? "+" : "-"} ₱
-                        {e.amount.toLocaleString("en-US")}
-                      </span>
-                      <span>₱{e.previous_balance.toLocaleString("en-US")}</span>
-                      <span>{displayDate}</span>
-                    </div>
-                  </td>
-                </tr>
+                <HistoryRow
+                  id={e.id}
+                  transaction_type={e.transaction_type}
+                  sent_to={e.sent_to}
+                  amount={e.amount}
+                  previous_balance={e.previous_balance}
+                  displayDate={displayDate}
+                />
               );
             })}
         </tbody>

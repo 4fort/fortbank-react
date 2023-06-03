@@ -20,6 +20,7 @@ import {
 } from "react-icons/tb";
 
 import { ToastContainer, toast } from "react-toastify";
+import HistoryRow from "../../../components/HistoryRow";
 
 const Card = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
@@ -113,15 +114,15 @@ const Card = () => {
     fetchData();
   }, [userLoggedIn?.transactionhistory_set]);
 
-  const getFilteredHistory = (
-    query: string,
-    histories: UserTransactions[] | null
-  ) => {
+  const getFilteredHistory = (histories: UserTransactions[] | null) => {
     return histories?.filter((e) => {
-      return e.transaction_type.toLowerCase().includes(query);
+      return (
+        e.transaction_type.toLowerCase().includes("transfer") ||
+        e.transaction_type.toLowerCase().includes("funds")
+      );
     });
   };
-  const filtereredHistory = getFilteredHistory("funds", transactionHistory);
+  const filtereredHistory = getFilteredHistory(transactionHistory);
 
   return (
     <>
@@ -203,54 +204,14 @@ const Card = () => {
                       }
 
                       return (
-                        <tr key={e.id} className='activity'>
-                          <td>
-                            <div className='type'>
-                              {e.transaction_type === "Pay" ? (
-                                <TbSquareRoundedArrowUpFilled />
-                              ) : e.transaction_type === "Add funds" ? (
-                                <TbWallet />
-                              ) : e.transaction_type === "Receive Payment" ? (
-                                <TbSquareRoundedArrowDownFilled />
-                              ) : e.transaction_type === "Cashout Funds" ? (
-                                <TbCreditCard />
-                              ) : null}
-                              <div className=''>
-                                <span>{e.transaction_type}</span>
-                                <span>
-                                  {e.transaction_type === "Pay" ? (
-                                    <p>Payment sent to @{e.sent_to}</p>
-                                  ) : e.transaction_type ===
-                                    "Receive Payment" ? (
-                                    <p>Received payment from @{e.sent_to}</p>
-                                  ) : e.transaction_type === "Add funds" ? (
-                                    <p>Added funds from {e.sent_to}</p>
-                                  ) : e.transaction_type === "Cashout Funds" ? (
-                                    <p>Transfered funds to {e.sent_to}</p>
-                                  ) : null}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div className='amount'>
-                              <span
-                                style={
-                                  e.transaction_type === "Pay"
-                                    ? { color: "red" }
-                                    : { color: "green" }
-                                }
-                              >
-                                {e.transaction_type !== "Pay" ? "+" : "-"} ₱
-                                {e.amount.toLocaleString("en-US")}
-                              </span>
-                              <span>
-                                ₱{e.previous_balance.toLocaleString("en-US")}
-                              </span>
-                              <span>{displayDate}</span>
-                            </div>
-                          </td>
-                        </tr>
+                        <HistoryRow
+                          id={e.id}
+                          transaction_type={e.transaction_type}
+                          sent_to={e.sent_to}
+                          amount={e.amount}
+                          previous_balance={e.previous_balance}
+                          displayDate={displayDate}
+                        />
                       );
                     })}
                 </tbody>
@@ -268,7 +229,10 @@ const Card = () => {
                 </span>
                 Add funds
               </div>
-              <div className='transfer-to-bank'>
+              <div
+                className='transfer-to-bank'
+                onClick={() => navigate("/card/transfer-to-bank")}
+              >
                 <span>
                   <TbCreditCard />
                 </span>
@@ -278,7 +242,6 @@ const Card = () => {
           </div>
         </div>
       </div>
-      <ToastContainer newestOnTop hideProgressBar pauseOnHover theme='dark' />
     </>
   );
 };
