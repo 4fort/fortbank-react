@@ -105,10 +105,10 @@ const SidePanel = () => {
             : "₱" + userBalance?.toLocaleString("en-US")}
         </div>
         <div className='actions'>
-          {/* <NavLink to='/' className='home'>
+          <NavLink to='/' className='home'>
             <TbHome />
             <p>Home</p>
-          </NavLink> */}
+          </NavLink>
           <NavLink to='/payment' className='payment'>
             <TbCash />
             <p>Payment</p>

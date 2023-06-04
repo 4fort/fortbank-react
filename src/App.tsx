@@ -33,7 +33,13 @@ function App() {
   return (
     <div className='App'>
       <AuthProvider>
-        <ToastContainer newestOnTop hideProgressBar pauseOnHover theme='dark' />
+        <ToastContainer
+          newestOnTop
+          hideProgressBar
+          pauseOnHover
+          theme='dark'
+          position='bottom-right'
+        />
 
         <Routes>
           <Route element={<PrivateRoutes isSuperUserRequired />}>

@@ -60,7 +60,7 @@ export interface FortbankUser {
 interface ModifiedFortbankUser
   extends Omit<
     FortbankUser,
-    "transactionticket_set" | "useraccount" | "transactionhistory_set"
+    "transactionticket_set" | "useraccount_set" | "transactionhistory_set"
   > {}
 
 export interface UserToken {

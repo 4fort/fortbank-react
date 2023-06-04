@@ -1187,14 +1187,105 @@ header {
 .toast.tst {
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
-  background: rgba(37, 37, 37, 0.8);
+  background: rgba(37, 37, 37, 0.7);
   border-radius: 8px;
   font-size: 0.9rem;
-  opacity: 0.8;
 }
 
 .btn.disabled {
   pointer-events: none;
   background: var(--darkmode-secondary-color) !important;
   opacity: 0.8;
+}
+
+.main-panel.home * {
+  transition: 0.1s;
+}
+.main-panel.home h1 {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+.main-panel.home h1 span {
+  color: var(--tertiary-color);
+}
+.main-panel.home .hero {
+  margin-top: 1rem;
+  height: 40%;
+}
+.main-panel.home .hero .user {
+  padding: 1rem;
+}
+.main-panel.home .hero .user span {
+  font-weight: 600;
+}
+.main-panel.home .hero .balance {
+  position: relative;
+  background: var(--primary-color);
+  border-radius: 15px;
+  padding: 2rem;
+  opacity: 0.8;
+  overflow: hidden;
+}
+.main-panel.home .hero .balance p {
+  font-weight: 500;
+}
+.main-panel.home .hero .balance span {
+  font-weight: 900;
+  font-size: 5cqi;
+}
+.main-panel.home .hero .balance .shape {
+  position: absolute;
+  inset: 0;
+  z-index: -999;
+}
+.main-panel.home .hero .balance .shape svg {
+  position: absolute;
+  bottom: 0;
+  opacity: 0.08;
+}
+.main-panel.home .hero .balance .shape:nth-child(2n) {
+  bottom: -20px;
+}
+.main-panel.home .actions {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-around;
+}
+.main-panel.home .actions a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-radius: 50px;
+  padding: 1rem;
+  background: var(--darkmode-secondary-color);
+  width: 15cqi;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.main-panel.home .actions a svg {
+  font-size: 1rem;
+  padding-right: 0.5rem;
+}
+.main-panel.home .actions a:hover {
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1333333333);
+}
+.main-panel.home .actions a:active {
+  transform: scale(0.98);
+}
+
+.coming-soon {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: dotted 4px var(--darkmode-primary-color);
+  border-radius: 15px;
+}
+.coming-soon p {
+  opacity: 0.4;
 }/*# sourceMappingURL=style.css.map */

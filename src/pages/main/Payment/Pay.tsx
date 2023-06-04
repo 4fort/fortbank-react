@@ -28,35 +28,35 @@ const Pay = () => {
     authTokens: null,
   };
 
-  let { userLoggedIn, setUserBalance } = useContext<ClientContextType | null>(
-    ClientContext
-  ) ?? {
-    userLoggedIn: {
-      id: 0,
-      username: "",
-      first_name: "",
-      last_name: "",
-      email: "",
-      userwallet: {
-        balance: 0,
+  let { userLoggedIn, setUserBalance, userBalance } =
+    useContext<ClientContextType | null>(ClientContext) ?? {
+      userLoggedIn: {
+        id: 0,
+        username: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        userwallet: {
+          balance: 0,
+        },
+        userwallet_set: {
+          brand: "",
+          card_num: "",
+          card_pin: "",
+          date_added: "",
+        },
+        userprofile: {
+          mobile_number: "",
+          birthdate: "",
+          gender: 0,
+          civil_status: 0,
+          address: "",
+        },
+        last_login: "",
       },
-      userwallet_set: {
-        brand: "",
-        card_num: "",
-        card_pin: "",
-        date_added: "",
-      },
-      userprofile: {
-        mobile_number: "",
-        birthdate: "",
-        gender: 0,
-        civil_status: 0,
-        address: "",
-      },
-      last_login: "",
-    },
-    setUserBalance: (e: number) => {},
-  };
+      setUserBalance: (e: number) => {},
+      userBalance: 0,
+    };
 
   const navigate = useNavigate();
   const [refIdInput, setRefIdInput] = useState(0);
@@ -92,7 +92,7 @@ const Pay = () => {
 
   const proceedPayment = async () => {
     ticket = await getTicket(Number(refIdInput), authTokens!);
-    setReceiverDetails(await getUser(Number(ticket?.user), authTokens!));
+    setReceiverDetails(await getUser(+ticket?.user, authTokens!));
 
     validateUser();
 
@@ -127,9 +127,8 @@ const Pay = () => {
 
   const makePayment = async () => {
     setLoading(true);
-    const senderBalance = userLoggedIn?.userwallet?.balance;
 
-    if (Number(senderBalance) < amount) {
+    if (userBalance < amount) {
       setLoading(false);
       setIsFail(true);
       setAlertMsg("Insufficient Balance!");

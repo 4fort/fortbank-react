@@ -100,7 +100,7 @@ export const updateBalance = async (
 export const getTicket = async (
   reference_id: number,
   authTokens: AuthTokensType
-): Promise<TransactionTicket | null> => {
+): Promise<TransactionTicket> => {
   try {
     const response = await axios.get(`${baseUrl}/api/tickets/${reference_id}`, {
       headers: {
@@ -111,7 +111,7 @@ export const getTicket = async (
     return response.data;
   } catch (error) {
     console.log(error);
-    return null;
+    throw error;
   }
 };
 

@@ -150,7 +150,7 @@ const AddCard = (props: Props) => {
       try {
         added = await addCard(userLoggedIn.id, cardDetails, authTokens!);
       } catch (error) {
-        return toast.error("Failed to add card. Card isn't verified.", {
+        return toast.error("Failed to add card. Card is invalid.", {
           className: "toast tst",
         });
       }

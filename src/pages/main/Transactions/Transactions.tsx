@@ -120,6 +120,7 @@ const Transactions = () => {
 
               return (
                 <HistoryRow
+                  key={e.id}
                   id={e.id}
                   transaction_type={e.transaction_type}
                   sent_to={e.sent_to}

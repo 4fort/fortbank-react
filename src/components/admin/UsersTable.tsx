@@ -4,6 +4,7 @@ import Modal from "../Modal.tsx";
 import { FortbankUser } from "../../Interfaces/interfaces.ts";
 import AdminContext from "../../context/AdminContext.tsx";
 import { AdminContextType } from "../../Interfaces/interfaces.ts";
+import { toast } from "react-toastify";
 
 const UsersTable = () => {
   const context = useContext<AdminContextType | null>(AdminContext) ?? {
@@ -64,6 +65,12 @@ const UsersTable = () => {
                   <span>
                     <TbTrash
                       onClick={() => {
+                        toast.success(
+                          "User added in the database successfully.",
+                          {
+                            className: "toast tst",
+                          }
+                        );
                         deleteUser(user.id);
                       }}
                     />

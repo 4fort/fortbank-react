@@ -6,6 +6,7 @@ import { User } from "../Models/UserModel";
 import AdminContext from "../context/AdminContext";
 import { AdminContextType } from "../Interfaces/interfaces";
 import SelectInput from "./SelectInput";
+import { toast } from "react-toastify";
 
 const Modal = () => {
   let {
@@ -202,8 +203,14 @@ const Modal = () => {
     console.log(JSON.stringify(user));
 
     if (modalMethod === 0) {
+      toast.success("User added in the database successfully.", {
+        className: "toast tst",
+      });
       addUser(user);
     } else if (modalMethod === 1) {
+      toast.success("User updated successfully.", {
+        className: "toast tst",
+      });
       updateUser(selectedUserValues.id, user);
     }
   };
