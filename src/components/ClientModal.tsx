@@ -3,8 +3,8 @@ import {
   AuthContextType,
   ClientContextType,
   ModifiedUserAccount,
-} from "../../../Interfaces/interfaces";
-import AuthContext from "../../../context/AuthContext";
+} from "../Interfaces/interfaces";
+import AuthContext from "../context/AuthContext";
 import { NavLink } from "react-router-dom";
 import {
   TbAlertCircle,
@@ -13,31 +13,36 @@ import {
   TbExclamationCircle,
   TbX,
 } from "react-icons/tb";
-import { addCard, deleteCard, updateCard } from "../../../utils/Transactions";
-import ClientContext from "../../../context/ClientContext";
-import ATMCard from "../../../components/ATMCard";
-import {
-  cardNumValidator,
-  cardPinValidator,
-} from "../../../utils/FormValidator";
+import { addCard, deleteCard, updateCard } from "../utils/Transactions";
+import ClientContext from "../context/ClientContext";
+import ATMCard from "./ATMCard";
+import { cardNumValidator, cardPinValidator } from "../utils/FormValidator";
 
 import { ToastContainer, toast } from "react-toastify";
 
 interface Props {
   setIsModal: (e: boolean) => void;
-  selectedCard: {
-    card_num: string;
-    card_pin: string;
+  selectedCard?: {
+    card_num?: string;
+    card_pin?: string;
   };
-  modalProps: {
-    setCardNum: (e: string) => void;
-    setCardPin: (e: string) => void;
-    modalMode: number;
-    setModalMode: (e: number) => void;
+  modalProps?: {
+    setCardNum?: (e: string) => void;
+    setCardPin?: (e: string) => void;
+    modalMode?: number;
+    setModalMode?: (e: number) => void;
+  };
+  selectedActivity?: {
+    id: number;
+    sent_to: string;
+    amount: number;
+    previous_balance: number;
+    transaction_type: string;
+    transaction_date: string;
   };
 }
 
-const AddCard = (props: Props) => {
+const ClientModal = (props: Props) => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
     authTokens: null,
   };
@@ -82,7 +87,7 @@ const AddCard = (props: Props) => {
     },
   };
 
-  const { setIsModal, modalProps, selectedCard } = props;
+  const { setIsModal, modalProps, selectedCard, selectedActivity } = props;
 
   let today = new Date();
   let [cardNumError, setCardNumError] = useState<String | undefined>(undefined);
@@ -90,8 +95,8 @@ const AddCard = (props: Props) => {
   let NumError: string | undefined;
   let PinError: string | undefined;
   let cardDetails: ModifiedUserAccount = {
-    card_num: selectedCard.card_num,
-    card_pin: selectedCard.card_pin,
+    card_num: selectedCard?.card_num!,
+    card_pin: selectedCard?.card_pin!,
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -118,7 +123,7 @@ const AddCard = (props: Props) => {
       console.log(NumError);
       return;
     }
-    if (modalProps.modalMode === 1) {
+    if (modalProps?.modalMode === 1) {
       let edited;
       try {
         edited = await updateCard(userLoggedIn.id, cardDetails, authTokens!);
@@ -127,8 +132,8 @@ const AddCard = (props: Props) => {
           className: "toast tst",
         });
       }
-      modalProps.setCardNum("");
-      modalProps.setCardPin("");
+      modalProps.setCardNum!("");
+      modalProps.setCardPin!("");
       setIsModal(false);
       return toast.success("Card edited successfully", {
         className: "toast tst",
@@ -155,12 +160,12 @@ const AddCard = (props: Props) => {
         });
       }
 
-      modalProps.setCardNum("");
-      modalProps.setCardPin("");
+      modalProps?.setCardNum!("");
+      modalProps?.setCardPin!("");
       setIsModal(false);
       return toast.success(
         `Card successfully ${
-          modalProps.modalMode === 0 ? "added" : "edited"
+          modalProps?.modalMode === 0 ? "added" : "edited"
         } to your account`,
         {
           className: "toast tst",
@@ -173,7 +178,7 @@ const AddCard = (props: Props) => {
   return (
     <div className='modal-container'>
       <div className='modal'>
-        {modalProps.modalMode === 2 ? (
+        {modalProps?.modalMode === 2 ? (
           <div className='delete-card'>
             <TbAlertCircle className='alert-icon' />
             <p>Are You Sure You want to delete this card?</p>
@@ -182,8 +187,8 @@ const AddCard = (props: Props) => {
               modalProps={modalProps}
               selectedCard={selectedCard}
               brand='...'
-              card_num={selectedCard.card_num ? selectedCard.card_num : "..."}
-              card_pin={selectedCard.card_pin ? selectedCard.card_pin : "..."}
+              card_num={selectedCard?.card_num ? selectedCard.card_num : "..."}
+              card_pin={selectedCard?.card_pin ? selectedCard.card_pin : "..."}
               date_added={String(today)}
             />
             <div className='buttons'>
@@ -193,8 +198,8 @@ const AddCard = (props: Props) => {
                   toast.success("Card deleted in your account", {
                     className: "toast tst",
                   });
-                  modalProps.setCardNum("");
-                  modalProps.setCardPin("");
+                  modalProps?.setCardNum!("");
+                  modalProps?.setCardPin!("");
                   deleteCard(userLoggedIn.id, cardDetails, authTokens!);
                   setIsModal(false);
                 }}
@@ -203,8 +208,8 @@ const AddCard = (props: Props) => {
               </button>
               <button
                 onClick={() => {
-                  modalProps.setCardNum("");
-                  modalProps.setCardPin("");
+                  modalProps?.setCardNum!("");
+                  modalProps?.setCardPin!("");
                   setIsModal(false);
                 }}
               >
@@ -212,15 +217,15 @@ const AddCard = (props: Props) => {
               </button>
             </div>
           </div>
-        ) : (
+        ) : modalProps?.modalMode === 0 || modalProps?.modalMode === 1 ? (
           <>
             <span className='title'>
-              <p>{modalMode[modalProps.modalMode]}</p>
+              <h3>{modalMode[modalProps?.modalMode!]}</h3>
               <TbX
                 onClick={() => {
                   setIsModal(false);
-                  modalProps.setCardNum("");
-                  modalProps.setCardPin("");
+                  modalProps?.setCardNum!("");
+                  modalProps?.setCardPin!("");
                 }}
               />
             </span>
@@ -230,8 +235,12 @@ const AddCard = (props: Props) => {
                 modalProps={modalProps}
                 selectedCard={selectedCard}
                 brand='...'
-                card_num={selectedCard.card_num ? selectedCard.card_num : "..."}
-                card_pin={selectedCard.card_pin ? selectedCard.card_pin : "..."}
+                card_num={
+                  selectedCard?.card_num ? selectedCard.card_num : "..."
+                }
+                card_pin={
+                  selectedCard?.card_pin ? selectedCard.card_pin : "..."
+                }
                 date_added={String(today)}
               />
             </div>
@@ -243,7 +252,7 @@ const AddCard = (props: Props) => {
                 name='card_num'
                 value={selectedCard ? selectedCard.card_num : undefined}
                 onChange={(e) => {
-                  modalProps.setCardNum(e.target.value);
+                  modalProps?.setCardNum!(e.target.value);
                   setCardNumError(cardNumValidator(e.target.value));
                 }}
               />
@@ -260,7 +269,7 @@ const AddCard = (props: Props) => {
                 name='card_pin'
                 value={selectedCard ? selectedCard.card_pin : undefined}
                 onChange={(e) => {
-                  modalProps.setCardPin(e.target.value);
+                  modalProps?.setCardPin!(e.target.value);
                   setCardPinError(cardPinValidator(e.target.value));
                 }}
               />
@@ -273,14 +282,68 @@ const AddCard = (props: Props) => {
               <button
                 className={cardNumError || cardPinError ? "btn disabled" : ""}
               >
-                {modalMode[modalProps.modalMode]}
+                {modalMode[modalProps?.modalMode!]}
               </button>
             </form>
           </>
-        )}
+        ) : modalProps?.modalMode === 3 ? (
+          <>
+            <span className='title'>
+              <h3>Activity Details</h3>
+              <TbX
+                onClick={() => {
+                  setIsModal(false);
+                }}
+              />
+            </span>
+            <div className='activity-data'>
+              <div className='row'>
+                <span>Reference number:</span>
+                <span>{selectedActivity?.id}</span>
+              </div>
+              <div className='row'>
+                <span>
+                  {selectedActivity?.transaction_type === "Pay"
+                    ? "Sent to:"
+                    : selectedActivity?.transaction_type === "Receive Payment"
+                    ? "Received Payment From:"
+                    : selectedActivity?.transaction_type === "Add funds"
+                    ? "Added funds from:"
+                    : selectedActivity?.transaction_type === "Transfer to bank"
+                    ? "Transfered funds to:"
+                    : null}
+                </span>
+                <span>
+                  {selectedActivity?.transaction_type === "Pay" ||
+                  selectedActivity?.transaction_type === "Receive Payment"
+                    ? "@"
+                    : null}
+                  {selectedActivity?.sent_to}
+                </span>
+              </div>
+              <div className='row'>
+                <span>Amount:</span>
+                <span>₱{selectedActivity?.amount.toLocaleString("en-US")}</span>
+              </div>
+              <div className='row'>
+                <span>Previous balance:</span>
+                <span>{selectedActivity?.previous_balance}</span>
+              </div>
+              <div className='row'>
+                <span>Transaction Type:</span>
+                <span>{selectedActivity?.transaction_type}</span>
+              </div>
+              <div className='row'>
+                <span>Transaction Date:</span>
+                <span>{selectedActivity?.transaction_date}</span>
+              </div>
+              <button>Print</button>
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );
 };
 
-export default AddCard;
+export default ClientModal;

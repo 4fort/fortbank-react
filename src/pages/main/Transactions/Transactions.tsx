@@ -16,6 +16,7 @@ import {
 import { getHistorySet } from "../../../utils/Transactions";
 import AuthContext from "../../../context/AuthContext";
 import HistoryRow from "../../../components/HistoryRow";
+import ClientModal from "../../../components/ClientModal";
 
 const Transactions = () => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
@@ -61,6 +62,23 @@ const Transactions = () => {
       last_login: "",
     },
   };
+
+  const [isModal, setIsModal] = useState(false);
+  const [modalMode, setModalMode] = useState(3);
+  const modalProps = {
+    modalMode: modalMode,
+  };
+
+  const selectedActivityData: UserTransactions = {
+    id: 0,
+    sent_to: "",
+    amount: 0,
+    previous_balance: 0,
+    transaction_type: "",
+    transaction_date: "",
+  };
+  const [selectedActivity, setSelectedActivity] =
+    useState<UserTransactions>(selectedActivityData);
 
   const [transactionHistory, setTransactionHistory] = useState<
     UserTransactions[] | null
@@ -127,11 +145,22 @@ const Transactions = () => {
                   amount={e.amount}
                   previous_balance={e.previous_balance}
                   displayDate={displayDate}
+                  transaction_date={date.toLocaleString()}
+                  setIsModal={setIsModal}
+                  setModalMode={setModalMode}
+                  setSelectedActivity={setSelectedActivity}
                 />
               );
             })}
         </tbody>
       </table>
+      {isModal ? (
+        <ClientModal
+          setIsModal={setIsModal}
+          modalProps={modalProps}
+          selectedActivity={selectedActivity}
+        />
+      ) : null}
     </div>
   );
 };

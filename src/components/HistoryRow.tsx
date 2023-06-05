@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   TbCreditCard,
   TbSquareRoundedArrowDown,
@@ -7,6 +7,7 @@ import {
   TbSquareRoundedArrowUpFilled,
   TbWallet,
 } from "react-icons/tb";
+import { UserTransactions } from "../Interfaces/interfaces";
 
 interface Props {
   id: number;
@@ -15,13 +16,41 @@ interface Props {
   amount: number;
   previous_balance: number;
   displayDate: string;
+  transaction_date?: string;
+  setIsModal: Dispatch<SetStateAction<boolean>>;
+  setModalMode: Dispatch<SetStateAction<number>>;
+  setSelectedActivity: Dispatch<SetStateAction<UserTransactions>>;
 }
 
 const HistoryRow = (props: Props) => {
-  let { id, transaction_type, sent_to, amount, previous_balance, displayDate } =
-    props;
+  let {
+    id,
+    transaction_type,
+    sent_to,
+    amount,
+    previous_balance,
+    displayDate,
+    transaction_date,
+    setIsModal,
+    setModalMode,
+    setSelectedActivity,
+  } = props;
+
+  const handleClick = () => {
+    setIsModal(true);
+    setModalMode(3);
+    setSelectedActivity({
+      id: id,
+      sent_to: sent_to,
+      amount: amount,
+      previous_balance: previous_balance,
+      transaction_type: transaction_type,
+      transaction_date: transaction_date!,
+    });
+  };
+
   return (
-    <tr className='activity'>
+    <tr className='activity' onClick={handleClick}>
       <td>
         <div className='type'>
           {transaction_type === "Pay" ? (

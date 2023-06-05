@@ -6,8 +6,8 @@ import { UserAccount } from "../Interfaces/interfaces";
 interface Props extends UserAccount {
   setIsModal?: (e: boolean) => void;
   selectedCard?: {
-    card_num: string;
-    card_pin: string;
+    card_num?: string;
+    card_pin?: string;
   };
   modalProps?: {
     setCardNum?: (e: string) => void;

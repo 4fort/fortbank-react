@@ -11,7 +11,7 @@ import { getCard, getHistorySet } from "../../../utils/Transactions";
 import AuthContext from "../../../context/AuthContext";
 import ATMCard from "../../../components/ATMCard";
 import { useNavigate } from "react-router-dom";
-import AddCard from "./AddCard";
+import ClientModal from "../../../components/ClientModal";
 import {
   TbCreditCard,
   TbSquareRoundedArrowDownFilled,
@@ -87,6 +87,17 @@ const Card = () => {
     setModalMode: setModalMode,
   };
 
+  const selectedActivityData: UserTransactions = {
+    id: 0,
+    sent_to: "",
+    amount: 0,
+    previous_balance: 0,
+    transaction_type: "",
+    transaction_date: "",
+  };
+  const [selectedActivity, setSelectedActivity] =
+    useState(selectedActivityData);
+
   const [userCards, setUserCards] = useState<UserCards[] | null>(
     userLoggedIn?.useraccount_set as UserCards[]
   );
@@ -127,9 +138,10 @@ const Card = () => {
   return (
     <>
       {isModal ? (
-        <AddCard
+        <ClientModal
           setIsModal={setIsModal}
           selectedCard={selectedCard}
+          selectedActivity={selectedActivity}
           modalProps={modalProps}
         />
       ) : null}
@@ -212,6 +224,10 @@ const Card = () => {
                           amount={e.amount}
                           previous_balance={e.previous_balance}
                           displayDate={displayDate}
+                          transaction_date={date.toLocaleString()}
+                          setIsModal={setIsModal}
+                          setModalMode={setModalMode}
+                          setSelectedActivity={setSelectedActivity}
                         />
                       );
                     })}

@@ -33,7 +33,6 @@ export interface TransactionTicket {
 
 export interface UserTransactions {
   id: number;
-  user: number;
   sent_to: string;
   amount: number;
   previous_balance: number;
