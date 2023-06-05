@@ -46,7 +46,7 @@ const ClientModal = (props: Props) => {
   let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
     authTokens: null,
   };
-  let { userLoggedIn } = useContext<ClientContextType | null>(
+  let { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -85,6 +85,7 @@ const ClientModal = (props: Props) => {
       ],
       last_login: "",
     },
+    userBalance: 0,
   };
 
   const { setIsModal, modalProps, selectedCard, selectedActivity } = props;
@@ -172,6 +173,16 @@ const ClientModal = (props: Props) => {
         }
       );
     }
+  };
+
+  const printIt = (e: string) => {
+    let win = window.open();
+    self.focus();
+    win?.document.open();
+    win?.document.write(e);
+    win?.document.close();
+    win?.print();
+    win?.close();
   };
 
   const modalMode = ["Add Card", "Edit Card"];
@@ -297,11 +308,31 @@ const ClientModal = (props: Props) => {
               />
             </span>
             <div className='activity-data'>
+              <h3>
+                {selectedActivity?.transaction_type === "Pay"
+                  ? "Sent to"
+                  : selectedActivity?.transaction_type === "Receive Payment"
+                  ? "Received Payment From"
+                  : selectedActivity?.transaction_type === "Add funds"
+                  ? "Added funds from"
+                  : selectedActivity?.transaction_type === "Transfer to bank"
+                  ? "Transfered funds to"
+                  : null}
+                &nbsp;
+                <span>
+                  {selectedActivity?.transaction_type === "Pay" ||
+                  selectedActivity?.transaction_type === "Receive Payment"
+                    ? "@"
+                    : null}
+                  {selectedActivity?.sent_to}
+                </span>
+              </h3>
+
               <div className='row'>
                 <span>Reference number:</span>
                 <span>{selectedActivity?.id}</span>
               </div>
-              <div className='row'>
+              {/* <div className='row'>
                 <span>
                   {selectedActivity?.transaction_type === "Pay"
                     ? "Sent to:"
@@ -320,7 +351,7 @@ const ClientModal = (props: Props) => {
                     : null}
                   {selectedActivity?.sent_to}
                 </span>
-              </div>
+              </div> */}
               <div className='row'>
                 <span>Amount:</span>
                 <span>₱{selectedActivity?.amount.toLocaleString("en-US")}</span>
@@ -329,15 +360,104 @@ const ClientModal = (props: Props) => {
                 <span>Previous balance:</span>
                 <span>{selectedActivity?.previous_balance}</span>
               </div>
-              <div className='row'>
+              {/* <div className='row'>
                 <span>Transaction Type:</span>
                 <span>{selectedActivity?.transaction_type}</span>
-              </div>
+              </div> */}
               <div className='row'>
-                <span>Transaction Date:</span>
+                <span>Date & Time:</span>
                 <span>{selectedActivity?.transaction_date}</span>
               </div>
-              <button>Print</button>
+              <button
+                onClick={() => {
+                  printIt(`
+                <style>
+                * {
+                    font-family: monospace;
+                    line-height: 5px;
+                    font-size: 1.3rem;
+                }
+                h1 {
+                    font-size: 2.1rem;
+                }
+                h1, h5 {
+                    text-align: center;
+                    margin: 20px;
+                }
+                span {
+                    display: flex;
+                    justify-content: space-between;
+                }
+                h4 {
+                    text-transform: Capitalize;
+                }
+                .username {
+                  text-transform: none;
+                }
+                </style>
+
+                <hr>
+                <br>
+                <h1>FORTPAY</h1>
+                <br>
+                <hr>
+                <span><h4>Date:</h4><h4>${
+                  selectedActivity?.transaction_date
+                }</h4></span>
+                <span><h4>Customer Name:</h4><h4>${
+                  userLoggedIn.first_name
+                }&nbsp;${userLoggedIn.last_name}</h4></span>
+                <span><h4>${
+                  selectedActivity?.transaction_type === "Pay"
+                    ? "Sent to:"
+                    : selectedActivity?.transaction_type === "Receive Payment"
+                    ? "Received Payment From:"
+                    : selectedActivity?.transaction_type === "Add funds"
+                    ? "Added funds from:"
+                    : selectedActivity?.transaction_type === "Transfer to bank"
+                    ? "Transfered funds to:"
+                    : ""
+                }</h4><h4 class='username'>${
+                    selectedActivity?.transaction_type === "Pay" ||
+                    selectedActivity?.transaction_type === "Receive Payment"
+                      ? "@"
+                      : ""
+                  }${selectedActivity?.sent_to}</h4></span>
+                <span><h4>Transaction:</h4><h4>${
+                  selectedActivity?.transaction_type
+                }</h4></span>
+                <span><h4>Reference number:</h4><h4>${
+                  selectedActivity?.id
+                }</h4></span>
+                <hr>
+                <span><h2>Amount:</h2><h2>₱${
+                  selectedActivity?.amount
+                }</h2></span>
+                <span><h4>Previous Balance:</h4><h4>₱${
+                  selectedActivity?.previous_balance
+                }</h4></span>
+                <span><h4>Total Balance:</h4><h4>₱${
+                  selectedActivity?.transaction_type == "Pay" ||
+                  selectedActivity?.transaction_type === "Transfer to bank"
+                    ? (
+                        selectedActivity?.previous_balance -
+                        selectedActivity?.amount
+                      ).toFixed(2)
+                    : (
+                        selectedActivity?.previous_balance! +
+                        selectedActivity?.amount!
+                      ).toFixed(2)
+                }</h4></span>
+                <span><h4>Current Balance:</h4><h4>₱${userBalance}</h4></span>
+                <hr>
+                <h5>THANKS FOR USING MY ATM SYSTEM</h5>
+                <h5>Sir Please Perfect Akong Score ^_^</h5>
+                <h5>100/100</h5>
+            `);
+                }}
+              >
+                Print
+              </button>
             </div>
           </>
         ) : null}
