@@ -13,7 +13,7 @@ import {
 } from "../../../Interfaces/interfaces";
 import AuthContext from "../../../context/AuthContext";
 import ClientContext from "../../../context/ClientContext";
-import { addFunds, getCard } from "../../../utils/Transactions";
+import { addFunds, getCard } from "../../../utils/adapters";
 import ATMCard from "../../../components/ATMCard";
 import {
   selectedAmountValidator,

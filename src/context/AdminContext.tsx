@@ -253,8 +253,8 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setQuery: setQuery,
     filteredUsers: filteredUsers,
 
-    isValidated: isValidated,
-    setIsValidated: setIsValidated,
+    // isValidated: isValidated,
+    // setIsValidated: setIsValidated,
   };
 
   return (

@@ -302,3 +302,13 @@ export const getHistorySet = async (
     return null;
   }
 };
+
+export const RegisterToDB = async (userData: User) => {
+  try {
+    const response = await axios.post(`${baseUrl}/api/register`, userData);
+  } catch (error) {
+    console.error(error);
+    console.log(userData);
+    throw error;
+  }
+};

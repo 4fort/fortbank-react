@@ -13,6 +13,7 @@ export class User {
   };
   is_active: boolean;
   is_superuser: boolean;
+  password?: string;
 
   constructor(
     username: string,
@@ -26,7 +27,8 @@ export class User {
     civil_status: number,
     address: string,
     is_active: boolean,
-    is_superuser: boolean
+    is_superuser: boolean,
+    password?: string
   ) {
     this.username = username;
     this.first_name = first_name;
@@ -43,5 +45,6 @@ export class User {
       address,
     };
     (this.is_active = is_active), (this.is_superuser = is_superuser);
+    this.password = password;
   }
 }

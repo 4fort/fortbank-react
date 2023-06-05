@@ -7,7 +7,7 @@ import {
   UserTransactions,
 } from "../../../Interfaces/interfaces";
 import ClientContext from "../../../context/ClientContext";
-import { getCard, getHistorySet } from "../../../utils/Transactions";
+import { getCard, getHistorySet } from "../../../utils/adapters";
 import AuthContext from "../../../context/AuthContext";
 import ATMCard from "../../../components/ATMCard";
 import { useNavigate } from "react-router-dom";

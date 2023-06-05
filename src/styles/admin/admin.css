@@ -270,6 +270,12 @@ header div.actions .logout:hover {
 .loginWrapper .loginForm button:active {
   transform: scale(0.95);
 }
+.loginWrapper .loginForm .bottom-prompt {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  padding-top: 2rem;
+  padding-bottom: 0;
+}
 
 .adminActions {
   width: 90%;

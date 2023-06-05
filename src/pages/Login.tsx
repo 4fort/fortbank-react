@@ -3,7 +3,7 @@ import { TbExclamationCircle } from "react-icons/tb";
 import AuthContext from "../context/AuthContext";
 import "../styles/style.css";
 import { AuthContextType } from "../Interfaces/interfaces";
-import AdminHeader from "../components/Header";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const context = useContext<AuthContextType | null>(AuthContext) ?? {
@@ -38,6 +38,10 @@ const Login = () => {
           type='password'
         />
         <button type='submit'>Login</button>
+        <span className='bottom-prompt'>
+          Dont have an account? register&nbsp;
+          <NavLink to='/register'>here</NavLink>
+        </span>
       </form>
     </div>
   );

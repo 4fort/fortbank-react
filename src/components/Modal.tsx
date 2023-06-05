@@ -4,9 +4,10 @@ import FormInput from "./FormInput";
 import * as validator from "../utils/FormValidator";
 import { User } from "../Models/UserModel";
 import AdminContext from "../context/AdminContext";
-import { AdminContextType } from "../Interfaces/interfaces";
+import { AdminContextType, AuthContextType } from "../Interfaces/interfaces";
 import SelectInput from "./SelectInput";
 import { toast } from "react-toastify";
+import AuthContext from "../context/AuthContext";
 
 const Modal = () => {
   let {
@@ -32,8 +33,6 @@ const Modal = () => {
 
     addUser,
     updateUser,
-
-    setIsValidated,
   } = useContext<AdminContextType | null>(AdminContext) ?? {
     setFirstName: () => {},
     setLastName: () => {},
@@ -78,8 +77,13 @@ const Modal = () => {
 
     addUser: () => {},
     updateUser: () => {},
+  };
 
+  let { setIsValidated, isValidated } = useContext<AuthContextType | null>(
+    AuthContext
+  ) ?? {
     setIsValidated: () => {},
+    isValidated: null,
   };
 
   const modalMethods = ["Add User", "Update User"];
@@ -214,6 +218,8 @@ const Modal = () => {
       updateUser(selectedUserValues.id, user);
     }
   };
+
+  console.log(selectedUserValues);
 
   return (
     <dialog ref={dialogRef}>

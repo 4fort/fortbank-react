@@ -15,7 +15,7 @@ import {
   getTicket,
   getUser,
   updateBalance,
-} from "../../../utils/Transactions";
+} from "../../../utils/adapters";
 import ClientContext from "../../../context/ClientContext";
 import Loading from "../../../components/Loading";
 import { timeoutInterval } from "../../../context/GlobalVars";

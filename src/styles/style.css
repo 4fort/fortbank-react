@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&display=swap");
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -1305,4 +1306,152 @@ header {
 }
 .coming-soon p {
   opacity: 0.4;
+}
+
+.registerWrapper {
+  margin: auto;
+  padding: 1em;
+  overflow-y: overlay;
+  background: var(--darkmode-tertiary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+.registerWrapper .title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  padding-bottom: 20px;
+}
+.registerWrapper form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.registerWrapper form div {
+  display: flex;
+  justify-content: space-evenly;
+}
+.registerWrapper form span.fieldTitle {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.registerWrapper form .firstSection {
+  flex-direction: row;
+  align-items: start;
+  width: 100%;
+  gap: 2vw;
+}
+.registerWrapper form .firstSection div {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+.registerWrapper form .firstSection div.nameFields {
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 1vw;
+}
+.registerWrapper form .firstSection div.nameFields div {
+  width: 48.5%;
+}
+.registerWrapper form label {
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  opacity: var(--icon-opacity);
+}
+.registerWrapper form input {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  font-family: inherit;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+}
+.registerWrapper form input:focus {
+  outline: solid 3px var(--secondary-color);
+}
+.registerWrapper form input.disabled {
+  pointer-events: none;
+}
+.registerWrapper form input.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+.registerWrapper form input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+.registerWrapper form select {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+}
+.registerWrapper form select:focus {
+  outline: solid 3px var(--secondary-color);
+}
+.registerWrapper form select.disabled {
+  pointer-events: none;
+}
+.registerWrapper form select.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form select.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form select.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+.registerWrapper form select::after {
+  content: "▼";
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.registerWrapper form button {
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--tertiary-color);
+  cursor: pointer;
+  transition: all 0.1s;
+  margin-top: 30px;
+  padding: 0.7rem;
+  color: var(--white-color);
+}
+.registerWrapper form button:hover {
+  background: var(--secondary-color);
+}
+.registerWrapper form button:active {
+  transform: scale(0.95);
+}
+.registerWrapper form button:disabled,
+.registerWrapper form button [disabled] {
+  background: var(--primary-color) !important;
+  cursor: default;
+  pointer-events: none;
 }/*# sourceMappingURL=style.css.map */

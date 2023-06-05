@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { User } from "../Models/UserModel";
 
 export interface UserWallet {
@@ -80,11 +81,21 @@ export interface AuthContextType {
   authTokens: AuthTokensType | null;
   loginAdmin: (e: React.FormEvent<HTMLFormElement>) => void;
   logoutAdmin: () => void;
+  register: (e: React.FormEvent<HTMLFormElement>) => void;
   login: (e: React.FormEvent<HTMLFormElement>) => void;
   logout: () => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   unauthorized: boolean;
+
+  isValidated: boolean;
+  setIsValidated: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isOTP: boolean;
+  setIsOTP: React.Dispatch<React.SetStateAction<boolean>>;
+  OTPInput: string;
+  setOTPInput: React.Dispatch<React.SetStateAction<string>>;
+  verifyOTP: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface AdminContextType {
@@ -139,8 +150,8 @@ export interface AdminContextType {
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   filteredUsers: FortbankUser[];
 
-  isValidated: boolean;
-  setIsValidated: React.Dispatch<React.SetStateAction<boolean>>;
+  // isValidated: boolean;
+  // setIsValidated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface DialogRefInterface extends HTMLDialogElement {
@@ -148,7 +159,7 @@ export interface DialogRefInterface extends HTMLDialogElement {
   close: () => void;
 }
 
-export type Validate = (e: string) => string | undefined;
+export type Validate = (e: string, x?: string) => string | undefined;
 
 export type ChildProp = {
   children: React.ReactNode;

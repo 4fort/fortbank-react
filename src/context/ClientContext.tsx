@@ -7,7 +7,7 @@ import {
 } from "../Interfaces/interfaces";
 import AuthContext from "./AuthContext";
 import axios from "axios";
-import { getBalance } from "../utils/Transactions";
+import { getBalance } from "../utils/adapters";
 
 const ClientContext = createContext<ClientContextType | null>(null);
 export default ClientContext;

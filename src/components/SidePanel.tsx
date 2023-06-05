@@ -17,7 +17,7 @@ import ClientContext from "../context/ClientContext";
 import { ClientContextType, UserWallet } from "../Interfaces/interfaces";
 import AuthContext from "../context/AuthContext";
 import { AuthContextType } from "../Interfaces/interfaces";
-import { getBalance } from "../utils/Transactions";
+import { getBalance } from "../utils/adapters";
 
 const SidePanel = () => {
   let { logout, authTokens } = useContext<AuthContextType | null>(

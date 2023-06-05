@@ -25,9 +25,11 @@ import Home from "./pages/main/Home";
 import Receive from "./pages/main/Payment/Receive";
 import AddFunds from "./pages/main/Account/AddFunds";
 
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import TransferToBank from "./pages/main/Account/TransferToBank";
+import Register from "./pages/Register";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -177,6 +179,17 @@ function App() {
                 <div className='container'>
                   <Header />
                   <Login />
+                </div>
+              </ClientProvider>
+            }
+          />
+          <Route
+            path='register'
+            element={
+              <ClientProvider>
+                <div className='container'>
+                  <Header />
+                  <Register />
                 </div>
               </ClientProvider>
             }

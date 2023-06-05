@@ -140,6 +140,30 @@ export const addressValidator: Validate = (address: string) => {
   return undefined;
 };
 
+export const passwordValidator: Validate = (password: string) => {
+  if (!password.trim()) {
+    return "Password is required";
+  }
+
+  if (!/^(?=.*[A-Z])(?=.*[!@#$%^&*()])\S{8,}$/.test(password)) {
+    return "Password must be at least 8 characters long, have 1 Capital letter, and have 1 special character.";
+  }
+
+  return undefined;
+};
+
+export const passwordConfirmValidator: Validate = (p1: string, p2?: string) => {
+  if (!p1.trim()) {
+    return "You must confirm Password";
+  }
+
+  if (String(p1) !== String(p2)) {
+    return "Password does not match";
+  }
+
+  return undefined;
+};
+
 interface cardDetails {
   user: number;
   card_num: number;

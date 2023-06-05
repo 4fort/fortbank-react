@@ -13,7 +13,7 @@ import {
   TbSquareRoundedArrowUpFilled,
   TbWallet,
 } from "react-icons/tb";
-import { getHistorySet } from "../../../utils/Transactions";
+import { getHistorySet } from "../../../utils/adapters";
 import AuthContext from "../../../context/AuthContext";
 import HistoryRow from "../../../components/HistoryRow";
 import ClientModal from "../../../components/ClientModal";

@@ -1,14 +1,19 @@
 import { useEffect, useState, useContext } from "react";
 import { TbExclamationCircle } from "react-icons/tb";
 import AdminContext from "../context/AdminContext";
-import { AdminContextType, Validate } from "../Interfaces/interfaces";
+import {
+  AdminContextType,
+  AuthContextType,
+  Validate,
+} from "../Interfaces/interfaces";
+import AuthContext from "../context/AuthContext";
 
 type OnInputChange = (e: number) => void;
 
 interface Props {
   labelFor: string;
   inputLabel: string;
-  value: number;
+  value?: number;
   validate: Validate;
   onInputChange: OnInputChange;
 }
@@ -16,7 +21,7 @@ interface Props {
 const SelectInput = (props: Props) => {
   const { labelFor, inputLabel, value, validate, onInputChange } = props;
 
-  let { isValidated } = useContext<AdminContextType | null>(AdminContext) ?? {
+  let { isValidated } = useContext<AuthContextType | null>(AuthContext) ?? {
     isValidated: null,
   };
 

@@ -13,7 +13,7 @@ import {
   TbExclamationCircle,
   TbX,
 } from "react-icons/tb";
-import { addCard, deleteCard, updateCard } from "../utils/Transactions";
+import { addCard, deleteCard, updateCard } from "../utils/adapters";
 import ClientContext from "../context/ClientContext";
 import ATMCard from "./ATMCard";
 import { cardNumValidator, cardPinValidator } from "../utils/FormValidator";
