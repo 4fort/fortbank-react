@@ -272,9 +272,14 @@ header div.actions .logout:hover {
 }
 .loginWrapper .loginForm .bottom-prompt {
   font-size: 0.8rem;
+  font-weight: 500;
   opacity: 0.6;
   padding-top: 2rem;
   padding-bottom: 0;
+}
+.loginWrapper .loginForm .bottom-prompt a {
+  color: inherit;
+  font-weight: 600;
 }
 
 .adminActions {

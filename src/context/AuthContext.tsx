@@ -114,41 +114,31 @@ export const AuthProvider = ({ children }: Props) => {
   const [isValidated, setIsValidated] = useState(true);
   const [isOTP, setIsOTP] = useState(false);
   const [OTPInput, setOTPInput] = useState("");
-  let userData: User;
+  const [userDataState, setUserDataState] = useState<User | null>(null);
 
   const verifyOTP = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoading(false);
     let otp = e.target.value;
     setOTPInput(otp);
 
     if (otp.length === 6) {
       console.log(otp);
-      setLoading(true);
       //@ts-ignore
       let confirmationResult = window.confirmationResult;
-      toast.promise(
-        confirmationResult,
-        {
-          pending: "Sending request to the server.",
-          success: "Success! Redirecting to login page",
-          error: "The OTP you entered is incorrect.",
-        },
-        {
-          className: "toast tst",
-          position: "top-center",
-        }
-      );
       confirmationResult
         .confirm(otp)
         .then(() => {
           // REGISTER!
           try {
-            RegisterToDB(userData);
+            RegisterToDB(userDataState);
           } catch (error) {
             console.log(error);
           }
-          setLoading(false);
+          setIsOTP(false);
           navigate("/login");
+          toast.success("Success! you can now login.", {
+            className: "toast tst",
+            position: "top-center",
+          });
         })
         .catch((error: any) => {
           toast.error(`Server response:${error}.`, {
@@ -168,7 +158,7 @@ export const AuthProvider = ({ children }: Props) => {
     const payload = Object.fromEntries(data);
     console.log(payload);
 
-    userData = new User(
+    const userData = new User(
       String(payload.username),
       String(payload.first_name),
       String(payload.last_name),
@@ -252,6 +242,7 @@ export const AuthProvider = ({ children }: Props) => {
       setIsValidated(false);
       return;
     }
+    setUserDataState(userData);
     setIsValidated(false);
     generateRecaptcha();
     //@ts-ignore
@@ -265,7 +256,6 @@ export const AuthProvider = ({ children }: Props) => {
         //@ts-ignore
         window.confirmationResult = confirmationResult;
         setIsOTP(true);
-        setLoading(true);
       })
       .catch((error) => {
         toast.error(`Server response: ${error}.`, {

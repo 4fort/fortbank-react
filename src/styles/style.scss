@@ -1572,4 +1572,20 @@ header {
       }
     }
   }
+
+  .OTP {
+    div {
+      input {
+        @include input-style();
+        padding: 0.8rem;
+        margin-top: 1rem;
+        font-family: inherit;
+        outline: solid 3px var(--darkmode-secondary-color);
+        background: var(--darkmode-quinary-color);
+        &::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+        }
+      }
+    }
+  }
 }

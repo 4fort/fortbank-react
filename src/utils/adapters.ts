@@ -303,7 +303,7 @@ export const getHistorySet = async (
   }
 };
 
-export const RegisterToDB = async (userData: User) => {
+export const RegisterToDB = async (userData: User | null) => {
   try {
     const response = await axios.post(`${baseUrl}/api/register`, userData);
   } catch (error) {

@@ -1454,4 +1454,36 @@ header {
   background: var(--primary-color) !important;
   cursor: default;
   pointer-events: none;
+}
+.registerWrapper .OTP div input {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-top: 1rem;
+  font-family: inherit;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+}
+.registerWrapper .OTP div input:focus {
+  outline: solid 3px var(--secondary-color);
+}
+.registerWrapper .OTP div input.disabled {
+  pointer-events: none;
+}
+.registerWrapper .OTP div input.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper .OTP div input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper .OTP div input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+.registerWrapper .OTP div input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }/*# sourceMappingURL=style.css.map */

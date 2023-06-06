@@ -44,12 +44,12 @@ const Register = () => {
   return (
     <div className='registerWrapper'>
       {isOTP ? (
-        <>
+        <div className='OTP'>
           <span className='title'>Enter your OTP</span>
           <div className='firstSection'>
             <input type='text' value={OTPInput} onChange={verifyOTP} />
           </div>
-        </>
+        </div>
       ) : (
         <form onSubmit={register}>
           <span className='title'>Register</span>
