@@ -11,7 +11,7 @@ const AdminHeader = () => {
   return (
     <header className='admin'>
       <div className='logo admin'>
-        FORT<span>BANK</span>
+        FORT<span>PAY</span>
       </div>
       <div className='actions'>
         {user && (

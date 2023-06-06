@@ -8,12 +8,12 @@ const AdminHeader = () => {
   let { user, logout } = useContext<AuthContextType | null>(AuthContext) ?? {
     logout: () => {},
   };
-  let { userInfo } = useContext(ClientContext);
+  // let { userInfo } = useContext(ClientContext);
 
   return (
     <header>
       <div className='logo'>
-        FORT<span>BANK</span>
+        FORT<span>PAY</span>
       </div>
       <div className='actions'>
         {user && (

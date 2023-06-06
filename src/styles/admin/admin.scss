@@ -260,12 +260,14 @@ header {
   border: solid 1px rgba(255, 0, 0, 0.05);
   border-radius: 5px;
   height: 30px;
+  width: 100%;
+  overflow-wrap: break-word;
   display: flex;
   align-items: center;
-  padding-left: 0.8rem;
-  padding-bottom: 0 !important;
+  padding: 0.8rem 0;
   svg {
-    padding-right: 0.5rem;
+    padding: 0 0.5rem;
+    font-size: 1rem;
   }
 }
 
@@ -283,7 +285,9 @@ header {
     span {
       font-weight: 700;
       font-size: 1.4rem;
-      padding-bottom: 20px;
+      margin-top: 5px;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
     }
 
     label {

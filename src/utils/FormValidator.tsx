@@ -158,6 +158,7 @@ export const passwordConfirmValidator: Validate = (p1: string, p2?: string) => {
   }
 
   if (String(p1) !== String(p2)) {
+    console.log(p1, p2);
     return "Password does not match";
   }
 

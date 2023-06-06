@@ -358,7 +358,7 @@ const ClientModal = (props: Props) => {
               </div>
               <div className='row'>
                 <span>Previous balance:</span>
-                <span>{selectedActivity?.previous_balance}</span>
+                <span>₱{selectedActivity?.previous_balance?.toFixed(2)}</span>
               </div>
               {/* <div className='row'>
                 <span>Transaction Type:</span>

@@ -84,6 +84,7 @@ export interface AuthContextType {
   register: (e: React.FormEvent<HTMLFormElement>) => void;
   login: (e: React.FormEvent<HTMLFormElement>) => void;
   logout: () => void;
+  setUnauthorized: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   unauthorized: boolean;

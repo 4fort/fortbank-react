@@ -1471,8 +1471,8 @@ header {
 .registerWrapper {
   margin: auto;
   padding: 1em;
-  // height: 90vh;
-  // width: 90%;
+  height: 80vh;
+  width: 88%;
   overflow-y: overlay;
   background: var(--darkmode-tertiary-color);
   color: var(--white-color);
@@ -1510,6 +1510,7 @@ header {
         display: flex;
         flex-direction: column;
         width: 35%;
+        justify-content: space-between;
 
         &.nameFields {
           flex-direction: row;
@@ -1557,6 +1558,11 @@ header {
         top: 0;
         right: 0;
       }
+    }
+
+    span.error {
+      word-wrap: break-word;
+      height: auto;
     }
 
     button {

@@ -1311,6 +1311,8 @@ header {
 .registerWrapper {
   margin: auto;
   padding: 1em;
+  height: 80vh;
+  width: 88%;
   overflow-y: overlay;
   background: var(--darkmode-tertiary-color);
   color: var(--white-color);
@@ -1346,6 +1348,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 35%;
+  justify-content: space-between;
 }
 .registerWrapper form .firstSection div.nameFields {
   flex-direction: row;
@@ -1431,6 +1434,10 @@ header {
   position: absolute;
   top: 0;
   right: 0;
+}
+.registerWrapper form span.error {
+  word-wrap: break-word;
+  height: auto;
 }
 .registerWrapper form button {
   font-weight: 600;

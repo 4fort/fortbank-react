@@ -156,11 +156,9 @@ const Register = () => {
                 validate2={validator.passwordConfirmValidator}
               />
               <div id='recaptcha-container'></div>
+              <button type='submit'>Register</button>
             </div>
           </div>
-          <button type='submit' disabled={isValidated ? false : true}>
-            Register
-          </button>
         </form>
       )}
     </div>

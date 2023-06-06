@@ -33,8 +33,11 @@ const FormInput = (props: Props) => {
     onInputChange,
   } = props;
 
-  let { isValidated } = useContext<AuthContextType | null>(AuthContext) ?? {
+  let { isValidated, setIsValidated } = useContext<AuthContextType | null>(
+    AuthContext
+  ) ?? {
     isValidated: null,
+    setIsValidated: () => {},
   };
 
   const [errorPrompt, setErrorPrompt] = useState<string | undefined>("");

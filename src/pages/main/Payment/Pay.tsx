@@ -20,6 +20,7 @@ import ClientContext from "../../../context/ClientContext";
 import Loading from "../../../components/Loading";
 import { timeoutInterval } from "../../../context/GlobalVars";
 import Alert from "../../../components/Alert";
+import { toast } from "react-toastify";
 
 let ticket: TransactionTicket | null = null;
 
@@ -91,8 +92,17 @@ const Pay = () => {
   };
 
   const proceedPayment = async () => {
-    ticket = await getTicket(Number(refIdInput), authTokens!);
-    setReceiverDetails(await getUser(+ticket?.user, authTokens!));
+    try {
+      ticket = await getTicket(Number(refIdInput), authTokens!);
+      setReceiverDetails(await getUser(+ticket?.user, authTokens!));
+    } catch (error) {
+      setLoading(false);
+      setIsFail(true);
+      setAlertMsg("The code is invalid!");
+      return setTimeout(() => {
+        navigate("/payment");
+      }, timeoutInterval);
+    }
 
     validateUser();
 
@@ -115,14 +125,6 @@ const Pay = () => {
         navigate("/payment");
       }, timeoutInterval);
     }
-    if (ticket === null) {
-      setLoading(false);
-      setIsFail(true);
-      setAlertMsg("The code is invalid!");
-      return setTimeout(() => {
-        navigate("/payment");
-      }, timeoutInterval);
-    }
   };
 
   const makePayment = async () => {
@@ -132,6 +134,15 @@ const Pay = () => {
       setLoading(false);
       setIsFail(true);
       setAlertMsg("Insufficient Balance!");
+      return setTimeout(() => {
+        navigate("/payment");
+      }, timeoutInterval);
+    }
+
+    if (amount < 0) {
+      setLoading(false);
+      setIsFail(true);
+      setAlertMsg("Cannot send negative amount!");
       return setTimeout(() => {
         navigate("/payment");
       }, timeoutInterval);

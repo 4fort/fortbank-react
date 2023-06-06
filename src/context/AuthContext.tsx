@@ -96,6 +96,8 @@ export const AuthProvider = ({ children }: Props) => {
   let genderError: string | undefined;
   let civilStatusError: string | undefined;
   let addressError: string | undefined;
+  let passwordError: string | undefined;
+  let passwordConfirmError: string | undefined;
 
   const generateRecaptcha = () => {
     //@ts-ignore
@@ -191,6 +193,10 @@ export const AuthProvider = ({ children }: Props) => {
       String(userData.userprofile.civil_status)
     );
     addressError = validator.addressValidator(userData.userprofile.address);
+    passwordError = validator.passwordValidator(userData.password!);
+    passwordConfirmError = validator.passwordConfirmValidator(
+      userData.password!
+    );
 
     if (
       firstNameError ||
@@ -202,6 +208,8 @@ export const AuthProvider = ({ children }: Props) => {
       genderError ||
       civilStatusError ||
       addressError
+      // passwordError ||
+      // passwordConfirmError
     ) {
       // if (firstNameError) {
       //   console.log(firstNameError);
@@ -240,6 +248,7 @@ export const AuthProvider = ({ children }: Props) => {
       //   console.log(addressError);
       // }
       setIsValidated(false);
+      console.log(passwordError, passwordConfirmError);
       return;
     }
     setUserDataState(userData);
@@ -353,6 +362,7 @@ export const AuthProvider = ({ children }: Props) => {
     register: register,
     login: login,
     logout: logout,
+    setUnauthorized: setUnauthorized,
     loading: loading,
     setLoading: setLoading,
     unauthorized: unauthorized,
@@ -376,6 +386,17 @@ export const AuthProvider = ({ children }: Props) => {
     }, updateInterval);
     return () => clearInterval(interval);
   }, [authTokens, loading]);
+
+  // useEffect(() => {
+  //   const inactivityInterval = 1000 * 5;
+  //   const interval = setTimeout(() => {
+  //     if (authTokens) {
+  //       logout();
+  //     }
+  //   }, inactivityInterval);
+  //   console.log("inactive");
+  //   return () => clearTimeout(interval);
+  // }, []);
 
   return (
     <>
