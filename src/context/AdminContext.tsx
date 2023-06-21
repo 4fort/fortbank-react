@@ -1,54 +1,82 @@
 import { createContext, useContext, useState, useRef, useEffect } from "react";
-import { FortbankUser } from "../Interfaces/interfaces";
-import { User } from "../Models/UserModel";
 import axios from "axios";
 import AuthContext from "./AuthContext";
+import {
+  AdminContextType,
+  AuthContextType,
+  FortbankUser,
+  ChildProp,
+} from "../Interfaces/interfaces";
+import { User } from "../Models/UserModel";
 
-const AdminContext = createContext({});
+const AdminContext = createContext<AdminContextType | null>(null);
 export default AdminContext;
 
-export const AdminProvider = ({ children }) => {
-  let { baseUrl, user, authTokens }: any = useContext(AuthContext);
+export const AdminProvider = ({ children }: ChildProp) => {
+  let { baseUrl, user, authTokens } = useContext<AuthContextType | null>(
+    AuthContext
+  ) ?? { baseUrl: "", user: null, authTokens: null };
 
-  const [userId, setUserId] = useState("");
-  const [ownerName, setOwnerName] = useState("");
+  const [userId, setUserId] = useState(0);
+  const [firstName, setFirstName] = useState("");
+  const [username, setUsername] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [cardNum, setCardNum] = useState("");
-  const [cardPin, setCardPin] = useState("");
   const [balance, setBalance] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [birthdate, setBirthDate] = useState("");
+  const [gender, setGender] = useState(0);
+  const [civilStatus, setCivilStatus] = useState(0);
+  const [address, setAddress] = useState("");
+  const [isActive, setIsActive] = useState(false);
+  const [isSuperUser, setIsSuperUser] = useState(false);
+  const [lastLogin, setLastLogin] = useState("");
 
   const [modalMethod, setModalMethod] = useState<number>(0);
-  const [selectedUser, setSelectedUser] = useState<FortbankUser | {}>({});
+  const [selectedUser, setSelectedUser] = useState<FortbankUser | null>(null);
 
   const [isValidated, setIsValidated] = useState(true);
 
-  const dialogRef = useRef(null);
-
   const [query, setQuery] = useState("");
 
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
   const handleShowModal = () => {
-    dialogRef.current.showModal();
+    if (dialogRef.current) {
+      dialogRef.current?.showModal();
+    }
   };
 
   const handleCloseModal = () => {
-    setSelectedUser({});
+    setSelectedUser(null);
 
-    setOwnerName("");
+    setUserId(0);
+    setFirstName("");
+    setLastName("");
+    setUsername("");
     setEmail("");
-    setCardNum("");
-    setCardPin("");
     setBalance("");
+    setMobileNumber("");
+    setBirthDate("");
+    setGender(0);
+    setCivilStatus(0);
+    setAddress("");
+    setIsActive(false);
+    setIsSuperUser(false);
 
     setIsValidated(true);
 
-    dialogRef.current.close();
+    if (dialogRef.current) {
+      dialogRef.current?.close();
+    }
   };
 
-  const [fortbankUsers, setFortbankUsers] = useState<FortbankUser | []>([]);
+  const [fortbankUsers, setFortbankUsers] = useState<FortbankUser[]>([]);
 
   useEffect(() => {
-    getUsers();
-  }, []);
+    if (user) getUsers();
+    return;
+  }, [user]);
 
   const getUsers = async () => {
     try {
@@ -69,7 +97,7 @@ export const AdminProvider = ({ children }) => {
       const response = await axios.post(`${baseUrl}/api/users/`, user, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(authTokens?.access),
         },
       });
       setFortbankUsers([...fortbankUsers, response.data]);
@@ -87,7 +115,7 @@ export const AdminProvider = ({ children }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + String(authTokens.access),
+            Authorization: "Bearer " + String(authTokens?.access),
           },
         }
       );
@@ -107,7 +135,7 @@ export const AdminProvider = ({ children }) => {
       await axios.delete(`${baseUrl}/api/users/${userId}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(authTokens?.access),
         },
       });
       setFortbankUsers(
@@ -118,51 +146,88 @@ export const AdminProvider = ({ children }) => {
     }
   };
 
-  const getFilteredUsers = (query: string, users: FortbankUser) => {
+  const getFilteredUsers = (query: string, users: FortbankUser[]) => {
     if (!query) {
       return users;
     }
     return users.filter(
-      (user: User) =>
-        user.owner_name.toLowerCase().includes(query.toLowerCase()) ||
+      (user: FortbankUser) =>
+        String(user.id).includes(query) ||
+        user.first_name.toLowerCase().includes(query.toLowerCase()) ||
+        user.last_name.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase()) ||
-        String(user.card_num).includes(query) ||
-        String(user.balance).includes(query)
+        String(user.userwallet?.balance).includes(query) ||
+        String(user.userprofile?.mobile_number).includes(query)
     );
   };
 
-  const filteredUsers = getFilteredUsers(query, fortbankUsers);
+  const filteredUsers: FortbankUser[] = getFilteredUsers(query, fortbankUsers);
 
   useEffect(() => {
-    setUserId(selectedUser?.id || "");
-    setOwnerName(selectedUser?.owner_name || "");
+    setUserId(selectedUser?.id || fortbankUsers.slice(-1)[0]?.id);
+    setFirstName(selectedUser?.first_name || "");
+    setLastName(selectedUser?.last_name || "");
+    setUsername(selectedUser?.username || "");
     setEmail(selectedUser?.email || "");
-    setCardNum(selectedUser?.card_num || "");
-    setCardPin(selectedUser?.card_pin || "");
-    setBalance(selectedUser?.balance || "");
-  }, [selectedUser]);
+    setBalance(selectedUser?.userwallet?.balance || "");
+    setMobileNumber(selectedUser?.userprofile?.mobile_number || "");
+    setBirthDate(selectedUser?.userprofile?.birthdate || "");
+    setGender(selectedUser?.userprofile?.gender || 0);
+    setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
+    setAddress(selectedUser?.userprofile?.address || "");
+    setIsActive(selectedUser?.is_active || false);
+    setIsSuperUser(selectedUser?.is_superuser || false);
+  }, [selectedUser, userId, fortbankUsers]);
+
+  // useEffect(() => {
+  //   setUserId(selectedUser?.id || 0);
+  //   setFirstName(selectedUser?.first_name || "");
+  //   setLastName(selectedUser?.last_name || "");
+  //   setEmail(selectedUser?.email || "");
+  //   setCardNum(String(selectedUser?.useraccount?.card_num) || "");
+  //   setCardPin(String(selectedUser?.useraccount?.card_pin) || "");
+  //   setBalance(String(selectedUser?.useraccount?.balance) || "");
+  //   setMobileNumber(String(selectedUser?.userprofile?.mobile_number) || "");
+  //   setBirthDate(selectedUser?.userprofile?.birthdate || "");
+  //   setGender(selectedUser?.userprofile?.gender || 0);
+  //   setCivilStatus(selectedUser?.userprofile?.civil_status || 0);
+  //   setAddress(selectedUser?.userprofile?.address || "");
+  // }, [selectedUser]);
 
   let selectedUserValues = {
     id: userId,
-    owner_name: ownerName,
+    first_name: firstName,
+    last_name: lastName,
+    username: username,
     email: email,
-    card_num: cardNum,
-    card_pin: cardPin,
-    balance: balance,
+    userwallet: {
+      balance: balance,
+    },
+    userprofile: {
+      mobile_number: mobileNumber,
+      birthdate: birthdate,
+      gender: gender,
+      civil_status: civilStatus,
+      address: address,
+    },
+    is_active: isActive,
+    is_superuser: isSuperUser,
+    last_login: lastLogin,
   };
 
   let adminContextData = {
-    ownerName: ownerName,
-    email: email,
-    cardNum: cardNum,
-    cardPin: cardPin,
-    balance: balance,
-
-    setOwnerName: setOwnerName,
+    setFirstName: setFirstName,
+    setLastName: setLastName,
+    setUsername: setUsername,
     setEmail: setEmail,
-    setCardNum: setCardNum,
-    setCardPin: setCardPin,
     setBalance: setBalance,
+    setMobileNumber: setMobileNumber,
+    setBirthDate: setBirthDate,
+    setGender: setGender,
+    setCivilStatus: setCivilStatus,
+    setAddress: setAddress,
+    setIsActive: setIsActive,
+    setIsSuperUser: setIsSuperUser,
 
     selectedUserValues: selectedUserValues,
 
@@ -188,8 +253,8 @@ export const AdminProvider = ({ children }) => {
     setQuery: setQuery,
     filteredUsers: filteredUsers,
 
-    isValidated: isValidated,
-    setIsValidated: setIsValidated,
+    // isValidated: isValidated,
+    // setIsValidated: setIsValidated,
   };
 
   return (

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   padding: 0;
   margin: 0;
@@ -6,14 +7,16 @@
   /* Handle on hover */
 }
 *::-webkit-scrollbar {
-  width: 6px;
+  z-index: 5;
+  height: 4px; /* height of horizontal scrollbar ← You're missing this */
+  width: 4px;
 }
 *::-webkit-scrollbar-track {
   opacity: 0;
 }
 *::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: #888;
+  background: rgba(136, 136, 136, 0.2);
 }
 *::-webkit-scrollbar-thumb:hover {
   background: #555;
@@ -28,15 +31,6 @@ body {
 #root {
   width: 100%;
   height: 100%;
-}
-
-.App {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 :root {
@@ -84,15 +78,22 @@ body {
 }
 header {
   display: flex;
-  background: linear-gradient(180deg, var(--light_white-color) 0%, var(--darkmode-tertiary-color) 100%);
+  background: var(--darkmode-tertiary-color);
   height: 60px;
-  width: 100%;
+  min-height: 60px;
+  max-height: 60px;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.06);
+}
+header.admin {
+  width: 90%;
 }
 header div.logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 5rem;
+  margin-left: 2rem;
   font-weight: 700;
   font-size: 1.4rem;
   color: var(--quaternary-color);
@@ -100,7 +101,7 @@ header div.logo {
 header div.logo span {
   color: var(--white-color);
 }
-header div.logo span::after {
+header div.logo.admin span::after {
   content: "admin";
   font-size: 0.6rem;
   vertical-align: super;
@@ -111,25 +112,103 @@ header div.actions {
   justify-content: end;
   align-items: center;
   width: 100%;
-  margin-right: 5rem;
+  margin-right: 2rem;
+}
+header div.actions * {
+  transition: 0.2s;
 }
 header div.actions *:not(b, .logout) {
-  padding-right: 1.5rem;
+  padding-right: 2rem;
 }
 header div.actions a {
   color: inherit;
   text-decoration: none;
 }
 header div.actions .logout {
+  padding: 0.5rem;
+  border-radius: 5px;
   cursor: pointer;
 }
+header div.actions .logout:hover {
+  background: var(--darkmode-primary-color);
+}
 
-.loginWrapper {
-  height: 100%;
-  width: 100%;
+.loadingScreen {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.loadingScreen .lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.loadingScreen .lds-ripple div {
+  position: absolute;
+  border: 4px solid #fff;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.loadingScreen .lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
+}
+
+.error {
+  margin-top: -0.7rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem !important;
+  opacity: 0.8;
+  background-color: rgba(255, 0, 0, 0.08);
+  border: solid 1px rgba(255, 0, 0, 0.05);
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  overflow-wrap: break-word;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 0;
+}
+.error svg {
+  padding: 0 0.5rem;
+  font-size: 1rem;
+}
+
+.loginWrapper {
+  margin: auto;
 }
 .loginWrapper .loginForm {
   display: flex;
@@ -142,7 +221,9 @@ header div.actions .logout {
 .loginWrapper .loginForm span {
   font-weight: 700;
   font-size: 1.4rem;
-  padding-bottom: 20px;
+  margin-top: 5px;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 }
 .loginWrapper .loginForm label {
   padding-bottom: 5px;
@@ -162,6 +243,18 @@ header div.actions .logout {
 .loginWrapper .loginForm input:focus {
   outline: solid 3px var(--secondary-color);
 }
+.loginWrapper .loginForm input.disabled {
+  pointer-events: none;
+}
+.loginWrapper .loginForm input.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.loginWrapper .loginForm input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.loginWrapper .loginForm input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
 .loginWrapper .loginForm button {
   font-weight: 600;
   border: none;
@@ -169,14 +262,28 @@ header div.actions .logout {
   background-color: var(--tertiary-color);
   cursor: pointer;
   transition: all 0.1s;
-  padding: 0.8rem;
+  padding: 0.7rem;
   color: var(--white-color);
   font-size: 0.7rem;
   text-transform: uppercase;
-  border-radius: 25px;
+  border-radius: 8px;
 }
 .loginWrapper .loginForm button:hover {
   background: var(--secondary-color);
+}
+.loginWrapper .loginForm button:active {
+  transform: scale(0.95);
+}
+.loginWrapper .loginForm .bottom-prompt {
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.6;
+  padding-top: 2rem;
+  padding-bottom: 0;
+}
+.loginWrapper .loginForm .bottom-prompt a {
+  color: inherit;
+  font-weight: 600;
 }
 
 .adminActions {
@@ -213,6 +320,18 @@ header div.actions .logout {
 .adminActions div span input:focus {
   outline: solid 3px var(--secondary-color);
 }
+.adminActions div span input.disabled {
+  pointer-events: none;
+}
+.adminActions div span input.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.adminActions div span input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.adminActions div span input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
 .adminActions div button {
   font-weight: 600;
   border: none;
@@ -221,7 +340,7 @@ header div.actions .logout {
   cursor: pointer;
   transition: all 0.1s;
   display: flex;
-  padding: 0.5rem 0.9rem;
+  padding: 0.6rem 0.9rem;
   color: var(--white-color);
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -231,6 +350,9 @@ header div.actions .logout {
 .adminActions div button:hover {
   background: var(--secondary-color);
 }
+.adminActions div button:active {
+  transform: scale(0.95);
+}
 .adminActions div button svg {
   font-size: 0.8rem;
   padding-left: 0.3rem;
@@ -238,9 +360,10 @@ header div.actions .logout {
 
 div.tableWrapper {
   width: 90%;
-  height: 80vh;
-  border-radius: 5px;
-  overflow-y: scroll;
+  height: 77vh;
+  background: var(--darkmode-primary-color);
+  border-radius: 8px;
+  overflow-y: overlay;
 }
 div.tableWrapper table {
   width: 100%;
@@ -255,7 +378,7 @@ div.tableWrapper table td {
 div.tableWrapper table thead {
   position: sticky;
   top: 0;
-  z-index: 11;
+  z-index: 20;
 }
 div.tableWrapper table th {
   background: var(--darkmode-quarternary-color);
@@ -272,40 +395,83 @@ div.tableWrapper table td[data-cell=actions] {
 }
 div.tableWrapper table td[data-cell=actions] span {
   font-size: 1.1rem;
+}
+div.tableWrapper table td[data-cell=actions] svg {
   cursor: pointer;
+  transition: 0.1s;
+}
+div.tableWrapper table td[data-cell=actions] svg:active {
+  transform: scale(0.85);
 }
 
 dialog {
   margin: auto;
   padding: 1em;
-  width: 350px;
-  background: var(--darkmode-quarternary-color);
+  width: 70vw;
+  overflow-y: overlay;
+  background: var(--darkmode-tertiary-color);
   color: var(--white-color);
   border: none;
   border-radius: 5px;
+  outline: none;
 }
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.5);
 }
-dialog div {
+dialog div.actionLabel {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.2rem;
 }
-dialog div span {
+dialog div.actionLabel span {
   font-weight: 700;
 }
-dialog div svg {
+dialog div.actionLabel svg {
   cursor: pointer;
+  transition: 0.1s;
+}
+dialog div.actionLabel svg:active {
+  transform: scale(0.85);
 }
 dialog form {
-  margin-top: 30px;
+  margin-top: 50px;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
+dialog form div {
+  display: flex;
+  justify-content: space-evenly;
+}
+dialog form span.fieldTitle {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+dialog form .firstSection {
+  flex-direction: row;
+  align-items: start;
+  width: 100%;
+  gap: 2vw;
+}
+dialog form .firstSection div {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+dialog form .firstSection div.nameFields {
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 1vw;
+}
+dialog form .firstSection div.nameFields div {
+  width: 48.5%;
+}
 dialog form label {
   margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  opacity: var(--icon-opacity);
 }
 dialog form input {
   color: var(--white-color);
@@ -315,28 +481,68 @@ dialog form input {
   max-width: 100%;
   transition: all 0.1s;
   outline: solid 0px var(--secondary-color);
-  padding: 0.5rem;
+  padding: 0.8rem;
   margin-bottom: 1rem;
-  background: var(--darkmode-primary-color);
+  font-family: inherit;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
 }
 dialog form input:focus {
   outline: solid 3px var(--secondary-color);
 }
-dialog form .error {
-  margin-top: -0.7rem;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-  opacity: 0.8;
-  background-color: rgba(255, 0, 0, 0.08);
-  border: solid 1px rgba(255, 0, 0, 0.05);
-  border-radius: 5px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  padding-left: 0.8rem;
+dialog form input.disabled {
+  pointer-events: none;
 }
-dialog form .error svg {
-  padding-right: 0.5rem;
+dialog form input.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+dialog form input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+dialog form input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+dialog form input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+dialog form select {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+}
+dialog form select:focus {
+  outline: solid 3px var(--secondary-color);
+}
+dialog form select.disabled {
+  pointer-events: none;
+}
+dialog form select.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+dialog form select.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+dialog form select.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+dialog form select::after {
+  content: "▼";
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 dialog form button {
   font-weight: 600;
@@ -345,11 +551,15 @@ dialog form button {
   background-color: var(--tertiary-color);
   cursor: pointer;
   transition: all 0.1s;
+  margin-top: 30px;
   padding: 0.7rem;
   color: var(--white-color);
 }
 dialog form button:hover {
   background: var(--secondary-color);
+}
+dialog form button:active {
+  transform: scale(0.95);
 }
 dialog form button:disabled,
 dialog form button [disabled] {

@@ -1,21 +1,22 @@
 import { useContext } from "react";
 import { TbExclamationCircle } from "react-icons/tb";
-import AuthContext from "../../context/AuthContext";
-import "../../styles/admin/admin.css";
-import { AuthContextType } from "../../Interfaces/interfaces";
+import AuthContext from "../context/AuthContext";
+import "../styles/style.css";
+import { AuthContextType } from "../Interfaces/interfaces";
+import { NavLink } from "react-router-dom";
 
-const AdminLogin = () => {
+const Login = () => {
   const context = useContext<AuthContextType | null>(AuthContext) ?? {
-    loginAdmin: () => {},
+    login: () => {},
     unauthorized: true,
     setUnauthorized: () => {},
   };
-  let { loginAdmin: login, unauthorized } = context;
+  let { login: login, unauthorized } = context;
 
   return (
     <div className='loginWrapper'>
       <form onSubmit={login} className='loginForm'>
-        <span>Login Admin</span>
+        <span>Login</span>
         {unauthorized ? (
           <span className='error'>
             <TbExclamationCircle />
@@ -37,9 +38,13 @@ const AdminLogin = () => {
           type='password'
         />
         <button type='submit'>Login</button>
+        <span className='bottom-prompt'>
+          Dont have an account? register&nbsp;
+          <NavLink to='/register'>here</NavLink>
+        </span>
       </form>
     </div>
   );
 };
 
-export default AdminLogin;
+export default Login;

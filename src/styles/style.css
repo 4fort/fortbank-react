@@ -1,0 +1,1496 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&display=swap");
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--darkmode-quinary-color);
+  color: rgb(255, 255, 255);
+  --primary-color: #4c3a51;
+  --secondary-color: #774360;
+  --tertiary-color: #b25068;
+  --quaternary-color: #e7ab79;
+  --darkmode-primary-color: #303030;
+  --darkmode-secondary-color: #2b2b2b;
+  --darkmode-tertiary-color: #252525;
+  --darkmode-quarternary-color: #1f1f1f;
+  --darkmode-quinary-color: #1b1c1e;
+  --white-color: #fefefe;
+  --light_white-color: #303030;
+  --icon-opacity: 0.5;
+}
+
+* {
+  font-family: Inter;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+body {
+  overflow: hidden;
+}
+
+header {
+  width: 90%;
+}
+
+.cards-panel .cards .atm_card {
+  width: 100%;
+}
+
+.atm_card {
+  position: relative;
+  min-width: 340px;
+  height: 200px;
+  border-radius: 15px;
+  background: rgb(178, 80, 104);
+  background: linear-gradient(90deg, var(--darkmode-primary-color) 0%, rgb(76, 58, 81) 100%);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+  transition: 0.4s;
+  z-index: 11;
+  overflow: hidden;
+}
+.atm_card .actions {
+  display: none;
+}
+.atm_card .backdrop {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: -40px;
+  top: -50px;
+  opacity: 0.2;
+  transform: rotate(-70deg);
+}
+.atm_card .backdrop svg {
+  font-size: 20rem;
+  stroke-width: 1.5;
+}
+.atm_card .logo {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--quaternary-color);
+  font-weight: 700;
+  font-size: inherit;
+}
+.atm_card .logo span {
+  color: var(--white-color);
+}
+.atm_card .qrcode {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 64px;
+  width: 64px;
+  background: var(--white-color);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.atm_card .qrcode svg {
+  transform: scale(0.8);
+}
+.atm_card .atm_cardNum {
+  position: absolute;
+  top: 95px;
+  left: 20px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
+}
+.atm_card .atm_cardHolder {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  font-size: 0.7rem;
+  opacity: 0.5;
+  left: 20px;
+  bottom: 30px;
+}
+.atm_card .atm_cardHolder span {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.atm_card .atm_cardHolder span {
+  font-size: 0.8rem;
+}
+.atm_card .atm_cardId {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  font-size: 0.7rem;
+  opacity: 0.5;
+  left: 270px;
+  bottom: 35px;
+}
+.atm_card .atm_cardId span {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.atm_card .atm_cardId span {
+  cursor: pointer;
+}
+.atm_card .atm_cardId #atm_cardId {
+  height: 20px;
+}
+
+.otherbrand {
+  background: rgb(178, 80, 104);
+  background: linear-gradient(90deg, var(--darkmode-primary-color) 0%, rgb(76, 58, 81) 100%);
+}
+.otherbrand .logo {
+  color: var(--white-color);
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 80%;
+  gap: 8px;
+  padding: 0.8rem;
+}
+
+.detailsContainer {
+  display: flex;
+  width: 100%;
+  border-radius: 15px;
+}
+.detailsContainer .balance_container {
+  margin: auto;
+  margin-left: 5rem;
+}
+.detailsContainer .balance_container span {
+  font-size: 1.2rem;
+}
+.detailsContainer .balance_container div {
+  font-weight: 900;
+  font-size: 4rem;
+}
+
+.bottomContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.bottomContainer .transactions {
+  width: 75%;
+}
+.bottomContainer .actions {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  gap: 0.5rem;
+}
+.bottomContainer .actions .sub_actions {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: inherit;
+  width: auto;
+  padding: 1rem;
+  background: var(--darkmode-tertiary-color);
+  border-radius: 10px;
+}
+.bottomContainer .actions .sub_actions div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  background: var(--darkmode-primary-color);
+  border-radius: 25px;
+  transition: 0.1s;
+  cursor: pointer;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.bottomContainer .actions .sub_actions div svg {
+  padding-right: 5px;
+}
+.bottomContainer .actions .sub_actions div:hover {
+  background: var(--darkmode-secondary-color);
+}
+.bottomContainer .actions .sub_actions div:active {
+  color: var(--tertiary-color);
+  transform: scale(0.95);
+}
+.bottomContainer .actions .main_actions {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-content: space-between;
+  gap: inherit;
+}
+.bottomContainer .actions .main_actions div {
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  background: linear-gradient(80deg, var(--tertiary-color), var(--secondary-color) 50%, var(--primary-color)) var(--x, 0)/200%;
+  transition: 0.2s;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.bottomContainer .actions .main_actions div:hover {
+  --x: 100%;
+}
+.bottomContainer .actions .main_actions div:active {
+  transform: scale(0.95);
+}
+.bottomContainer .actions .main_actions div span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -40px;
+  left: -20px;
+  opacity: 0.2;
+  transition: 0.5s;
+}
+.bottomContainer .actions .main_actions div span svg {
+  transform: rotate(-10deg);
+  font-size: 10rem;
+  transition: inherit;
+}
+.bottomContainer .actions .main_actions div:hover span {
+  left: 10%;
+}
+.bottomContainer .actions .main_actions div:hover span svg {
+  transform: rotate(10deg);
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  max-width: 98%;
+  gap: 0.5rem;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-width: 80rem;
+  gap: 0.5rem;
+}
+
+.hidden {
+  min-width: 48px !important;
+  width: 50px !important;
+}
+.hidden .user {
+  justify-content: center !important;
+}
+.hidden .user span {
+  margin-left: -500px;
+}
+.hidden .balance {
+  margin-left: -500px;
+  width: 20px;
+}
+.hidden .actions {
+  margin-top: -120px;
+}
+.hidden .actions a svg {
+  display: block;
+}
+.hidden .actions a p {
+  display: none;
+}
+.hidden .logout span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-panel {
+  height: 90%;
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 18%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  --transition-interval: 0.2s;
+  transition: var(--transition-interval);
+}
+.side-panel .show-hide-sidepanel svg {
+  transition: 0.1s;
+  padding: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.side-panel .show-hide-sidepanel svg:hover {
+  background: var(--darkmode-secondary-color);
+}
+.side-panel .user {
+  display: flex;
+  justify-content: space-between;
+}
+.side-panel .user .details {
+  display: flex;
+  flex-direction: column;
+}
+.side-panel .user .details span {
+  transition: var(--transition-interval);
+}
+.side-panel .user .details span:first-child:not(.logo span) {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.side-panel .user .details span:nth-of-type(2n):not(.logo span) {
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+.side-panel .balance {
+  display: flex;
+  flex-direction: column;
+  font-size: 2cqi;
+  font-weight: 700;
+  transition: var(--transition-interval);
+}
+.side-panel .balance span {
+  font-weight: 500;
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+.side-panel .actions {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 6rem;
+  transition: var(--transition-interval);
+}
+.side-panel .actions a {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 10px;
+  gap: inherit;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.1s;
+}
+.side-panel .actions a:hover {
+  background: var(--darkmode-secondary-color);
+}
+.side-panel .actions a:active {
+  transform: scale(0.95);
+}
+.side-panel .actions a.active {
+  background: var(--darkmode-primary-color);
+  color: var(--tertiary-color);
+}
+.side-panel .logout {
+  padding: inherit;
+  border-radius: inherit;
+  cursor: pointer;
+}
+.side-panel .logout:hover {
+  background: var(--darkmode-primary-color);
+}
+
+.main-panel {
+  height: 90%;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 100%;
+  background: rgba(37, 37, 37, 0.5);
+  overflow: hidden;
+}
+.main-panel h1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-panel h1 a {
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  color: var(--tertiary-color);
+  padding: 0.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.main-panel h1 a * {
+  transition: 0.2s;
+}
+.main-panel h1 a:hover {
+  background: var(--darkmode-secondary-color);
+}
+.main-panel h1 a:hover svg {
+  padding-right: 0.4rem;
+}
+.main-panel h1 a:active {
+  transform: scale(0.95);
+}
+.main-panel h1 a svg {
+  font-size: 1.1rem;
+  padding-right: 0.2rem;
+  stroke-width: 3px;
+}
+
+.cards-panel {
+  height: 90%;
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(37, 37, 37, 0.5);
+  min-width: 23%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cards-panel .cards {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: overlay;
+  gap: 1rem;
+}
+.cards-panel .cards h5 {
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: -10px;
+  opacity: 0.5;
+}
+.cards-panel .cards a {
+  padding: 1rem;
+  color: inherit;
+  font-size: 0.9rem;
+  text-decoration: none;
+  text-align: center;
+  width: 30%;
+  border-radius: 10px;
+  transition: 0.1s;
+}
+.cards-panel .cards a:hover {
+  background: var(--darkmode-secondary-color);
+}
+.cards-panel .cards a:active {
+  transform: scale(0.95);
+}
+.cards-panel p {
+  font-size: 0.8rem;
+  opacity: 0.3;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cards-panel p svg {
+  padding-right: 0.5rem;
+}
+.cards-panel p a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 95%;
+  justify-content: center;
+  align-items: center;
+}
+
+.transaction-actions {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  gap: 1rem;
+}
+.transaction-actions a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  background: var(--darkmode-secondary-color);
+  padding: 1rem;
+  border-radius: 15px;
+  color: var(--secondary-color);
+  transition: 0.2s;
+  text-decoration: none;
+}
+.transaction-actions a:hover {
+  color: var(--tertiary-color);
+}
+.transaction-actions a:active {
+  transform: scale(0.95);
+}
+.transaction-actions a svg {
+  font-size: 8rem;
+  stroke-width: 1.5px;
+}
+.transaction-actions a p {
+  color: #fefefe;
+  padding: 2.5rem 0.5rem 1rem 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+
+.reference-code-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.reference-code-wrapper div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.reference-code-wrapper div * {
+  transition: 0.1s;
+}
+.reference-code-wrapper div label {
+  opacity: 0.5;
+  font-size: 0.85rem;
+  padding-bottom: 0.5rem;
+}
+.reference-code-wrapper div span {
+  width: 50%;
+}
+.reference-code-wrapper div span input {
+  width: 70%;
+  color: inherit;
+  background: var(--darkmode-primary-color);
+  padding: 1rem;
+  outline: none;
+  border: none;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.reference-code-wrapper div span button {
+  width: 20%;
+  height: 100%;
+  background: var(--tertiary-color);
+  color: inherit;
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.reference-code-wrapper div span button:hover {
+  background: var(--secondary-color);
+}
+.reference-code-wrapper hr {
+  position: relative;
+  width: 30%;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 2px solid var(--darkmode-primary-color);
+  margin: 1rem 0;
+  margin-bottom: -0.2rem;
+  padding: 0;
+}
+.reference-code-wrapper #html5qr-code-full-region {
+  width: 50%;
+  transform: scale(0.9);
+  border: none !important;
+}
+.reference-code-wrapper #html5qr-code-full-region * {
+  transition: 0.2s;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__scan_region {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1rem;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr select {
+  background: var(--darkmode-primary-color);
+  color: inherit;
+  padding: 0.8rem;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr button {
+  color: inherit;
+  border: none;
+  font-size: 1rem;
+  padding: 1.1rem 0;
+  width: 60%;
+  border-radius: 10px;
+  background: var(--tertiary-color);
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr button:hover {
+  background: var(--primary-color);
+}
+.reference-code-wrapper #html5qr-code-full-region #html5qr-code-full-region__dashboard_section_csr button:active {
+  transform: scale(0.95);
+}
+.reference-code-wrapper #html5qr-code-full-region #html5-qrcode-anchor-scan-type-change {
+  color: inherit;
+  border: none;
+  font-size: 1rem;
+  padding: 1.1rem 0;
+  width: 60%;
+  border-radius: 10px;
+  width: 100%;
+  background: var(--quaternary-color);
+  color: var(--darkmode-quinary-color);
+  text-decoration: none !important;
+}
+.reference-code-wrapper #html5qr-code-full-region #html5-qrcode-anchor-scan-type-change:hover {
+  background: var(--primary-color);
+}
+.reference-code-wrapper .qrcode {
+  width: 30%;
+  margin: 1.5rem;
+  padding: 1rem;
+  background-color: var(--white-color);
+  border-radius: 15px;
+}
+.reference-code-wrapper .qrcode span {
+  color: #1b1c1e;
+}
+.reference-code-wrapper .qrcode span span {
+  font-weight: 700;
+}
+
+.success-screen,
+.fail-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.success-screen svg,
+.fail-screen svg {
+  font-size: 8rem;
+  stroke-width: 2;
+}
+
+.success-screen {
+  color: var(--quaternary-color);
+}
+
+.fail-screen {
+  color: var(--tertiary-color);
+}
+
+.proceed-payment .receiverDetails {
+  display: flex;
+  justify-content: center;
+}
+.proceed-payment .receiverDetails span {
+  width: auto;
+  opacity: 0.5;
+  padding-bottom: 5rem;
+}
+.proceed-payment input {
+  background: var(--darkmode-primary-color);
+  outline: none;
+  color: inherit;
+  font-size: 1rem;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 10px;
+}
+.proceed-payment button {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  color: inherit;
+  border: none;
+  border-radius: 25px;
+  background: var(--tertiary-color);
+}
+
+.footer {
+  opacity: 0.3;
+  font-size: 0.8rem;
+}
+
+.transactions table {
+  margin-top: 1rem;
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.transactions table tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 90%;
+  width: 100%;
+  overflow-y: auto;
+}
+.transactions table tr.activity {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  background: var(--darkmode-secondary-color);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+.transactions table tr.activity:hover {
+  background: var(--darkmode-primary-color);
+}
+.transactions table th,
+.transactions table td {
+  padding: 1rem;
+}
+.transactions table th div.type,
+.transactions table td div.type {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+.transactions table th div.type svg,
+.transactions table td div.type svg {
+  font-size: 2rem;
+  padding-right: 1rem;
+}
+.transactions table th div.type div,
+.transactions table td div.type div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.transactions table th div.type div span:last-child,
+.transactions table td div.type div span:last-child {
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.5;
+}
+.transactions table th div.amount,
+.transactions table td div.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 0.3rem;
+}
+.transactions table th div.amount span:first-child,
+.transactions table td div.amount span:first-child {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.transactions table th div.amount span:nth-child(2n),
+.transactions table td div.amount span:nth-child(2n) {
+  font-weight: 700;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+.transactions table th div.amount span:last-child,
+.transactions table td div.amount span:last-child {
+  font-size: 0.8rem;
+  opacity: 0.3;
+}
+.transactions table th {
+  text-align: start;
+}
+
+.user-account .container {
+  justify-content: start;
+}
+.user-account .container .cards {
+  align-items: start;
+  width: 100%;
+  min-height: 240px;
+  display: flex;
+  overflow: hidden;
+  overflow-x: overlay;
+}
+.user-account .container .cards::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0);
+}
+.user-account .container .cards * {
+  transition: 0.2s;
+}
+.user-account .container .cards .atm_card,
+.user-account .container .cards .add_card {
+  margin: 1rem;
+}
+.user-account .container .cards .atm_card {
+  z-index: 1;
+}
+.user-account .container .cards .atm_card .actions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.user-account .container .cards .atm_card .actions * {
+  z-index: 99;
+}
+.user-account .container .cards .atm_card .actions div {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+.user-account .container .cards .atm_card .actions div svg {
+  opacity: 0.4;
+  font-size: 2.5rem;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 20px var(--darkmode-quinary-color));
+}
+.user-account .container .cards .atm_card .actions .edit {
+  margin-left: -500px;
+  background: rgb(178, 80, 104);
+  background: linear-gradient(270deg, rgba(178, 80, 104, 0) 0%, rgba(37, 37, 37, 0.8) 100%);
+}
+.user-account .container .cards .atm_card .actions .delete {
+  margin-right: -500px;
+  background: rgb(178, 80, 104);
+  background: linear-gradient(90deg, rgba(178, 80, 104, 0) 0%, rgba(76, 58, 81, 0.8) 100%);
+}
+.user-account .container .cards .atm_card:hover .actions div {
+  margin: 0;
+}
+.user-account .container .cards .atm_card:hover .actions div:hover {
+  width: 60%;
+}
+.user-account .container .cards .atm_card:hover .actions div:hover svg {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+.user-account .container .cards .atm_card:hover .actions .edit:hover {
+  background: rgb(178, 80, 104);
+  background: linear-gradient(270deg, rgba(178, 80, 104, 0) 0%, rgba(37, 37, 37, 0.9) 100%);
+}
+.user-account .container .cards .atm_card:hover .actions .delete:hover {
+  background: rgb(178, 80, 104);
+  background: linear-gradient(90deg, rgba(178, 80, 104, 0) 0%, rgba(76, 58, 81, 0.9) 100%);
+}
+.user-account .container .cards .add_card {
+  min-width: 340px;
+  height: 200px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: dashed #fff 2px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+.user-account .container .cards .add_card:hover {
+  transform: scale(1.01);
+}
+.user-account .container .cards .add_card:active {
+  transform: scale(1);
+}
+.user-account .container .bottom-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+}
+.user-account .container .bottom-container .recent-transactions {
+  height: 100%;
+  width: 100%;
+}
+.user-account .container .bottom-container .recent-transactions table {
+  margin-top: 0;
+}
+.user-account .container .bottom-container .recent-transactions table tbody {
+  height: 100%;
+}
+.user-account .container .bottom-container .actions {
+  min-width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+.user-account .container .bottom-container .actions div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  background: linear-gradient(80deg, var(--tertiary-color), var(--secondary-color) 30%, var(--primary-color)) var(--x, 0)/200%;
+  transition: 0.2s;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.user-account .container .bottom-container .actions div:hover {
+  --x: 30%;
+}
+.user-account .container .bottom-container .actions div:active {
+  transform: scale(0.95);
+}
+.user-account .container .bottom-container .actions div span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -30px;
+  left: -20px;
+  opacity: 0.2;
+  transition: 0.5s;
+}
+.user-account .container .bottom-container .actions div span svg {
+  transform: rotate(-10deg);
+  font-size: 20rem;
+  transition: inherit;
+}
+.user-account .container .bottom-container .actions div:hover span {
+  left: 20%;
+}
+.user-account .container .bottom-container .actions div:hover span svg {
+  transform: rotate(10deg) scale(1.1);
+}
+.user-account .container .bottom-container .actions.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.user-account .container .bottom-container .actions.disabled div {
+  background: var(--darkmode-primary-color);
+}
+.user-account .container .bottom-container .actions.disabled div:hover span {
+  left: -20px;
+}
+.user-account .container .bottom-container .actions.disabled div:hover span svg {
+  transform: rotate(-10deg) scale(1);
+}
+
+.modal-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3333333333);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  z-index: 99;
+}
+.modal-container .modal {
+  background: rgba(37, 37, 37, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding: 1rem;
+  width: 350px;
+  border-radius: 10px;
+}
+.modal-container .modal * {
+  transition: 0.1s;
+}
+.modal-container .modal .delete-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal-container .modal .delete-card p,
+.modal-container .modal .delete-card .alert-icon {
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+.modal-container .modal .delete-card svg.alert-icon {
+  font-size: 5rem;
+}
+.modal-container .modal .delete-card div.buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+}
+.modal-container .modal .delete-card div.buttons .yes {
+  background: var(--tertiary-color);
+}
+.modal-container .modal .delete-card div.buttons button {
+  color: var(--white-color);
+  background: var(--secondary-color);
+  width: 50%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal-container .modal .delete-card div.buttons button:active {
+  transform: scale(0.95);
+}
+.modal-container .modal .title {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+.modal-container .modal .title svg {
+  cursor: pointer;
+}
+.modal-container .modal .card-preview {
+  margin-bottom: 2rem;
+}
+.modal-container .modal .card-preview .actions {
+  display: none;
+}
+.modal-container .modal form {
+  display: flex;
+  flex-direction: column;
+}
+.modal-container .modal form label {
+  opacity: 0.5;
+  font-size: 0.8rem;
+  padding-bottom: 5px;
+}
+.modal-container .modal form input {
+  color: #fefefe;
+  margin-bottom: 15px;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background: var(--darkmode-primary-color);
+}
+.modal-container .modal form .error {
+  word-wrap: break-word;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
+.modal-container .modal form .error svg {
+  padding: 0.8rem;
+}
+.modal-container .modal .activity-data {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.modal-container .modal .activity-data h3 span {
+  font-weight: 900;
+}
+.modal-container .modal .activity-data .row {
+  display: flex;
+  justify-content: space-between;
+}
+.modal-container .modal .activity-data .row :first-child {
+  opacity: 0.6;
+}
+.modal-container .modal .activity-data .row :last-child {
+  font-weight: 600;
+}
+.modal-container .modal button {
+  color: #fefefe;
+  background: var(--tertiary-color);
+  border: none;
+  border-radius: 5px;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+.modal-container .modal button:active {
+  transform: scale(0.98);
+}
+
+.container.carousel {
+  width: 100%;
+  height: 100%;
+  justify-content: start;
+}
+.container.carousel .cards {
+  align-items: start;
+  width: 100%;
+  min-height: 240px;
+  display: flex;
+  overflow: hidden;
+  overflow-x: overlay;
+}
+.container.carousel .cards::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0);
+}
+.container.carousel .cards .atm_card {
+  margin: 1rem;
+  cursor: pointer;
+}
+.container.carousel .cards .selected {
+  transform: scale(1.1);
+  z-index: 999;
+  box-shadow: 0px 6px 8px 1px rgba(0, 0, 0, 0.1921568627);
+}
+.container.carousel .options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+}
+.container.carousel .options * {
+  color: white;
+  transition: 0.1s;
+}
+.container.carousel .options .presets {
+  display: flex;
+  gap: 1rem;
+}
+.container.carousel .options .presets div {
+  width: 5rem;
+  aspect-ratio: 2/1.2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--darkmode-primary-color);
+  border-radius: 50px;
+}
+.container.carousel .options .presets .selected {
+  transform: scale(1.1);
+  background: var(--darkmode-secondary-color);
+}
+.container.carousel .options .custom {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin-top: 5rem;
+}
+.container.carousel .options .custom input {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--darkmode-primary-color);
+  outline: none;
+  margin-bottom: 1rem;
+}
+.container.carousel .options .custom button {
+  text-transform: capitalize;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--tertiary-color);
+}
+.container.carousel .options .custom .error {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  height: auto;
+}
+.container.carousel .options .custom .error span {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.toast.tst {
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  background: rgba(37, 37, 37, 0.7);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.btn.disabled {
+  pointer-events: none;
+  background: var(--darkmode-secondary-color) !important;
+  opacity: 0.8;
+}
+
+.main-panel.home {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.main-panel.home * {
+  transition: 0.1s;
+}
+.main-panel.home h1 {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+.main-panel.home h1 span {
+  color: var(--tertiary-color);
+}
+.main-panel.home .hero {
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.main-panel.home .hero .user span {
+  font-weight: 600;
+}
+.main-panel.home .hero .balance {
+  position: relative;
+  background: var(--primary-color);
+  border-radius: 15px;
+  padding: 2rem;
+  opacity: 0.8;
+  overflow: hidden;
+}
+.main-panel.home .hero .balance p {
+  font-weight: 500;
+}
+.main-panel.home .hero .balance span {
+  font-weight: 900;
+  font-size: 5cqi;
+}
+.main-panel.home .hero .balance .shape {
+  position: absolute;
+  inset: 0;
+  z-index: -999;
+}
+.main-panel.home .hero .balance .shape svg {
+  position: absolute;
+  bottom: 0;
+  opacity: 0.08;
+}
+.main-panel.home .hero .balance .shape:nth-child(2n) {
+  bottom: -20px;
+}
+.main-panel.home .actions {
+  display: flex;
+  justify-content: space-around;
+}
+.main-panel.home .actions a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-radius: 50px;
+  padding: 1rem;
+  background: var(--darkmode-secondary-color);
+  width: 15cqi;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.0666666667);
+}
+.main-panel.home .actions a svg {
+  font-size: 1rem;
+  padding-right: 0.5rem;
+}
+.main-panel.home .actions a:hover {
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1333333333);
+}
+.main-panel.home .actions a:active {
+  transform: scale(0.98);
+}
+
+.coming-soon {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: dotted 4px var(--darkmode-primary-color);
+  border-radius: 15px;
+}
+.coming-soon p {
+  opacity: 0.4;
+}
+
+.registerWrapper {
+  margin: auto;
+  padding: 1em;
+  height: 80vh;
+  width: 88%;
+  overflow-y: overlay;
+  background: var(--darkmode-tertiary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+.registerWrapper .title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  padding-bottom: 20px;
+}
+.registerWrapper form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.registerWrapper form div {
+  display: flex;
+  justify-content: space-evenly;
+}
+.registerWrapper form span.fieldTitle {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.registerWrapper form .firstSection {
+  flex-direction: row;
+  align-items: start;
+  width: 100%;
+  gap: 2vw;
+}
+.registerWrapper form .firstSection div {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  justify-content: space-between;
+}
+.registerWrapper form .firstSection div.nameFields {
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 1vw;
+}
+.registerWrapper form .firstSection div.nameFields div {
+  width: 48.5%;
+}
+.registerWrapper form label {
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  opacity: var(--icon-opacity);
+}
+.registerWrapper form input {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  font-family: inherit;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+}
+.registerWrapper form input:focus {
+  outline: solid 3px var(--secondary-color);
+}
+.registerWrapper form input.disabled {
+  pointer-events: none;
+}
+.registerWrapper form input.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+.registerWrapper form input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+.registerWrapper form select {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+}
+.registerWrapper form select:focus {
+  outline: solid 3px var(--secondary-color);
+}
+.registerWrapper form select.disabled {
+  pointer-events: none;
+}
+.registerWrapper form select.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form select.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper form select.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+.registerWrapper form select::after {
+  content: "▼";
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.registerWrapper form span.error {
+  word-wrap: break-word;
+  height: auto;
+}
+.registerWrapper form button {
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--tertiary-color);
+  cursor: pointer;
+  transition: all 0.1s;
+  margin-top: 30px;
+  padding: 0.7rem;
+  color: var(--white-color);
+}
+.registerWrapper form button:hover {
+  background: var(--secondary-color);
+}
+.registerWrapper form button:active {
+  transform: scale(0.95);
+}
+.registerWrapper form button:disabled,
+.registerWrapper form button [disabled] {
+  background: var(--primary-color) !important;
+  cursor: default;
+  pointer-events: none;
+}
+.registerWrapper .OTP div input {
+  color: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  vertical-align: top;
+  max-width: 100%;
+  transition: all 0.1s;
+  outline: solid 0px var(--secondary-color);
+  padding: 0.8rem;
+  margin-top: 1rem;
+  font-family: inherit;
+  outline: solid 3px var(--darkmode-secondary-color);
+  background: var(--darkmode-quinary-color);
+}
+.registerWrapper .OTP div input:focus {
+  outline: solid 3px var(--secondary-color);
+}
+.registerWrapper .OTP div input.disabled {
+  pointer-events: none;
+}
+.registerWrapper .OTP div input.disabled:-moz-read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper .OTP div input.disabled:read-only {
+  background: var(--darkmode-primary-color);
+}
+.registerWrapper .OTP div input.disabled:focus {
+  outline: solid 3px var(--darkmode-secondary-color);
+}
+.registerWrapper .OTP div input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}/*# sourceMappingURL=style.css.map */

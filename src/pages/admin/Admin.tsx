@@ -1,14 +1,19 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { TbSearch, TbUserPlus } from "react-icons/tb";
 
 import AdminContext from "../../context/AdminContext";
 import UsersTable from "../../components/admin/UsersTable";
 
 import "../../styles/admin/admin.css";
+import { AdminContextType } from "../../Interfaces/interfaces";
 
 const Admin = () => {
-  let { setModalMethod, handleShowModal, setQuery }: any =
-    useContext(AdminContext);
+  const context = useContext<AdminContextType | null>(AdminContext) ?? {
+    setModalMethod: () => {},
+    handleShowModal: () => {},
+    setQuery: () => {},
+  };
+  const { setModalMethod, handleShowModal, setQuery } = context;
 
   return (
     <>

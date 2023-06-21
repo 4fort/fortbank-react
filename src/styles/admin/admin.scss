@@ -3,7 +3,9 @@
   margin: 0;
 
   &::-webkit-scrollbar {
-    width: 6px;
+    z-index: 5;
+    height: 4px; /* height of horizontal scrollbar ← You're missing this */
+    width: 4px;
   }
 
   /* Track */
@@ -14,7 +16,7 @@
   /* Handle */
   &::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background: #888;
+    background: #88888833;
   }
 
   /* Handle on hover */
@@ -34,14 +36,14 @@ body {
   height: 100%;
 }
 
-.App {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
+// .App {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: center;
+// }
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -95,23 +97,33 @@ body {
 
 header {
   display: flex;
-  background: linear-gradient(
-    180deg,
-    var(--light_white-color) 0%,
-    var(--darkmode-tertiary-color) 100%
-  );
+  // background: linear-gradient(
+  //   180deg,
+  //   var(--light_white-color) 0%,
+  //   var(--darkmode-tertiary-color) 100%
+  // );
+  background: var(--darkmode-tertiary-color);
   height: 60px;
-  width: 100%;
+  min-height: 60px;
+  max-height: 60px;
+  &.admin {
+    width: 90%;
+  }
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.06);
   div.logo {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 5rem;
+    margin-left: 2rem;
     font-weight: 700;
     font-size: 1.4rem;
     color: var(--quaternary-color);
     span {
       color: var(--white-color);
+    }
+    &.admin span {
       &::after {
         content: "admin";
         font-size: 0.6rem;
@@ -125,15 +137,24 @@ header {
     justify-content: end;
     align-items: center;
     width: 100%;
-    margin-right: 5rem;
+    margin-right: 2rem;
+
+    * {
+      transition: 0.2s;
+    }
     *:not(b, .logout) {
-      padding-right: 1.5rem;
+      padding-right: 2rem;
     }
     a {
       color: inherit;
       text-decoration: none;
     }
     .logout {
+      padding: 0.5rem;
+      border-radius: 5px;
+      &:hover {
+        background: var(--darkmode-primary-color);
+      }
       cursor: pointer;
     }
   }
@@ -150,6 +171,15 @@ header {
   &:focus {
     outline: solid 3px var(--secondary-color);
   }
+  &.disabled {
+    pointer-events: none;
+    &:read-only {
+      background: var(--darkmode-primary-color);
+    }
+    &:focus {
+      outline: solid 3px var(--darkmode-secondary-color);
+    }
+  }
 }
 
 @mixin button-style {
@@ -162,14 +192,87 @@ header {
   &:hover {
     background: var(--secondary-color);
   }
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
-.loginWrapper {
-  height: 100%;
-  width: 100%;
+.loadingScreen {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
+  .lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ripple div {
+    position: absolute;
+    border: 4px solid #fff;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  @keyframes lds-ripple {
+    0% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    4.9% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    5% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 72px;
+      height: 72px;
+      opacity: 0;
+    }
+  }
+}
+
+.error {
+  margin-top: -0.7rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem !important;
+  opacity: 0.8;
+  background-color: rgba(255, 0, 0, 0.08);
+  border: solid 1px rgba(255, 0, 0, 0.05);
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  overflow-wrap: break-word;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 0;
+  svg {
+    padding: 0 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+.loginWrapper {
+  margin: auto;
 
   .loginForm {
     display: flex;
@@ -182,7 +285,9 @@ header {
     span {
       font-weight: 700;
       font-size: 1.4rem;
-      padding-bottom: 20px;
+      margin-top: 5px;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
     }
 
     label {
@@ -196,11 +301,23 @@ header {
     }
     button {
       @include button-style();
-      padding: 0.8rem;
+      padding: 0.7rem;
       color: var(--white-color);
       font-size: 0.7rem;
       text-transform: uppercase;
-      border-radius: 25px;
+      border-radius: 8px;
+    }
+    .bottom-prompt {
+      font-size: 0.8rem;
+      font-weight: 500;
+      opacity: 0.6;
+      padding-top: 2rem;
+      padding-bottom: 0;
+      a {
+        // text-decoration: none;
+        color: inherit;
+        font-weight: 600;
+      }
     }
   }
 }
@@ -233,7 +350,7 @@ header {
     button {
       @include button-style();
       display: flex;
-      padding: 0.5rem 0.9rem;
+      padding: 0.6rem 0.9rem;
       color: var(--white-color);
       font-size: 0.7rem;
       text-transform: uppercase;
@@ -249,9 +366,10 @@ header {
 
 div.tableWrapper {
   width: 90%;
-  height: 80vh;
-  border-radius: 5px;
-  overflow-y: scroll;
+  height: 77vh;
+  background: var(--darkmode-primary-color);
+  border-radius: 8px;
+  overflow-y: overlay;
 
   table {
     width: 100%;
@@ -266,7 +384,7 @@ div.tableWrapper {
     thead {
       position: sticky;
       top: 0;
-      z-index: 11;
+      z-index: 20;
     }
 
     th {
@@ -285,7 +403,14 @@ div.tableWrapper {
       opacity: var(--icon-opacity);
       span {
         font-size: 1.1rem;
+      }
+      svg {
         cursor: pointer;
+        transition: 0.1s;
+
+        &:active {
+          transform: scale(0.85);
+        }
       }
     }
   }
@@ -294,15 +419,18 @@ div.tableWrapper {
 dialog {
   margin: auto;
   padding: 1em;
-  width: 350px;
-  background: var(--darkmode-quarternary-color);
+  width: 70vw;
+  // height: 90vh;
+  overflow-y: overlay;
+  background: var(--darkmode-tertiary-color);
   color: var(--white-color);
   border: none;
   border-radius: 5px;
+  outline: none;
   &::backdrop {
     background: rgba(0, 0, 0, 0.5);
   }
-  div {
+  div.actionLabel {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -312,42 +440,91 @@ dialog {
     }
     svg {
       cursor: pointer;
+      transition: 0.1s;
+
+      &:active {
+        transform: scale(0.85);
+      }
     }
   }
   form {
-    margin-top: 30px;
+    margin-top: 50px;
+    width: 100%;
     display: flex;
     flex-direction: column;
 
+    div {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    span.fieldTitle {
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .firstSection {
+      flex-direction: row;
+      align-items: start;
+      width: 100%;
+      // height: 50%;
+      gap: 2vw;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        width: 35%;
+
+        &.nameFields {
+          flex-direction: row;
+          width: 100%;
+          height: 100%;
+          gap: 1vw;
+          & div {
+            width: 48.5%;
+          }
+        }
+      }
+    }
+
     label {
       margin-bottom: 0.2rem;
+      font-size: 0.9rem;
+      opacity: var(--icon-opacity);
     }
     input {
       @include input-style();
-      padding: 0.5rem;
+      padding: 0.8rem;
       margin-bottom: 1rem;
-      background: var(--darkmode-primary-color);
+      font-family: inherit;
+      outline: solid 3px var(--darkmode-secondary-color);
+      background: var(--darkmode-quinary-color);
+      &::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+      }
     }
-
-    .error {
-      margin-top: -0.7rem;
+    select {
+      @include input-style();
+      padding: 0.8rem;
       margin-bottom: 1rem;
-      font-size: 0.8rem;
-      opacity: 0.8;
-      background-color: rgba(255, 0, 0, 0.08);
-      border: solid 1px rgba(255, 0, 0, 0.05);
-      border-radius: 5px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      padding-left: 0.8rem;
-      svg {
-        padding-right: 0.5rem;
+      outline: solid 3px var(--darkmode-secondary-color);
+      background: var(--darkmode-quinary-color);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      position: relative;
+      cursor: pointer;
+
+      &::after {
+        content: "\25BC";
+        position: absolute;
+        top: 0;
+        right: 0;
       }
     }
 
     button {
       @include button-style();
+      margin-top: 30px;
       padding: 0.7rem;
       color: var(--white-color);
       &:disabled,

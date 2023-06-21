@@ -1,17 +1,26 @@
-import { useEffect, useRef, useState, useContext } from "react";
+import { useContext } from "react";
 import { TbEdit, TbTrash } from "react-icons/tb";
 import Modal from "../Modal.tsx";
-import { FortbankUser } from "../../Interfaces/interfaces.tsx";
+import { FortbankUser } from "../../Interfaces/interfaces.ts";
 import AdminContext from "../../context/AdminContext.tsx";
+import { AdminContextType } from "../../Interfaces/interfaces.ts";
+import { toast } from "react-toastify";
 
 const UsersTable = () => {
-  let {
+  const context = useContext<AdminContextType | null>(AdminContext) ?? {
+    setSelectedUser: () => {},
+    setModalMethod: () => {},
+    handleShowModal: () => {},
+    deleteUser: () => {},
+    filteredUsers: () => {},
+  };
+  const {
     setSelectedUser,
     setModalMethod,
     handleShowModal,
     deleteUser,
     filteredUsers,
-  }: any = useContext(AdminContext);
+  } = context;
 
   return (
     <div className='tableWrapper'>
@@ -19,29 +28,29 @@ const UsersTable = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
             <th>Email</th>
-            <th>Card Number</th>
-            <th>Card PIN</th>
             <th>Balance</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.length > 0 ? (
+          {Array.isArray(filteredUsers) && filteredUsers.length > 0 ? (
             filteredUsers.map((user: FortbankUser) => (
               <tr key={user.id}>
                 <td data-cell='id'>{user.id}</td>
-                <td data-cell='name'>{user.owner_name}</td>
+                <td data-cell='first_name'>{user.first_name}</td>
+                <td data-cell='last_name'>{user.last_name}</td>
+                <td data-cell='last_name'>{user.username}</td>
                 <td data-cell='email'>{user.email}</td>
-                <td data-cell='card number'>
-                  {String(user.card_num)
-                    .match(/.{1,3}/g)
-                    .join("-")}
-                </td>
-                <td data-cell='card pin'>{user.card_pin}</td>
                 <td data-cell='balance'>
-                  ₱{parseFloat(user.balance).toLocaleString("en-US")}
+                  {user.userwallet?.balance != null &&
+                    "₱" +
+                      parseFloat(
+                        String(user.userwallet?.balance)
+                      ).toLocaleString("en-US")}
                 </td>
                 <td data-cell='actions'>
                   <span>
@@ -56,6 +65,12 @@ const UsersTable = () => {
                   <span>
                     <TbTrash
                       onClick={() => {
+                        toast.success(
+                          "User added in the database successfully.",
+                          {
+                            className: "toast tst",
+                          }
+                        );
                         deleteUser(user.id);
                       }}
                     />
@@ -65,7 +80,7 @@ const UsersTable = () => {
             ))
           ) : (
             <tr>
-              <td>No Users</td>
+              <td colSpan={6}>No Users</td>
             </tr>
           )}
         </tbody>
