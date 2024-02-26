@@ -185,7 +185,7 @@ const AddFunds = () => {
         ) : (
           <>
             <h1>
-              Account
+              Cards
               <NavLink to='/card'>
                 <TbChevronLeft /> Return
               </NavLink>

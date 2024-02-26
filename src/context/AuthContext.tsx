@@ -175,6 +175,7 @@ export const AuthProvider = ({ children }: Props) => {
       Boolean(false),
       String(payload.password)
     );
+    console.log(JSON.stringify(userData));
 
     firstNameError = validator.firstNameValidator(userData.first_name);
     lastNameError = validator.lastNameValidator(userData.last_name);
@@ -195,7 +196,8 @@ export const AuthProvider = ({ children }: Props) => {
     addressError = validator.addressValidator(userData.userprofile.address);
     passwordError = validator.passwordValidator(userData.password!);
     passwordConfirmError = validator.passwordConfirmValidator(
-      userData.password!
+      String(payload.password_confirm),
+      userData.password
     );
 
     if (
@@ -207,48 +209,11 @@ export const AuthProvider = ({ children }: Props) => {
       birthdateError ||
       genderError ||
       civilStatusError ||
-      addressError
-      // passwordError ||
-      // passwordConfirmError
+      addressError ||
+      passwordError ||
+      passwordConfirmError
     ) {
-      // if (firstNameError) {
-      //   console.log(firstNameError);
-      // }
-      // if (lastNameError) {
-      //   console.log(lastNameError);
-      // }
-      // if (usernameError) {
-      //   console.log(usernameError);
-      // }
-      // if (emailError) {
-      //   console.log(emailError);
-      // }
-      // if (cardNumError) {
-      //   console.log(cardNumError);
-      // }
-      // if (cardPinError) {
-      //   console.log(cardPinError);
-      // }
-      // if (balanceError) {
-      //   console.log(balanceError);
-      // }
-      // if (mobileNumberError) {
-      //   console.log(mobileNumberError);
-      // }
-      // if (birthdateError) {
-      //   console.log(birthdateError);
-      // }
-      // if (genderError) {
-      //   console.log(genderError);
-      // }
-      // if (civilStatusError) {
-      //   console.log(civilStatusError);
-      // }
-      // if (addressError) {
-      //   console.log(addressError);
-      // }
       setIsValidated(false);
-      console.log(passwordError, passwordConfirmError);
       return;
     }
     setUserDataState(userData);
@@ -349,7 +314,10 @@ export const AuthProvider = ({ children }: Props) => {
       setUnauthorized(false);
     } else {
       setUnauthorized(true);
-      logoutAdmin();
+      if (user?.is_superuser) {
+        logoutAdmin();
+      }
+      logout();
     }
   };
 

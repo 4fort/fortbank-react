@@ -23,6 +23,10 @@ const Modal = () => {
     setAddress,
     setIsActive,
     setIsSuperUser,
+    setPassword,
+    password,
+    setPasswordConfirm,
+    password_confirm,
 
     dialogRef,
     modalMethod,
@@ -46,6 +50,10 @@ const Modal = () => {
     setAddress: () => {},
     setIsActive: () => {},
     setIsSuperUser: () => {},
+    setPassword: () => {},
+    password: "",
+    setPasswordConfirm: () => {},
+    password_confirm: "",
     dialogRef: {
       current: null,
       showModal: () => {},
@@ -98,6 +106,8 @@ const Modal = () => {
   let genderError: string | undefined;
   let civilStatusError: string | undefined;
   let addressError: string | undefined;
+  let passwordError: string | undefined;
+  let passwordConfirmError: string | undefined;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -108,12 +118,6 @@ const Modal = () => {
     lastNameError = validator.lastNameValidator(selectedUserValues.last_name);
     usernameError = validator.usernameValidator(selectedUserValues.username);
     emailError = validator.emailValidator(selectedUserValues.email);
-    // cardNumError = validator.cardNumValidator(
-    //   String(selectedUserValues.userwallet?.card_num)
-    // );
-    // cardPinError = validator.cardPinValidator(
-    //   String(selectedUserValues.userwallet?.card_pin)
-    // );
     balanceError = validator.balanceValidator(
       String(selectedUserValues.userwallet?.balance)
     );
@@ -132,6 +136,11 @@ const Modal = () => {
     addressError = validator.addressValidator(
       selectedUserValues.userprofile.address
     );
+    passwordError = validator.passwordValidator(password);
+    passwordConfirmError = validator.passwordConfirmValidator(
+      password_confirm,
+      password
+    );
 
     if (
       firstNameError ||
@@ -145,44 +154,13 @@ const Modal = () => {
       civilStatusError ||
       addressError
     ) {
-      // if (firstNameError) {
-      //   console.log(firstNameError);
-      // }
-      // if (lastNameError) {
-      //   console.log(lastNameError);
-      // }
-      // if (usernameError) {
-      //   console.log(usernameError);
-      // }
-      // if (emailError) {
-      //   console.log(emailError);
-      // }
-      // if (cardNumError) {
-      //   console.log(cardNumError);
-      // }
-      // if (cardPinError) {
-      //   console.log(cardPinError);
-      // }
-      // if (balanceError) {
-      //   console.log(balanceError);
-      // }
-      // if (mobileNumberError) {
-      //   console.log(mobileNumberError);
-      // }
-      // if (birthdateError) {
-      //   console.log(birthdateError);
-      // }
-      // if (genderError) {
-      //   console.log(genderError);
-      // }
-      // if (civilStatusError) {
-      //   console.log(civilStatusError);
-      // }
-      // if (addressError) {
-      //   console.log(addressError);
-      // }
-      setIsValidated(false);
-      return;
+      if ((modalMethod === 0 && passwordError) || passwordConfirmError) {
+        setIsValidated(false);
+        return;
+      } else if (modalMethod === 1) {
+        setIsValidated(false);
+        return;
+      }
     }
 
     const data = new FormData(e.currentTarget);
@@ -201,21 +179,35 @@ const Modal = () => {
       Number(payload.civil_status),
       String(payload.address),
       Boolean(payload.is_active),
-      Boolean(payload.is_superuser)
+      Boolean(payload.is_superuser),
+      String(payload.password)
     );
 
     console.log(JSON.stringify(user));
 
     if (modalMethod === 0) {
-      toast.success("User added in the database successfully.", {
-        className: "toast tst",
-      });
-      addUser(user);
+      try {
+        addUser(user);
+        toast.success("User added in the database successfully.", {
+          className: "toast tst",
+        });
+      } catch (error) {
+        toast.error(
+          `An error occured while adding the user. Server response: ${error}`
+        );
+      }
     } else if (modalMethod === 1) {
-      toast.success("User updated successfully.", {
-        className: "toast tst",
-      });
-      updateUser(selectedUserValues.id, user);
+      console.log("here");
+      try {
+        updateUser(selectedUserValues.id, user);
+        toast.success("User updated successfully.", {
+          className: "toast tst",
+        });
+      } catch (error) {
+        toast.error(
+          `An error occured while updating the user. Server response: ${error}`
+        );
+      }
     }
   };
 
@@ -337,6 +329,27 @@ const Modal = () => {
               checked={selectedUserValues.is_superuser}
               onChange={(e) => setIsSuperUser(Boolean(e.target.checked))}
             />
+            {modalMethod === 0 ? (
+              <>
+                <FormInput
+                  labelFor='password'
+                  inputType='password'
+                  inputLabel='Password'
+                  value={password}
+                  onInputChange={setPassword}
+                  validate={validator.passwordValidator}
+                />
+                <FormInput
+                  labelFor='password_confirm'
+                  inputType='password'
+                  inputLabel='Confirm Password'
+                  value={password_confirm}
+                  onInputChange={setPasswordConfirm}
+                  value2={password}
+                  validate2={validator.passwordConfirmValidator}
+                />
+              </>
+            ) : null}
           </div>
         </div>
         <button type='submit'>{modalMethods[modalMethod]}</button>

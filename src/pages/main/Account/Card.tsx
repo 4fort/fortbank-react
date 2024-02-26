@@ -146,7 +146,7 @@ const Card = () => {
         />
       ) : null}
       <div className='main-panel no-card-section user-account'>
-        <h1>Account</h1>
+        <h1>Cards</h1>
         <div className='container'>
           <div className='cards'>
             {userCards &&

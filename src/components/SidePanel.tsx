@@ -119,7 +119,7 @@ const SidePanel = () => {
           </NavLink>
           <NavLink to='/card' className='card'>
             <TbCreditCard />
-            <p>Account</p>
+            <p>Cards</p>
           </NavLink>
           {/* <NavLink to='/Profile' className='profile'>
             <TbUserCircle />

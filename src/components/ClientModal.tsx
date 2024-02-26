@@ -192,7 +192,7 @@ const ClientModal = (props: Props) => {
         {modalProps?.modalMode === 2 ? (
           <div className='delete-card'>
             <TbAlertCircle className='alert-icon' />
-            <p>Are You Sure You want to delete this card?</p>
+            <p>Are you sure you want to delete this card?</p>
             <ATMCard
               setIsModal={setIsModal}
               modalProps={modalProps}

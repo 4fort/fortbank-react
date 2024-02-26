@@ -135,7 +135,6 @@ const TransferToBank = () => {
 
     if (
       cardError === undefined &&
-      amountError === undefined &&
       amount < Number(userLoggedIn.userwallet.balance)
     ) {
       let newBalance;
@@ -189,7 +188,7 @@ const TransferToBank = () => {
         ) : (
           <>
             <h1>
-              Account
+              Cards
               <NavLink to='/card'>
                 <TbChevronLeft /> Return
               </NavLink>
@@ -249,6 +248,10 @@ const TransferToBank = () => {
                       ) : null}
                     </div>
                   ) : null}
+                  <input
+                    type='text'
+                    onChange={(e) => setAmount(Number(e.target.value))}
+                  />
                   <button onClick={handleSubmit}>Transfer to Bank</button>
                 </div>
               </div>

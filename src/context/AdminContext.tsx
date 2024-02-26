@@ -31,6 +31,8 @@ export const AdminProvider = ({ children }: ChildProp) => {
   const [isActive, setIsActive] = useState(false);
   const [isSuperUser, setIsSuperUser] = useState(false);
   const [lastLogin, setLastLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirm, setPasswordConfirm] = useState("");
 
   const [modalMethod, setModalMethod] = useState<number>(0);
   const [selectedUser, setSelectedUser] = useState<FortbankUser | null>(null);
@@ -94,7 +96,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
 
   const addUser = async (user: User) => {
     try {
-      const response = await axios.post(`${baseUrl}/api/users/`, user, {
+      const response = await axios.post(`${baseUrl}/api/register`, user, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(authTokens?.access),
@@ -104,6 +106,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
       handleCloseModal();
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 
@@ -127,6 +130,7 @@ export const AdminProvider = ({ children }: ChildProp) => {
       handleCloseModal();
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 
@@ -228,6 +232,10 @@ export const AdminProvider = ({ children }: ChildProp) => {
     setAddress: setAddress,
     setIsActive: setIsActive,
     setIsSuperUser: setIsSuperUser,
+    setPassword: setPassword,
+    password: password,
+    setPasswordConfirm: setPasswordConfirm,
+    password_confirm: password_confirm,
 
     selectedUserValues: selectedUserValues,
 
