@@ -10,7 +10,7 @@ import {
   UserWallet,
 } from "../Interfaces/interfaces";
 import { User } from "../Models/UserModel";
-import { baseUrl, bankUrl } from "../context/GlobalVars";
+import { baseUrl } from "../context/GlobalVars";
 
 export const getUser = async (
   userId: number,

@@ -115,9 +115,6 @@
   .main-panel .hero .balance {
     padding: 16px !important;
   }
-  .main-panel .hero .balance p {
-    padding-bottom: 16px;
-  }
   .main-panel .hero .balance span {
     font-size: 4cqmax !important;
   }
@@ -139,6 +136,9 @@
   .main-panel .hero .actions a svg {
     font-size: 2.3rem !important;
     padding: 0 !important;
+  }
+  .main-panel.home {
+    gap: 0 !important;
   }
   .transaction-actions {
     flex-direction: column !important;
@@ -1437,7 +1437,7 @@ header {
   opacity: 0.6;
 }
 .main-panel.home .hero .balance .show-hide-balance svg {
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding-left: 1rem;
 }
 .main-panel.home .hero .balance p {
