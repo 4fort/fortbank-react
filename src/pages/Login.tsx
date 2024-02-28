@@ -6,12 +6,8 @@ import { AuthContextType } from "../Interfaces/interfaces";
 import { NavLink } from "react-router-dom";
 
 const Login = () => {
-  const context = useContext<AuthContextType | null>(AuthContext) ?? {
-    login: () => {},
-    unauthorized: true,
-    setUnauthorized: () => {},
-  };
-  let { login: login, unauthorized } = context;
+  const context = useContext<AuthContextType | null>(AuthContext);
+  const { login, unauthorized } = context;
 
   return (
     <div className='loginWrapper'>

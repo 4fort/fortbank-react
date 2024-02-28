@@ -1,6 +1,6 @@
-import React from "react";
 import { TbQrcode, TbScan, TbWallet } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
+import { bottomMargin } from "../../../utils/mobile-functions";
 
 const Payment = () => {
   return (

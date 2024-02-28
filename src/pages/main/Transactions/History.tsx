@@ -1,4 +1,3 @@
-import React from "react";
 import { TbChevronLeft } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 
@@ -7,13 +6,13 @@ interface Props {
 }
 
 const History = (props: Props) => {
-  let { setIsViewed } = props;
+  const { setIsViewed } = props;
 
   return (
     <div className='main-panel transactions'>
       <h1>
         Transactions
-        <NavLink to='/transactions' onClick={(e) => setIsViewed(false)}>
+        <NavLink to='/transactions' onClick={() => setIsViewed(false)}>
           <TbChevronLeft /> Return
         </NavLink>
       </h1>

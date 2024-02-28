@@ -103,7 +103,7 @@ const AddFunds = () => {
     setCardPin: setCardPin,
   };
 
-  const presetAmount = [100, 300, 500, 1000, 5000];
+  const presetAmount = [100, 300, 500, 1000, 5000, 10000];
   const [amount, setAmount] = useState(0);
   let cardError: string | undefined;
   let amountError: string | undefined;
@@ -140,7 +140,11 @@ const AddFunds = () => {
       } catch (error: any) {
         setLoading(false);
         return toast.error(
-          `Failed to add funds. Card declined.\nServer response: ${error.response.data.message}`,
+          `Failed to add funds. Server response: ${
+            error.response.data.message === undefined
+              ? "Service provider unreachable"
+              : error.response.data.message
+          }`,
           {
             className: "toast tst",
           }
@@ -226,6 +230,15 @@ const AddFunds = () => {
                       </div>
                     );
                   })}
+                </div>
+                <div className='pro-tip'>
+                  <span>
+                    <TbExclamationCircle />
+                    <p>
+                      Tip: Click the card and amount above you wish to add funds
+                      to
+                    </p>
+                  </span>
                 </div>
                 <div className='custom'>
                   {/* <input type='text' onChange={(e) => setAmount(e.target.value)} /> */}

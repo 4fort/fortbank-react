@@ -175,3 +175,8 @@ export interface ClientContextType {
   userBalance: number;
   setUserBalance: React.Dispatch<React.SetStateAction<number>>;
 }
+
+export interface UserPreferencesType {
+  sidePanelState: boolean;
+  balanceVisibility: boolean;
+}

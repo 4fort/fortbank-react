@@ -19,10 +19,10 @@ import HistoryRow from "../../../components/HistoryRow";
 import ClientModal from "../../../components/ClientModal";
 
 const Transactions = () => {
-  let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
+  const { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
     authTokens: null,
   };
-  let { userLoggedIn } = useContext<ClientContextType | null>(
+  const { userLoggedIn } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -108,8 +108,8 @@ const Transactions = () => {
             ?.slice()
             .reverse()
             .map((e) => {
-              let date = new Date(e.transaction_date);
-              let currentDate = new Date();
+              const date = new Date(e.transaction_date);
+              const currentDate = new Date();
 
               let displayDate;
               if (date.toDateString() === currentDate.toDateString()) {
@@ -120,11 +120,11 @@ const Transactions = () => {
                   second: undefined,
                 });
               } else {
-                let yesterday = new Date(currentDate);
+                const yesterday = new Date(currentDate);
                 yesterday.setDate(currentDate.getDate() - 1);
 
                 if (date.toDateString() === yesterday.toDateString()) {
-                  let time = date.toLocaleTimeString(undefined, {
+                  const time = date.toLocaleTimeString(undefined, {
                     hour12: true,
                     hour: "numeric",
                     minute: "numeric",

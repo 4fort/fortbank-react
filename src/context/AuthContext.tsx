@@ -26,7 +26,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export default AuthContext;
 
 export const AuthProvider = ({ children }: Props) => {
-  const baseUrl: string = "http://127.0.0.1:8000";
+  const baseUrl = "http://127.0.0.1:8000";
 
   const [authTokens, setAuthTokens] = useState<
     AuthContextType["authTokens"] | null
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   const navigate = useNavigate();
 
-  let loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  let logoutAdmin = () => {
+  const logoutAdmin = () => {
     setLoading(true);
 
     setAuthTokens(null);
@@ -119,13 +119,12 @@ export const AuthProvider = ({ children }: Props) => {
   const [userDataState, setUserDataState] = useState<User | null>(null);
 
   const verifyOTP = (e: ChangeEvent<HTMLInputElement>) => {
-    let otp = e.target.value;
+    const otp = e.target.value;
     setOTPInput(otp);
 
     if (otp.length === 6) {
       console.log(otp);
-      //@ts-ignore
-      let confirmationResult = window.confirmationResult;
+      const confirmationResult = window.confirmationResult;
       confirmationResult
         .confirm(otp)
         .then(() => {
@@ -142,7 +141,7 @@ export const AuthProvider = ({ children }: Props) => {
             position: "top-center",
           });
         })
-        .catch((error: any) => {
+        .catch((error: Error) => {
           toast.error(`Server response:${error}.`, {
             className: "toast tst",
             position: "top-center",
@@ -194,7 +193,7 @@ export const AuthProvider = ({ children }: Props) => {
       String(userData.userprofile.civil_status)
     );
     addressError = validator.addressValidator(userData.userprofile.address);
-    passwordError = validator.passwordValidator(userData.password!);
+    passwordError = validator.passwordValidator(userData.password);
     passwordConfirmError = validator.passwordConfirmValidator(
       String(payload.password_confirm),
       userData.password
