@@ -1,32 +1,27 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
-  TbUserCircle,
   TbHistory,
   TbCreditCard,
   TbCash,
-  TbArrowsTransferUp,
-  TbPolygon,
-  TbSettings,
   TbHome,
   TbLayoutSidebarLeftExpand,
   TbLayoutSidebarLeftCollapse,
   TbLogout,
 } from "react-icons/tb";
 import ClientContext from "../context/ClientContext";
-import { ClientContextType, UserWallet } from "../Interfaces/interfaces";
+import {
+  ClientContextType,
+  UserPreferencesType,
+} from "../Interfaces/interfaces";
 import AuthContext from "../context/AuthContext";
 import { AuthContextType } from "../Interfaces/interfaces";
-import { getBalance } from "../utils/adapters";
 
 const SidePanel = () => {
-  let { logout, authTokens } = useContext<AuthContextType | null>(
-    AuthContext
-  ) ?? {
+  const { logout } = useContext<AuthContextType | null>(AuthContext) ?? {
     logout: () => {},
-    authTokens: null,
   };
-  let { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
+  const { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -69,9 +64,30 @@ const SidePanel = () => {
     },
   };
 
-  const [sidePanelState, setSidePanelState] = useState(
-    Boolean(localStorage.getItem("sidePanelState"))
+  // const [userPreferences, setUserPreferences] = useState<UserPreferences>(
+  //   JSON.parse(
+  //     localStorage.getItem("userPreferences") ?? '{"sidePanelState": true}'
+  //   ) ?? "{}"
+  // );
+
+  const userPreferencesString = localStorage.getItem("userPreferences");
+  const userPreferences = userPreferencesString
+    ? (JSON.parse(userPreferencesString) as UserPreferencesType)
+    : { sidePanelState: true };
+
+  const [sidePanelState, setSidePanelState] = useState<boolean>(
+    userPreferences.sidePanelState
   );
+
+  // console.log(sidePanelState);
+
+  // const [sidePanelState, setSidePanelState] = useState<
+  //   UserPreferencesType["sidePanelState"]
+  // >(JSON.parse(localStorage.getItem("userPreferences") ?? "true"));
+
+  // console.log(JSON.parse(localStorage.getItem("userPreferences") ?? "{}"));
+
+  // localStorage.setItem("userPreferences", JSON.stringify({ sidePanelState }));
   return (
     <>
       <div className={sidePanelState ? "side-panel" : "side-panel hidden"}>
@@ -85,14 +101,36 @@ const SidePanel = () => {
               <TbLayoutSidebarLeftCollapse
                 onClick={() => {
                   setSidePanelState(!sidePanelState);
-                  localStorage.removeItem("sidePanelState");
+                  const userPreferencesString =
+                    localStorage.getItem("userPreferences");
+                  const userPreferences = userPreferencesString
+                    ? JSON.parse(userPreferencesString)
+                    : { sidePanelState: false };
+                  localStorage.setItem(
+                    "userPreferences",
+                    JSON.stringify({
+                      ...userPreferences,
+                      sidePanelState: !sidePanelState,
+                    })
+                  );
                 }}
               />
             ) : (
               <TbLayoutSidebarLeftExpand
                 onClick={() => {
                   setSidePanelState(!sidePanelState);
-                  localStorage.setItem("sidePanelState", JSON.stringify(true));
+                  const userPreferencesString =
+                    localStorage.getItem("userPreferences");
+                  const userPreferences = userPreferencesString
+                    ? JSON.parse(userPreferencesString)
+                    : { sidePanelState: true };
+                  localStorage.setItem(
+                    "userPreferences",
+                    JSON.stringify({
+                      ...userPreferences,
+                      sidePanelState: !sidePanelState,
+                    })
+                  );
                 }}
               />
             )}
@@ -119,7 +157,7 @@ const SidePanel = () => {
           </NavLink>
           <NavLink to='/card' className='card'>
             <TbCreditCard />
-            <p>Account</p>
+            <p>Cards</p>
           </NavLink>
           {/* <NavLink to='/Profile' className='profile'>
             <TbUserCircle />

@@ -25,6 +25,172 @@
           user-select: none;
 }
 
+@media (max-width: 768px) {
+  .Toastify {
+    z-index: 99999999;
+  }
+  .App {
+    max-width: 100% !important;
+    align-items: start !important;
+    flex-direction: column-reverse;
+    gap: 0 !important;
+  }
+  .modal .activity-data button {
+    padding: 1rem !important;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .cards-panel {
+    display: none !important;
+  }
+  .side-panel {
+    background: var(--darkmode-tertiary-color);
+    flex-direction: row !important;
+    position: sticky;
+    bottom: 0;
+    padding: 0 !important;
+    width: 100%;
+    height: 10% !important;
+    border-radius: 0 !important;
+    z-index: 99;
+  }
+  .side-panel .user,
+  .side-panel .balance,
+  .side-panel .logout,
+  .side-panel .footer {
+    display: none !important;
+  }
+  .side-panel .actions {
+    justify-content: space-evenly;
+    flex-direction: row !important;
+    width: 100%;
+  }
+  .side-panel .actions a {
+    height: 32px;
+    aspect-ratio: 1/1;
+    display: flex;
+  }
+  .side-panel .actions a svg {
+    width: 32px;
+    font-size: 1.4rem;
+  }
+  .side-panel .actions a p {
+    display: none !important;
+  }
+  .side-panel .actions .active {
+    border-top: var(--tertiary-color) solid 3px;
+    border-radius: 0px;
+    background: none !important;
+  }
+  .main-panel {
+    background: none !important;
+    height: 100svh !important;
+    overflow: scroll !important;
+    padding: 0 !important;
+  }
+  .main-panel .hero,
+  .main-panel .coming-soon,
+  .main-panel .container,
+  .main-panel table {
+    margin: 1rem !important;
+    width: auto !important;
+  }
+  .main-panel h1 {
+    padding: 1rem;
+    background: var(--darkmode-quinary-color);
+    position: sticky;
+    top: 0;
+    z-index: 999999;
+  }
+  .main-panel .container {
+    margin-top: 1rem;
+    height: auto !important;
+  }
+  .main-panel .hero {
+    background: var(--darkmode-quarternary-color);
+    border-radius: 16px;
+    padding: 1rem;
+    height: auto !important;
+  }
+  .main-panel .hero .balance {
+    padding: 16px !important;
+  }
+  .main-panel .hero .balance p {
+    padding-bottom: 16px;
+  }
+  .main-panel .hero .balance span {
+    font-size: 4cqmax !important;
+  }
+  .main-panel .hero .actions {
+    justify-content: space-between !important;
+    gap: 1rem;
+  }
+  .main-panel .hero .actions a {
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: 1/1;
+    border-radius: 16px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around !important;
+    text-align: center;
+    padding: 0.4rem !important;
+  }
+  .main-panel .hero .actions a svg {
+    font-size: 2.3rem !important;
+    padding: 0 !important;
+  }
+  .transaction-actions {
+    flex-direction: column !important;
+  }
+  .transaction-actions a {
+    width: auto !important;
+  }
+  .user-account .container {
+    gap: 1rem;
+  }
+  .user-account .container .cards {
+    background: var(--darkmode-quarternary-color);
+    border-radius: 16px;
+    padding: 0;
+    min-height: auto !important;
+    scroll-snap-type: x proximity !important;
+    position: sticky;
+    top: 4.5rem;
+    z-index: 99;
+  }
+  .user-account .container .cards div {
+    scroll-snap-align: center !important;
+  }
+  .user-account .container .bottom-container {
+    flex-direction: column-reverse;
+  }
+  .user-account .container .bottom-container .actions {
+    background: var(--darkmode-quarternary-color);
+    border-radius: 16px;
+    padding: 1rem;
+    flex-direction: row !important;
+    justify-content: space-between;
+    height: 80px !important;
+  }
+  .user-account .container .bottom-container .actions div {
+    width: 50%;
+    height: auto !important;
+  }
+  .user-account .container .bottom-container .actions div span svg {
+    font-size: 10rem !important;
+  }
+  .user-account .container .bottom-container .recent-transactions table {
+    margin: 0 !important;
+  }
+  .pay .container .options {
+    width: 100% !important;
+  }
+  .pay .container .options .presets {
+    display: grid !important;
+    grid-template: 50% 50%/auto auto;
+  }
+}
 body {
   overflow: hidden;
 }
@@ -267,7 +433,7 @@ header {
 .App {
   display: flex;
   align-items: center;
-  margin: auto;
+  margin: 0;
   height: 100%;
   width: 100%;
   max-width: 98%;
@@ -873,21 +1039,25 @@ header {
   background: rgb(178, 80, 104);
   background: linear-gradient(90deg, rgba(178, 80, 104, 0) 0%, rgba(76, 58, 81, 0.8) 100%);
 }
-.user-account .container .cards .atm_card:hover .actions div {
+.user-account .container .cards .atm_card:hover .actions div, .user-account .container .cards .atm_card:active .actions div {
   margin: 0;
 }
-.user-account .container .cards .atm_card:hover .actions div:hover {
+.user-account .container .cards .atm_card:hover .actions div:hover, .user-account .container .cards .atm_card:active .actions div:hover {
   width: 60%;
 }
-.user-account .container .cards .atm_card:hover .actions div:hover svg {
+.user-account .container .cards .atm_card:hover .actions div:hover svg, .user-account .container .cards .atm_card:active .actions div:hover svg {
   opacity: 0.8;
   transform: scale(1.1);
 }
-.user-account .container .cards .atm_card:hover .actions .edit:hover {
+.user-account .container .cards .atm_card:hover .actions .edit:hover,
+.user-account .container .cards .atm_card:hover .actions .edit:active, .user-account .container .cards .atm_card:active .actions .edit:hover,
+.user-account .container .cards .atm_card:active .actions .edit:active {
   background: rgb(178, 80, 104);
   background: linear-gradient(270deg, rgba(178, 80, 104, 0) 0%, rgba(37, 37, 37, 0.9) 100%);
 }
-.user-account .container .cards .atm_card:hover .actions .delete:hover {
+.user-account .container .cards .atm_card:hover .actions .delete:hover,
+.user-account .container .cards .atm_card:hover .actions .delete:active, .user-account .container .cards .atm_card:active .actions .delete:hover,
+.user-account .container .cards .atm_card:active .actions .delete:active {
   background: rgb(178, 80, 104);
   background: linear-gradient(90deg, rgba(178, 80, 104, 0) 0%, rgba(76, 58, 81, 0.9) 100%);
 }
@@ -995,7 +1165,7 @@ header {
   background: rgba(0, 0, 0, 0.3333333333);
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
-  z-index: 99;
+  z-index: 9999999;
 }
 .modal-container .modal {
   background: rgba(37, 37, 37, 0.9);
@@ -1144,6 +1314,7 @@ header {
   flex-direction: column;
   align-items: center;
   margin-top: 5rem;
+  gap: 2rem;
 }
 .container.carousel .options * {
   color: white;
@@ -1165,6 +1336,17 @@ header {
 .container.carousel .options .presets .selected {
   transform: scale(1.1);
   background: var(--darkmode-secondary-color);
+}
+.container.carousel .options .pro-tip {
+  display: flex;
+  opacity: 0.5;
+}
+.container.carousel .options .pro-tip span {
+  display: flex;
+  align-items: center;
+}
+.container.carousel .options .pro-tip span svg {
+  padding-right: 0.5rem;
 }
 .container.carousel .options .custom {
   display: flex;
@@ -1246,6 +1428,17 @@ header {
   padding: 2rem;
   opacity: 0.8;
   overflow: hidden;
+}
+.main-panel.home .hero .balance .show-hide-balance {
+  display: flex;
+  align-items: center;
+}
+.main-panel.home .hero .balance .show-hide-balance p {
+  opacity: 0.6;
+}
+.main-panel.home .hero .balance .show-hide-balance svg {
+  font-size: 2rem;
+  padding-left: 1rem;
 }
 .main-panel.home .hero .balance p {
   font-weight: 500;

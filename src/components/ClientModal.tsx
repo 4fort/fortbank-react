@@ -43,10 +43,10 @@ interface Props {
 }
 
 const ClientModal = (props: Props) => {
-  let { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
+  const { authTokens } = useContext<AuthContextType | null>(AuthContext) ?? {
     authTokens: null,
   };
-  let { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
+  const { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -90,15 +90,16 @@ const ClientModal = (props: Props) => {
 
   const { setIsModal, modalProps, selectedCard, selectedActivity } = props;
 
-  let today = new Date();
-  let [cardNumError, setCardNumError] = useState<String | undefined>(undefined);
-  let [cardPinError, setCardPinError] = useState<String | undefined>(undefined);
+  const today = new Date();
+  const [cardNumError, setCardNumError] = useState<string | undefined>(
+    undefined
+  );
+  const [cardPinError, setCardPinError] = useState<string | undefined>(
+    undefined
+  );
   let NumError: string | undefined;
   let PinError: string | undefined;
-  let cardDetails: ModifiedUserAccount = {
-    card_num: selectedCard?.card_num!,
-    card_pin: selectedCard?.card_pin!,
-  };
+  let cardDetails: ModifiedUserAccount;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -192,7 +193,7 @@ const ClientModal = (props: Props) => {
         {modalProps?.modalMode === 2 ? (
           <div className='delete-card'>
             <TbAlertCircle className='alert-icon' />
-            <p>Are You Sure You want to delete this card?</p>
+            <p>Are you sure you want to delete this card?</p>
             <ATMCard
               setIsModal={setIsModal}
               modalProps={modalProps}

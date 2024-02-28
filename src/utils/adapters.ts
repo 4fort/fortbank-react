@@ -184,6 +184,11 @@ export const deleteCard = async (
   cardDetails: ModifiedUserAccount,
   authTokens: AuthTokensType
 ): Promise<UserAccount | null> => {
+  const data = {
+    userId,
+    card_num: cardDetails.card_num,
+    card_pin: cardDetails.card_pin,
+  };
   try {
     const response = await axios.delete(
       `${baseUrl}/api/users/account/${userId}`,
@@ -192,11 +197,12 @@ export const deleteCard = async (
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(authTokens?.access),
         },
-        data: cardDetails,
+        data: data,
       }
     );
     return response.data;
   } catch (error) {
+    console.log(data);
     console.log(error);
     return null;
   }
@@ -306,6 +312,7 @@ export const getHistorySet = async (
 export const RegisterToDB = async (userData: User | null) => {
   try {
     const response = await axios.post(`${baseUrl}/api/register`, userData);
+    return response.data;
   } catch (error) {
     console.error(error);
     console.log(userData);

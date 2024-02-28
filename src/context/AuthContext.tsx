@@ -26,7 +26,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export default AuthContext;
 
 export const AuthProvider = ({ children }: Props) => {
-  const baseUrl: string = "http://127.0.0.1:8000";
+  const baseUrl = "http://127.0.0.1:8000";
 
   const [authTokens, setAuthTokens] = useState<
     AuthContextType["authTokens"] | null
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   const navigate = useNavigate();
 
-  let loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const loginAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  let logoutAdmin = () => {
+  const logoutAdmin = () => {
     setLoading(true);
 
     setAuthTokens(null);
@@ -119,13 +119,12 @@ export const AuthProvider = ({ children }: Props) => {
   const [userDataState, setUserDataState] = useState<User | null>(null);
 
   const verifyOTP = (e: ChangeEvent<HTMLInputElement>) => {
-    let otp = e.target.value;
+    const otp = e.target.value;
     setOTPInput(otp);
 
     if (otp.length === 6) {
       console.log(otp);
-      //@ts-ignore
-      let confirmationResult = window.confirmationResult;
+      const confirmationResult = window.confirmationResult;
       confirmationResult
         .confirm(otp)
         .then(() => {
@@ -142,7 +141,7 @@ export const AuthProvider = ({ children }: Props) => {
             position: "top-center",
           });
         })
-        .catch((error: any) => {
+        .catch((error: Error) => {
           toast.error(`Server response:${error}.`, {
             className: "toast tst",
             position: "top-center",
@@ -175,6 +174,7 @@ export const AuthProvider = ({ children }: Props) => {
       Boolean(false),
       String(payload.password)
     );
+    console.log(JSON.stringify(userData));
 
     firstNameError = validator.firstNameValidator(userData.first_name);
     lastNameError = validator.lastNameValidator(userData.last_name);
@@ -193,9 +193,10 @@ export const AuthProvider = ({ children }: Props) => {
       String(userData.userprofile.civil_status)
     );
     addressError = validator.addressValidator(userData.userprofile.address);
-    passwordError = validator.passwordValidator(userData.password!);
+    passwordError = validator.passwordValidator(userData.password);
     passwordConfirmError = validator.passwordConfirmValidator(
-      userData.password!
+      String(payload.password_confirm),
+      userData.password
     );
 
     if (
@@ -207,48 +208,11 @@ export const AuthProvider = ({ children }: Props) => {
       birthdateError ||
       genderError ||
       civilStatusError ||
-      addressError
-      // passwordError ||
-      // passwordConfirmError
+      addressError ||
+      passwordError ||
+      passwordConfirmError
     ) {
-      // if (firstNameError) {
-      //   console.log(firstNameError);
-      // }
-      // if (lastNameError) {
-      //   console.log(lastNameError);
-      // }
-      // if (usernameError) {
-      //   console.log(usernameError);
-      // }
-      // if (emailError) {
-      //   console.log(emailError);
-      // }
-      // if (cardNumError) {
-      //   console.log(cardNumError);
-      // }
-      // if (cardPinError) {
-      //   console.log(cardPinError);
-      // }
-      // if (balanceError) {
-      //   console.log(balanceError);
-      // }
-      // if (mobileNumberError) {
-      //   console.log(mobileNumberError);
-      // }
-      // if (birthdateError) {
-      //   console.log(birthdateError);
-      // }
-      // if (genderError) {
-      //   console.log(genderError);
-      // }
-      // if (civilStatusError) {
-      //   console.log(civilStatusError);
-      // }
-      // if (addressError) {
-      //   console.log(addressError);
-      // }
       setIsValidated(false);
-      console.log(passwordError, passwordConfirmError);
       return;
     }
     setUserDataState(userData);
@@ -349,7 +313,10 @@ export const AuthProvider = ({ children }: Props) => {
       setUnauthorized(false);
     } else {
       setUnauthorized(true);
-      logoutAdmin();
+      if (user?.is_superuser) {
+        logoutAdmin();
+      }
+      logout();
     }
   };
 

@@ -125,6 +125,10 @@ export interface AdminContextType {
   setAddress: React.Dispatch<React.SetStateAction<string>>;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
   setIsSuperUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPasswordConfirm: React.Dispatch<React.SetStateAction<string>>;
+  password_confirm: string;
 
   selectedUserValues: ModifiedFortbankUser;
 
@@ -170,4 +174,9 @@ export interface ClientContextType {
   userLoggedIn: FortbankUser;
   userBalance: number;
   setUserBalance: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface UserPreferencesType {
+  sidePanelState: boolean;
+  balanceVisibility: boolean;
 }

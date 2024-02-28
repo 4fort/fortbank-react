@@ -12,7 +12,7 @@ import { ClientContextType } from "../../Interfaces/interfaces";
 import QRCode from "react-qr-code";
 
 const Home = () => {
-  let { userLoggedIn } = useContext<ClientContextType | null>(
+  const { userLoggedIn } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -39,7 +39,7 @@ const Home = () => {
 
   const [viewPin, setViewPin] = useState<boolean>(false);
 
-  let qrValue = {
+  const qrValue = {
     username: userLoggedIn?.username,
   };
 
@@ -66,7 +66,7 @@ const Home = () => {
               {userLoggedIn
                 ? String(userLoggedIn?.userwallet?.card_num)
                     .match(/.{1,3}/g)
-                    .join("-")
+                    ?.join("-")
                 : "loading.."}
             </div>
             <div className='atm_cardHolder'>

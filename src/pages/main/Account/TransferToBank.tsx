@@ -103,7 +103,7 @@ const TransferToBank = () => {
     setCardPin: setCardPin,
   };
 
-  const presetAmount = [100, 300, 500, 1000, 5000];
+  const presetAmount = [100, 300, 500, 1000, 5000, 10000];
   const [amount, setAmount] = useState(0);
   let cardError: string | undefined;
   let amountError: string | undefined;
@@ -135,7 +135,6 @@ const TransferToBank = () => {
 
     if (
       cardError === undefined &&
-      amountError === undefined &&
       amount < Number(userLoggedIn.userwallet.balance)
     ) {
       let newBalance;
@@ -144,7 +143,11 @@ const TransferToBank = () => {
       } catch (error: any) {
         setLoading(false);
         return toast.error(
-          `Failed to add funds. Card declined.\nServer response: ${error.response.data.message}`,
+          `Failed to add funds.\nServer response: ${
+            error.response.data.message === undefined
+              ? "Service provider unreachable"
+              : error.response.data.message
+          }`,
           {
             className: "toast tst",
           }
@@ -189,7 +192,7 @@ const TransferToBank = () => {
         ) : (
           <>
             <h1>
-              Account
+              Cards
               <NavLink to='/card'>
                 <TbChevronLeft /> Return
               </NavLink>
@@ -249,6 +252,10 @@ const TransferToBank = () => {
                       ) : null}
                     </div>
                   ) : null}
+                  {/* <input
+                    type='text'
+                    onChange={(e) => setAmount(Number(e.target.value))}
+                  /> */}
                   <button onClick={handleSubmit}>Transfer to Bank</button>
                 </div>
               </div>

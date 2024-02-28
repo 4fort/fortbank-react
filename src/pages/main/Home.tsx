@@ -1,11 +1,22 @@
-import { useContext } from "react";
-import { ClientContextType } from "../../Interfaces/interfaces";
+import { useContext, useState } from "react";
+import {
+  ClientContextType,
+  UserPreferencesType,
+} from "../../Interfaces/interfaces";
 import ClientContext from "../../context/ClientContext";
 import { NavLink } from "react-router-dom";
-import { TbCash, TbCreditCard, TbHistory } from "react-icons/tb";
+import {
+  TbCash,
+  TbCreditCard,
+  TbEye,
+  TbEyeOff,
+  TbHistory,
+} from "react-icons/tb";
+
+import { bottomMargin } from "../../utils/mobile-functions";
 
 const Home = () => {
-  let { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
+  const { userLoggedIn, userBalance } = useContext<ClientContextType | null>(
     ClientContext
   ) ?? {
     userLoggedIn: {
@@ -47,6 +58,15 @@ const Home = () => {
     userBalance: 0,
   };
 
+  const userPreferencesString = localStorage.getItem("userPreferences");
+  const userPreferences = userPreferencesString
+    ? (JSON.parse(userPreferencesString) as UserPreferencesType)
+    : { balanceVisibility: false };
+
+  const [showBalance, setShowBalance] = useState<boolean>(
+    userPreferences.balanceVisibility
+  );
+
   return (
     <div className='main-panel home'>
       <h1>
@@ -61,11 +81,51 @@ const Home = () => {
           </span>
         </div>
         <div className='balance'>
-          <p>You have</p>
+          <div className='show-hide-balance'>
+            <p>You have</p>
+            {!showBalance ? (
+              <TbEye
+                onClick={() => {
+                  setShowBalance(!showBalance);
+                  const userPreferencesString =
+                    localStorage.getItem("userPreferences");
+                  const userPreferences = userPreferencesString
+                    ? JSON.parse(userPreferencesString)
+                    : { balanceVisibility: false };
+                  localStorage.setItem(
+                    "userPreferences",
+                    JSON.stringify({
+                      ...userPreferences,
+                      balanceVisibility: !showBalance,
+                    })
+                  );
+                }}
+              />
+            ) : (
+              <TbEyeOff
+                onClick={() => {
+                  setShowBalance(!showBalance);
+                  const userPreferencesString =
+                    localStorage.getItem("userPreferences");
+                  const userPreferences = userPreferencesString
+                    ? JSON.parse(userPreferencesString)
+                    : { balanceVisibility: true };
+                  localStorage.setItem(
+                    "userPreferences",
+                    JSON.stringify({
+                      ...userPreferences,
+                      balanceVisibility: !showBalance,
+                    })
+                  );
+                }}
+              />
+            )}
+          </div>
           <span>
             {!userLoggedIn
               ? "Processing..."
-              : "₱" + userBalance?.toLocaleString("en-US")}
+              : "₱" +
+                (showBalance ? userBalance?.toLocaleString("en-US") : " •••••")}
           </span>
           <span className='shape'>
             <svg

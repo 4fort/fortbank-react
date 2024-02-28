@@ -51,13 +51,11 @@ body {
   --icon-opacity: 0.5;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 768px) {
   th {
     display: none;
   }
   td {
-    display: grid;
-    grid-template-columns: 15ch auto;
     padding: 0.5rem 1rem;
   }
   td[data-cell=actions] {
@@ -70,10 +68,8 @@ body {
   td:last-child {
     padding-bottom: 2rem;
   }
-  td::before {
-    content: attr(data-cell) ": ";
-    font-weight: 700;
-    text-transform: capitalize;
+  td div span p {
+    font-weight: 400;
   }
 }
 header {

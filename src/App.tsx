@@ -40,7 +40,7 @@ function App() {
           hideProgressBar
           pauseOnHover
           theme='dark'
-          position='bottom-right'
+          position='top-center'
         />
 
         <Routes>
